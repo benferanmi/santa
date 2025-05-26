@@ -67,7 +67,7 @@ const VideoSlider = () => {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 ">
+    <div className="relative py-10 overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 ">
       {/* Background Animation */}
       <div className="absolute inset-0">
         {/* Floating Christmas Elements */}

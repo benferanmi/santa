@@ -62,7 +62,7 @@ const SantaReviewsSlider = () => {
   }, [currentIndex]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 relative overflow-hidden">
+    <div className="py-10 bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 relative overflow-hidden">
       <div className="relative z-10 container mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-12">
@@ -84,14 +84,14 @@ const SantaReviewsSlider = () => {
           {/* Navigation Arrows */}
           <button
             onClick={prevReview}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300"
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300"
           >
             <ChevronLeft size={20} />
           </button>
 
           <button
             onClick={nextReview}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300"
+            className="absolute right-2 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300"
           >
             <ChevronRight size={20} />
           </button>

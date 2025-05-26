@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const SantaMagicCTASection = () => {
   return (
-    <div className="min-h-screen bg-[url('https://res.cloudinary.com/dtcbirvxc/image/upload/v1748293561/ka3cdz0a0a3c4zvarte7.jpg')] relative overflow-hidden flex items-center justify-center">
+    <div className="py-12 md:py-20 lg:py-25 bg-[url('https://res.cloudinary.com/dtcbirvxc/image/upload/v1748293561/ka3cdz0a0a3c4zvarte7.jpg')] relative overflow-hidden flex items-center justify-center">
 
 
       <div className="container mx-auto px-6 relative z-10">

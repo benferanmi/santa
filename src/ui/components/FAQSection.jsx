@@ -25,18 +25,7 @@ const FAQSection = () => {
       question: "Can I order videos for more than one child?",
       answer: "Yes! You can order individual personalized videos for multiple children. Each video will be uniquely crafted with that specific child's name and personalized details."
     },
-    {
-      question: "How will I receive the video?",
-      answer: "Once your video is ready, you'll receive an email with a secure download link. The video will be in high-quality MP4 format, perfect for sharing with family or playing on any device."
-    },
-    {
-      question: "What payment methods do you accept?",
-      answer: "We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and various digital payment methods. All transactions are processed securely through encrypted payment gateways."
-    },
-    {
-      question: "Is my personal information secure?",
-      answer: "Your privacy and security are our top priorities. All personal information is encrypted and stored securely. We never share your data with third parties and only use it to create your personalized Santa video."
-    }
+   
   ];
 
   const toggleFAQ = (index) => {
@@ -44,7 +33,7 @@ const FAQSection = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-800 to-red-900 py-16">
+    <div className="py-10 bg-gradient-to-br from-green-800 to-red-900 py-16">
       <div className="container mx-auto px-6">
         {/* Header */}
         <motion.div

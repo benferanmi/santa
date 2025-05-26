@@ -10,7 +10,7 @@ const SantaVideoSection = () => {
     };
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-[url(https://res.cloudinary.com/dtcbirvxc/image/upload/v1748293560/h8ymkm0jxerxeqrhcq6m.jpg)]">
+        <div className="relative py-10 overflow-hidden bg-[url(https://res.cloudinary.com/dtcbirvxc/image/upload/v1748293560/h8ymkm0jxerxeqrhcq6m.jpg)]">
             {/* Animated Christmas Background */}
             <div className="absolute inset-0 ">
                 {/* Snowflakes */}

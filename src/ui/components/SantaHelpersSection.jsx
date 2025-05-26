@@ -28,7 +28,7 @@ const SantaHelpersSection = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 relative overflow-hidden">
+    <div className="py-10 bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         {/* Floating magical sparkles */}

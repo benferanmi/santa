@@ -89,7 +89,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-[500px] max-h-[700px] lg:max-h-screen lg:min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[url(https://res.cloudinary.com/dtcbirvxc/image/upload/v1748293580/bwd7sdonldvmvevatpgq.svg)]"

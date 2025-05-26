@@ -54,7 +54,7 @@ const SantaVideoForm = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white text-black relative overflow-hidden">
+    <div className="py-10 bg-white text-black relative overflow-hidden">
       {/* Subtle Background Animation */}
       <div className="absolute inset-0">
         {/* Gentle floating elements */}
