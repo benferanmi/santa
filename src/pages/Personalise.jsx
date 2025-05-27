@@ -1,8 +1,12 @@
 import React from 'react'
+import SantaVideoForm from '../ui/components/SantaVideoForm'
+import AppLayout from '../ui/AppLayout'
 
 const Personalise = () => {
   return (
-    <div>Personalise</div>
+    <AppLayout>
+      <SantaVideoForm />
+    </AppLayout>
   )
 }
 

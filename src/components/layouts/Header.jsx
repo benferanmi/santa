@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { Menu, X, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Logo } from '../../assets';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    // eslint-disable-next-line no-unused-vars
     const [profileName, setProfileName] = useState('Buddy Elf');
 
     const navigationItems = [
-        { name: 'Home', href: '#home' },
-        { name: 'Personalise', href: '#personalise' },
-        { name: 'Dashboard', href: '#dashboard' },
-        { name: 'About', href: '#about' }
+        { name: 'Home', href: '/' },
+        { name: 'Personalise', href: '/personalise' },
+        { name: 'Dashboard', href: '/dashboard' },
+        { name: 'About', href: '/about' }
     ];
 
     const toggleAuth = () => {
@@ -24,7 +27,7 @@ const Header = () => {
                     {/* Logo and Brand */}
                     <div className="flex items-center space-x-3">
                         <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md">
-                            <span className="text-2xl">🎄</span>
+                            <span className="text-2xl"><img alt='' src={Logo} /></span>
                         </div>
                         <div className="text-white">
                             <h1 className="text-xl font-bold">International Elf HQ</h1>
@@ -34,13 +37,13 @@ const Header = () => {
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
                         {navigationItems.map((item) => (
-                            <a
+                            <Link
                                 key={item.name}
-                                href={item.href}
-                                className="text-white hover:text-yellow-200 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white hover:bg-opacity-10"
+                                to={item.href}
+                                className="text-white hover:text-amber-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white hover:bg-opacity-10"
                             >
                                 {item.name}
-                            </a>
+                            </Link>
                         ))}
                     </nav>
 
@@ -61,12 +64,13 @@ const Header = () => {
                                     <span className="text-white font-medium hidden sm:block">{profileName}</span>
                                 </div>
                             ) : (
-                                <button
+                                <Link
                                     onClick={toggleAuth}
+                                    to={'/register'}
                                     className="text-white hover:text-yellow-200 font-medium"
                                 >
                                     Sign In
-                                </button>
+                                </Link>
                             )}
                         </div>
 

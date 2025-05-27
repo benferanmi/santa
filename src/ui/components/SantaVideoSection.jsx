@@ -63,7 +63,7 @@ const SantaVideoSection = () => {
             </div>
 
             {/* Content Container */}
-            <div className="relative z-10 container mx-auto px-4 py-16 min-h-screen flex flex-col justify-center items-center">
+            <div className="relative z-10 container mx-auto px-4 py-16 flex flex-col justify-center items-center">
                 {/* Heading */}
                 <motion.div
                     initial={{ opacity: 0, y: -50 }}

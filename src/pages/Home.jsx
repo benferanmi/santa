@@ -9,8 +9,21 @@ import SantaHelpersSection from '../ui/components/SantaHelpersSection'
 import SantaMagicCTASection from '../ui/components/SantaMagicCTASection'
 import FAQSection from '../ui/components/FAQSection'
 import SantaReviewsSlider from '../ui/components/Review'
+import { useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Home = () => {
+
+    const { hash } = useLocation();
+
+    useEffect(() => {
+        if (hash) {
+            const element = document.querySelector(hash);
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth" });
+            }
+        }
+    }, [hash]);
     return (
         <div>
             <AppLayout>
@@ -23,7 +36,9 @@ const Home = () => {
                     <SantaWishesSection />
                     <SantaHelpersSection />
                     <SantaMagicCTASection />
-                    <FAQSection />
+                    <section id='faq-section'>
+                        <FAQSection />
+                    </section>
                     <SantaReviewsSlider />
                 </div>
             </AppLayout>

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
-.video-slider {
-    background: linear-gradient(to right, rgba(107, 133, 163, 0.9) 30%, rgba(107, 133, 163, 0.3) 100%);
+.hero-section-custom-bg-positioning {
+    background-image: url('https://res.cloudinary.com/dtcbirvxc/image/upload/v1748379204/santa-hero_axiq2l.jpg');
+    background-color: black;
+    background-position-x: 50%;
+    background-position-y: center;
+
 }

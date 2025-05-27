@@ -148,7 +148,7 @@ const SantaVideoForm = () => {
                       name="childName"
                       value={formData.childName}
                       onChange={handleInputChange}
-                      className="w-full bg-white/10 border border-white/20 rounded-2xl py-4 pl-12 pr-4 text-black placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-300"
+                      className="w-full bg-white/10 border border-black/70 rounded-2xl py-4 pl-12 pr-4 text-black placeholder-white/50 focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-300"
                       placeholder="Enter your child's name"
                     />
                   </div>
@@ -169,7 +169,7 @@ const SantaVideoForm = () => {
                       name="childAge"
                       value={formData.childAge}
                       onChange={handleInputChange}
-                      className="w-full bg-white/10 border border-white/20 rounded-2xl py-4 pl-12 pr-4 text-black focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-300 appearance-none cursor-pointer"
+                      className="w-full bg-white/10 border border-black/70 rounded-2xl py-4 pl-12 pr-4 text-black focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-300 appearance-none cursor-pointer"
                     >
                       <option value="" className="bg-slate-800">Select age</option>
                       {[...Array(13)].map((_, i) => (
@@ -206,7 +206,7 @@ const SantaVideoForm = () => {
                     <motion.div
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="bg-white/10 border-2 border-dashed border-white/30 rounded-2xl p-8 text-center hover:border-blue-400 hover:bg-white/15 transition-all duration-300 cursor-pointer"
+                      className="bg-black/10 border-2 border-dashed border-white/30 rounded-2xl p-8 text-center hover:border-blue-400 hover:bg-white/15 transition-all duration-300 cursor-pointer"
                     >
                       <Upload className="mx-auto mb-4 text-black/60" size={32} />
                       <p className="text-black font-medium mb-2">Choose File</p>
