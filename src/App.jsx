@@ -6,6 +6,7 @@ import Registation from './pages/Registration'
 import PrivacyPolicyPage from './pages/Privacy'
 import UserGuidesPage from './pages/UserGuidesPage'
 import ContactUsPage from './pages/Contact'
+import TermsOfServicePage from './pages/TermsOfService'
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
         <Route path='/privacy' element={<PrivacyPolicyPage />} />
         <Route path="/guides" element={<UserGuidesPage />} />
         <Route path='/contact-us' element={<ContactUsPage />} />
-        <Route path='terms-of-service' />
+        <Route path='terms-of-service' element={<TermsOfServicePage />} />
       </Routes>
     </div>
   )
