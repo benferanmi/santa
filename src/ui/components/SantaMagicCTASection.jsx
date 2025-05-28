@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const SantaMagicCTASection = () => {
   return (
@@ -58,10 +59,10 @@ const SantaMagicCTASection = () => {
               whileTap={{ scale: 0.95 }}
               className="bg-red-800 text-white px-12 py-6 rounded-full font-bold text-xl lg:text-2xl shadow-2xl transition-all duration-300 border-2 border-white/20"
             >
-              <span className="flex items-center gap-4">
+              <Link to="/personalise" className="flex items-center gap-4">
                 Create Your Video Now
                 <span className="text-2xl">🎬</span>
-              </span>
+              </Link>
             </motion.button>
           </motion.div>
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, User, Calendar, Image, Play, Check, Gift, Star, Heart } from 'lucide-react';
+import { Navigate } from 'react-router-dom';
 
 const SantaVideoForm = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const SantaVideoForm = () => {
   });
   const [fileName, setFileName] = useState('');
   const [showPreview, setShowPreview] = useState(false);
+  const [isAuthenticated] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -52,6 +54,10 @@ const SantaVideoForm = () => {
       text: "Magical Christmas message from Santa"
     }
   ];
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="py-10 bg-white text-black relative overflow-hidden">
@@ -169,7 +175,7 @@ const SantaVideoForm = () => {
                       name="childAge"
                       value={formData.childAge}
                       onChange={handleInputChange}
-                      className="w-full bg-white/10 border border-black/70 rounded-2xl py-4 pl-12 pr-4 text-black focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-300 appearance-none cursor-pointer"
+                      className="w-full bg-white/10 border border-black/70 rounded-2xl py-4 pl-12 pr-4 text-white focus:outline-none focus:border-blue-400 focus:bg-white/15 transition-all duration-300 appearance-none cursor-pointer"
                     >
                       <option value="" className="bg-slate-800">Select age</option>
                       {[...Array(13)].map((_, i) => (
@@ -188,13 +194,13 @@ const SantaVideoForm = () => {
                   transition={{ delay: 0.7 }}
                 >
                   <label className="block text-black font-semibold mb-3 text-lg">
-                    Front Door Photo 
+                    Front Door Photo
                     <span className="text-black/60 font-normal">(Optional)</span>
                   </label>
                   <p className="text-black/60 text-sm mb-4">
                     Upload a photo of your front door for Santa to include in the video.
                   </p>
-                  
+
                   <div className="relative">
                     <input
                       type="file"
@@ -233,7 +239,7 @@ const SantaVideoForm = () => {
               >
                 Continue to Checkout 🛒
               </motion.button>
-              
+
               <motion.button
                 onClick={togglePreview}
                 whileHover={{ scale: 1.05 }}
@@ -335,7 +341,7 @@ const SantaVideoForm = () => {
                 <div>
                   <h4 className="text-amber-600 font-semibold mb-2">Note:</h4>
                   <p className="text-amber-500/90 text-sm leading-relaxed">
-                    The final video will be delivered to your email within 24 hours after purchase. 
+                    The final video will be delivered to your email within 24 hours after purchase.
                     Make sure to check your spam folder if you don't see it.
                   </p>
                 </div>

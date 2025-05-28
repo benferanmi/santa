@@ -29,21 +29,24 @@ const Footer = () => {
             {/* Social Media Links */}
             <div className="flex space-x-4 pt-2">
               <a
-                href="#facebook"
+                href="https://facebook.com/santa"
+                target='_blank'
                 className="bg-white bg-opacity-10 hover:bg-opacity-20 rounded-full p-3 transition-all duration-200 hover:scale-110"
                 aria-label="Facebook"
               >
                 <Facebook className="w-6 h-6 fill-green-800 stroke-1" />
               </a>
               <a
-                href="#youtube"
+                href="https://youtube.com/santa"
+                target='_blank'
                 className="bg-white bg-opacity-10 hover:bg-opacity-20 rounded-full p-3 transition-all duration-200 hover:scale-110"
                 aria-label="YouTube"
               >
                 <Youtube className="w-6 h-6 fill-green-800" />
               </a>
               <a
-                href="#twitter"
+                href="https://x.com/santa"
+                target='_blank'
                 className="bg-white bg-opacity-10 hover:bg-opacity-20 rounded-full p-3 transition-all duration-200 hover:scale-110"
                 aria-label="Twitter"
               >
@@ -57,9 +60,9 @@ const Footer = () => {
             <h4 className="text-xl font-semibold text-yellow-200">Quick Links</h4>
             <ul className="space-y-3">
               <li>
-                <a href="/privacy" className="text-red-100 hover:text-yellow-200 transition-colors duration-200 flex items-center">
+                <Link to="/privacy" className="text-red-100 hover:text-yellow-200 transition-colors duration-200 flex items-center">
                   Privacy Policy
-                </a>
+                </Link>
               </li>
               <li>
                 <Link to="/guides" className="text-red-100 hover:text-yellow-200 transition-colors duration-200 flex items-center">

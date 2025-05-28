@@ -12,9 +12,12 @@ const Header = () => {
     const navigationItems = [
         { name: 'Home', href: '/' },
         { name: 'Personalise', href: '/personalise' },
-        { name: 'Dashboard', href: '/dashboard' },
-        { name: 'About', href: '/about' }
+        { name: 'Contact', href: '/contact-us' },
+        { name: 'About', href: '/about' },
+        { name: 'Dashboard', href: '/dashboard' }
     ];
+
+
 
     const toggleAuth = () => {
         setIsAuthenticated(!isAuthenticated);
@@ -36,11 +39,11 @@ const Header = () => {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
-                        {navigationItems.map((item) => (
+                        {navigationItems?.map((item) => (
                             <Link
                                 key={item.name}
                                 to={item.href}
-                                className="text-white hover:text-amber-700 px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white hover:bg-opacity-10"
+                                className="text-white hover:text-amber-700 px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white hover:bg-opacity-10"
                             >
                                 {item.name}
                             </Link>
@@ -49,21 +52,28 @@ const Header = () => {
 
                     {/* Right Side - Create Video Button and Profile */}
                     <div className="flex items-center space-x-4">
-                        {/* Create Video Button */}
-                        <button className="bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 hidden sm:block">
-                            Create Your Video
-                        </button>
-
                         {/* Profile Section */}
-                        <div className="flex items-center space-x-3">
-                            {isAuthenticated ? (
-                                <div className="flex items-center space-x-2">
-                                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                                        <User className="w-5 h-5 text-red-600" />
+
+                        {isAuthenticated ? (
+                            <>
+                                <Link to='/create' className="bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 hidden sm:block">
+                                    Create Your Video
+                                </Link>
+                                <div className="flex items-center space-x-3">
+
+                                    <div className="flex items-center space-x-2">
+                                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                                            <User className="w-5 h-5 text-red-600" />
+                                        </div>
+                                        <span className="text-white font-medium hidden sm:block">{profileName}</span>
                                     </div>
-                                    <span className="text-white font-medium hidden sm:block">{profileName}</span>
                                 </div>
-                            ) : (
+                            </>
+                        ) : (
+                            <>
+                                <Link to='/register' className="bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 hidden sm:block">
+                                    Create Your Video
+                                </Link>
                                 <Link
                                     onClick={toggleAuth}
                                     to={'/register'}
@@ -71,39 +81,41 @@ const Header = () => {
                                 >
                                     Sign In
                                 </Link>
-                            )}
-                        </div>
+                            </>
 
-                        {/* Mobile menu button */}
-                        <button
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                            className="md:hidden text-white hover:text-yellow-200 p-2"
-                        >
-                            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        )}
+                    </div>
+
+
+                    {/* Mobile menu button */}
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden text-white hover:text-yellow-200 p-2"
+                    >
+                        {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Navigation */}
+            {isMenuOpen && (
+                <div className="md:hidden">
+                    <div className="px-2 pt-2 pb-3 space-y-1 bg-red-800 bg-opacity-50 rounded-lg mt-2">
+                        {navigationItems?.map((item) => (
+                            <a
+                                key={item.name}
+                                href={item.href}
+                                className="text-white hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium"
+                            >
+                                {item.name}
+                            </a>
+                        ))}
+                        <button className="w-full bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg mt-3">
+                            Create Your Video
                         </button>
                     </div>
                 </div>
-
-                {/* Mobile Navigation */}
-                {isMenuOpen && (
-                    <div className="md:hidden">
-                        <div className="px-2 pt-2 pb-3 space-y-1 bg-red-800 bg-opacity-50 rounded-lg mt-2">
-                            {navigationItems.map((item) => (
-                                <a
-                                    key={item.name}
-                                    href={item.href}
-                                    className="text-white hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium"
-                                >
-                                    {item.name}
-                                </a>
-                            ))}
-                            <button className="w-full bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg mt-3">
-                                Create Your Video
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </div>
+            )}
 
             {/* Demo Controls */}
             <div className="bg-green-700 px-4 py-2">

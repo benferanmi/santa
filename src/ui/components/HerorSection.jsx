@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Play } from 'lucide-react';
+import { Link } from 'react-router-dom'
 
 const HeroSection = () => {
   const fadeInUp = {
@@ -67,7 +68,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cover bg-no-repeat hero-section-custom-bg-positioning" 
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cover bg-no-repeat hero-section-custom-bg-positioning"
     >
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black opacity-80" />
@@ -97,18 +98,18 @@ const HeroSection = () => {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
           <AnimatedDiv variant={fadeInLeft}>
-            <button className="bg-yellow-400 hover:bg-yellow-300 text-red-900 font-bold px-6 py-3 rounded-full shadow-lg transform transition duration-300 hover:scale-105">
+            <Link to="/dashboard" className="bg-yellow-400 cursor-pointer hover:bg-yellow-300 text-red-900 font-bold px-6 py-3 rounded-full shadow-lg transform transition duration-300 hover:scale-105">
               🎄 Create Your Video
-            </button>
+            </Link>
           </AnimatedDiv>
 
           <AnimatedDiv variant={fadeInRight}>
-            <button className="flex items-center space-x-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white px-5 py-3 rounded-full border border-white transition-all duration-300 hover:scale-105">
+            <Link to="/dashboard" className="flex items-center space-x-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm text-white cursor-pointer px-5 py-3 rounded-full border border-white transition-all duration-300 hover:scale-105">
               <div className="bg-white/30 p-2 rounded-full">
                 <Play className="w-5 h-5 fill-black" />
               </div>
               <span className="text-amber-400 font-medium">Watch the Video</span>
-            </button>
+            </Link>
           </AnimatedDiv>
         </div>
 

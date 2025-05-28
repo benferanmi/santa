@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Edit3, CreditCard, Video, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom'
 
 const HowItWorksSection = () => {
   const steps = [
@@ -11,7 +12,7 @@ const HowItWorksSection = () => {
       accent: "emerald"
     },
     {
-      number: "2", 
+      number: "2",
       icon: CreditCard,
       title: "Process Payment",
       description: "Quick and secure checkout process to complete your order.",
@@ -29,7 +30,7 @@ const HowItWorksSection = () => {
   // Animation variants (inline implementation)
   const containerVariants = {
     initial: { opacity: 0 },
-    animate: { 
+    animate: {
       opacity: 1,
       transition: { staggerChildren: 0.2, delayChildren: 0.1 }
     }
@@ -37,8 +38,8 @@ const HowItWorksSection = () => {
 
   const itemVariants = {
     initial: { opacity: 0, y: 30 },
-    animate: { 
-      opacity: 1, 
+    animate: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.6, ease: "easeOut" }
     }
@@ -46,8 +47,8 @@ const HowItWorksSection = () => {
 
   const titleVariants = {
     initial: { opacity: 0, y: -20 },
-    animate: { 
-      opacity: 1, 
+    animate: {
+      opacity: 1,
       y: 0,
       transition: { duration: 0.8, ease: "easeOut" }
     }
@@ -128,10 +129,10 @@ const HowItWorksSection = () => {
           <div className="hidden lg:grid lg:grid-cols-3 lg:gap-12">
             {steps.map((step, index) => {
               const accentClasses = getAccentClasses(step.accent);
-              
+
               return (
-                <AnimatedDiv 
-                  key={step.number} 
+                <AnimatedDiv
+                  key={step.number}
                   variant={itemVariants}
                   delay={index * 0.2}
                   className="relative group"
@@ -142,19 +143,19 @@ const HowItWorksSection = () => {
                       <ArrowRight className="absolute -right-2 -top-2 w-5 h-5 text-gray-400" />
                     </div>
                   )}
-                  
+
                   {/* Step Card */}
                   <div className={`relative ${accentClasses.bg} ${accentClasses.hover} rounded-2xl p-8 transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 border border-gray-100`}>
                     {/* Step Number */}
                     <div className={`absolute -top-4 left-8 w-10 h-10 ${accentClasses.number} rounded-full flex items-center justify-center shadow-lg`}>
                       <span className="text-white font-bold text-lg">{step.number}</span>
                     </div>
-                    
+
                     {/* Icon */}
                     <div className={`w-16 h-16 ${accentClasses.iconBg} ${accentClasses.iconText} rounded-xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300`}>
                       <step.icon className="w-8 h-8" strokeWidth={1.5} />
                     </div>
-                    
+
                     {/* Content */}
                     <div className="text-center">
                       <h3 className="text-2xl font-semibold text-gray-900 mb-4">
@@ -174,10 +175,10 @@ const HowItWorksSection = () => {
           <div className="lg:hidden space-y-8">
             {steps.map((step, index) => {
               const accentClasses = getAccentClasses(step.accent);
-              
+
               return (
-                <AnimatedDiv 
-                  key={step.number} 
+                <AnimatedDiv
+                  key={step.number}
                   variant={itemVariants}
                   delay={index * 0.15}
                   className="relative"
@@ -186,13 +187,13 @@ const HowItWorksSection = () => {
                   {index < steps.length - 1 && (
                     <div className="absolute left-6 top-20 w-0.5 h-12 bg-gray-200 z-0"></div>
                   )}
-                  
+
                   <div className="flex items-start space-x-6">
                     {/* Step Number */}
                     <div className={`flex-shrink-0 w-12 h-12 ${accentClasses.number} rounded-full flex items-center justify-center shadow-lg`}>
                       <span className="text-white font-bold text-xl">{step.number}</span>
                     </div>
-                    
+
                     {/* Content Card */}
                     <div className={`flex-1 ${accentClasses.bg} p-6 rounded-xl border border-gray-100`}>
                       <div className="flex items-start space-x-4">
@@ -200,7 +201,7 @@ const HowItWorksSection = () => {
                         <div className={`w-12 h-12 ${accentClasses.iconBg} ${accentClasses.iconText} rounded-lg flex items-center justify-center flex-shrink-0`}>
                           <step.icon className="w-6 h-6" strokeWidth={1.5} />
                         </div>
-                        
+
                         {/* Text Content */}
                         <div>
                           <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -220,18 +221,18 @@ const HowItWorksSection = () => {
         </div>
 
         {/* Call to Action */}
-        <AnimatedDiv 
-          variant={itemVariants} 
+        <AnimatedDiv
+          variant={itemVariants}
           delay={0.8}
           className="text-center mt-20"
         >
           <button className="group bg-gray-900 hover:bg-gray-800 text-white font-semibold text-lg px-10 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl">
-            <span className="flex items-center space-x-2">
+            <Link to="/personalise" className="flex items-center space-x-2">
               <span>Get Started Now</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </span>
+            </Link>
           </button>
-          
+
           {/* Trust Indicators */}
           <div className="flex justify-center items-center space-x-8 mt-8 text-sm text-gray-500">
             <div className="flex items-center space-x-2">

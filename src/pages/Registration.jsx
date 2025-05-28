@@ -29,7 +29,7 @@ const Registation = () => {
     return (
         <AppLayout className=" bg-red-900 relative overflow-hidden">
             {/* Christmas Background Pattern */}
-            <div className="absolute inset-0 opacity-10">
+            <div className="absolute opacity-10">
                 <div className="absolute top-10 left-10 text-white text-6xl">❄</div>
                 <div className="absolute top-32 right-20 text-white text-4xl">⭐</div>
                 <div className="absolute top-64 left-32 text-white text-5xl">🎄</div>
@@ -58,9 +58,9 @@ const Registation = () => {
                 ))}
             </div>
 
-            <div className="relative z-10 flex px-8 w-[90%] md:w-[80%] mx-auto">
+            <div className="relative z-10 flex px-8 w-[90%] md:w-[80%] mx-auto py-20">
                 {/* Left Side - Auth Form */}
-                <div className="w-1/2 flex items-center justify-center p-8">
+                <div className="w-1/2 flex full1000 items-center justify-center p-8">
                     <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 w-full max-w-md border border-red-200">
                         {/* Header */}
                         <div className="text-center mb-8">
@@ -218,19 +218,10 @@ const Registation = () => {
                 </div>
 
                 {/* Right Side - Santa Image Space */}
-                <div className="none lg:block  w-1/2 flex items-center justify-center p-8">
-                    <div className="relative h-full">
+                <div className="none hidden1000 lg:block  w-1/2 flex items-center justify-center p-8">
+                    <div className="relative h-full flex items-center justify-center">
                         {/* Placeholder for Santa Image with Eye-catching Effect */}
-                        <div className=" bg-[url(https://res.cloudinary.com/dtcbirvxc/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1748293560/tsasynueb3kbdcdqw6oq.jpg)] w-full h-full bg-contain bg-no-repeat bg-white/20 backdrop-blur-sm rounded-sm border-4 border-white/30 flex items-center justify-center shadow-2xl">
-                            <div className="text-center">
-                                <div className="text-8xl mb-4 animate-bounce">🎅</div>
-                                <p className="text-white text-xl font-semibold">
-                                    Your Santa Image
-                                </p>
-                                <p className="text-white/80 text-sm mt-2">
-                                    Will go here with amazing effects!
-                                </p>
-                            </div>
+                        <div className=" bg-[url(https://res.cloudinary.com/dtcbirvxc/image/upload/w_1000,ar_1:1,c_fill,g_auto,e_art:hokusai/v1748293560/tsasynueb3kbdcdqw6oq.jpg)] w-full h-full bg-contain bg-no-repeat bg-white/20 backdrop-blur-sm rounded-sm border-4 border-white/30 flex items-center justify-center shadow-2xl min-w-[300px]">
                         </div>
 
                         {/* Glowing Ring Effect */}
