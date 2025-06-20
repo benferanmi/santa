@@ -23,7 +23,7 @@ import UserGuidesPage from "./pages/LegalAndGuides/UserGuidesPage";
 import ContactUsPage from "./pages/public/Contact";
 import TermsOfServicePage from "./pages/LegalAndGuides/TermsOfService";
 import "./App.css";
-import { ThemesProvider } from "./context/themeContext";
+import { ThemesProvider } from "./context/ThemeContext";
 
 const queryClient = new QueryClient();
 

@@ -3,7 +3,7 @@ import { Menu, X, User, Sun, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { Logo } from "@/assets";
-import { useThemes } from "@/context/themeContext";
+import { useThemes } from "@/context/ThemeContext";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

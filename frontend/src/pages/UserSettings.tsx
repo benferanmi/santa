@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { THEMES } from "@/constants";
-import { useThemes } from "@/context/themeContext";
+import { useThemes } from "@/context/ThemeContext";
 import AppLayout from "@/components/layout/AppLayout";
 
 const UserSettings = () => {

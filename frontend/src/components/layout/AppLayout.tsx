@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../ui/Header";
 import Footer from "../ui/Footer";
-import { useThemes } from "@/context/themeContext";
+import { useThemes } from "@/context/ThemeContext";
 
 interface AppLayoutProps {
   children: React.ReactNode;
