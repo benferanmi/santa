@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, User, Calendar, Image, Play, Check, Gift, Star, Heart } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 
-const SantaVideoForm = () => {
+const Personalise = () => {
   const [formData, setFormData] = useState({
     childName: '',
     childAge: '',

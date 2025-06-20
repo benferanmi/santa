@@ -1,0 +1,766 @@
+<style>
+  body {
+    background: linear-gradient(45deg, #2c1810, #4a3728, #3d2f1f);
+    min-height: 100vh;
+    color: #3a2817;
+    overflow-x: hidden;
+  }
+
+  .trace_link,
+  .tract_bg_change,
+  .bg-dark,
+  .bg-dark .home_special_font {
+    color: black;
+  }
+
+  .fot_bg_dark {
+    color: white !important;
+  }
+
+  .bg-dark .is-link,
+  .bg-dark .wp-block-freeform.block-library-rich-text__tinymce a,
+  .bg-dark p a {
+    color: #3a2817 !important;
+  }
+  .footer p {
+    color: white !important;
+  }
+
+  .spec_font_p,
+  .home_special_font {
+    font-family: "Cinzel", serif;
+  }
+
+  .home_special_font a {
+    border-bottom: 1px solid black;
+  }
+  .spec_font_h3 {
+    font-family: "Cinzel Decorative", serif;
+  }
+
+  .scroll-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+    position: relative;
+    margin-top: 100px;
+  }
+
+  .scroll-parchment {
+    max-width: 800px;
+    width: 100%;
+    background: radial-gradient(
+        circle at 20% 30%,
+        rgba(139, 117, 88, 0.3) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(101, 84, 63, 0.2) 0%,
+        transparent 50%
+      ),
+      linear-gradient(
+        135deg,
+        #f4e8d0 0%,
+        #e8dcc0 25%,
+        #f0e4cc 50%,
+        #e6d9b8 75%,
+        #f2e6d2 100%
+      );
+    border-radius: 20px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.5),
+      inset 0 0 30px rgba(139, 117, 88, 0.2), 0 20px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transform-origin: top center;
+  }
+
+  .scroll-parchment::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, #8b7558, #b59968, #a08760, #9d8456);
+    border-radius: 25px;
+    z-index: -1;
+    box-shadow: 0 0 30px rgba(139, 117, 88, 0.4);
+  }
+
+  .scroll-content {
+    padding: 60px 50px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .scroll-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(
+        circle at 15% 25%,
+        rgba(101, 84, 63, 0.1) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 85% 75%,
+        rgba(139, 117, 88, 0.08) 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 45% 85%,
+        rgba(160, 135, 96, 0.06) 2px,
+        transparent 2px
+      );
+    background-size: 120px 120px, 180px 180px, 240px 240px;
+    pointer-events: none;
+    border-radius: 15px;
+  }
+
+  h3.wp-block-heading {
+    font-size: 2.2em;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c1810;
+    text-shadow: 2px 2px 4px rgba(139, 117, 88, 0.3);
+    position: relative;
+  }
+  h4.wp-block-heading {
+    font-size: 1.5em;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c1810;
+    text-shadow: 2px 2px 4px rgba(139, 117, 88, 0.3);
+    position: relative;
+  }
+  h3.wp-block-heading::after {
+    content: "✦ ✧ ✦";
+    display: block;
+    font-size: 0.5em;
+    margin-top: 10px;
+    color: #8b7558;
+    letter-spacing: 10px;
+  }
+
+  .wp-block-quote {
+    background: rgba(139, 117, 88, 0.1);
+    border-left: 4px solid #8b7558;
+    padding: 20px 25px;
+    margin: 25px 0;
+    border-radius: 0 10px 10px 0;
+    font-style: italic;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(139, 117, 88, 0.1);
+  }
+
+  .wp-block-quote::before {
+    content: '"';
+    font-size: 4em;
+    color: #8b7558;
+    opacity: 0.3;
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    font-family: "Cinzel Decorative", serif;
+  }
+
+  .wp-block-quote p {
+    margin: 10px 0;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+  }
+
+  p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+    text-align: justify;
+    font-size: 1.1em;
+  }
+
+  strong {
+    color: #2c1810;
+    font-weight: 600;
+  }
+
+  em {
+    color: #4a3728;
+  }
+
+  .wp-block-image {
+    text-align: center;
+    margin: 30px 0;
+  }
+
+  .wp-block-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 3px solid #8b7558;
+  }
+
+  .wp-element-caption {
+    font-size: 0.9em;
+    color: #6b553d;
+    font-style: italic;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* Decorative elements */
+  .scroll-parchment::after {
+    content: "";
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #8b7558, transparent);
+    opacity: 0.6;
+  }
+
+  /* Aged paper spots */
+  .age-spot {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(139, 117, 88, 0.15);
+    pointer-events: none;
+  }
+
+  .age-spot:nth-child(1) {
+    width: 40px;
+    height: 30px;
+    top: 15%;
+    right: 10%;
+    opacity: 0.3;
+  }
+
+  .age-spot:nth-child(2) {
+    width: 25px;
+    height: 35px;
+    top: 60%;
+    left: 8%;
+    opacity: 0.2;
+  }
+
+  .age-spot:nth-child(3) {
+    width: 20px;
+    height: 20px;
+    bottom: 20%;
+    right: 15%;
+    opacity: 0.25;
+  }
+
+  /* Footnote styling */
+  sup {
+    font-size: 0.7em;
+    color: #8b7558;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .scroll-content {
+      padding: 40px 30px;
+    }
+
+    h3.wp-block-heading {
+      font-size: 1.8em;
+    }
+
+    p {
+      font-size: 1em;
+    }
+
+    .scroll-container {
+      padding: 20px 10px;
+      margin-top: 140px;
+    }
+  }
+</style>
+<div class="relative scroll-container home_special_font">
+  <div class="scroll-parchment spacing-top">
+    <div class="age-spot"> </div>
+    <div class="age-spot"> </div>
+    <div class="age-spot"> </div>
+    <div class="scroll-content">
+      <h3 class="wp-block-heading spec_font_h3" align="center">
+        Lava and the Phoenix
+      </h3>
+      <h4 class="wp-block-heading spec_font_h3" align="center">
+        Welcome to Reality Unveiled
+      </h4>
+      <p>
+        <strong><em>Kramer: </em></strong
+        ><em>You know, Frank, you could take a break.</em>
+      </p>
+      <p>
+        <strong><em>Frank Constanza: </em></strong
+        ><em
+          >No breaks! I feel reborn. I'm like a phoenix, rising from
+          Arizona.<sup
+            ><a id="footnote-anchor-1" href="#footnote-1">1</a></sup
+          ></em
+        >
+      </p>
+      <p>
+        <strong><em>- Seinfeld</em></strong>
+      </p>
+      <figure class="wp-block-image">
+        <a
+          class="image-link image2 is-viewable-img"
+          href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9f70af04-67a0-486c-98b1-54be9fb5952c_758x566.jpeg"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <img
+            src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9f70af04-67a0-486c-98b1-54be9fb5952c_758x566.jpeg"
+            alt=""
+            width="600"
+            height="450"
+          />
+        </a>
+      </figure>
+      <p>
+        They say some people are volcanic—driven by chaos under the surface,
+        always moments from eruption. If you read my article
+        <a
+          href="https://realityunveiled.com/go-nuclear/"
+          target="_blank"
+          rel="noreferrer noopener"
+          ><em>Going Nuclear</em></a
+        >, you'll know exactly how I mean. However, that's not me; not really.
+      </p>
+      <p>
+        My nickname is "Lava" but my heat doesn't destroy, it transforms. When I
+        began writing the <em>Herd Immunity</em> book in the spring of 2020, my
+        goal wasn't to create a self-actualization movement. It was a joke
+        project while the world was shut down. However, once I began to walk
+        through my own life lessons and processes, I noticed a deeper
+        transformation occurring. After facing my own mortality, my father's
+        death, and my inability to be present and process grief, I felt stunted
+        and impotent, and at times, a slave to my base emotions. I felt things,
+        but I lacked the emotional vocabulary to describe them. This changed
+        with my spiritual journey. The process was slow, but eventually, like a
+        volcano, all of those emotions boiled under the surface until one day, I
+        could no longer hold them in.
+      </p>
+      <p>
+        Lava isn't an explosion, it's a slow, inevitable process of becoming. It
+        reshapes the land it touches. It burns away the false, carves out the
+        real, and hardens into real ground.
+      </p>
+      <p>
+        Throughout this journey, my brain has moved from a place of snap
+        judgment to empathy. As such, the writings on this page not only reflect
+        the old way in which I saw the world, but as a natural evolution of my
+        spiritual journey from sleepwalking through life to living with greater
+        purpose.
+      </p>
+      <p>
+        As William V. Pietsch writes (and illustrates) in his classic tome
+        <em>Human</em> <em>Be-Ing</em>:
+      </p>
+      <figure class="wp-block-image">
+        <a
+          class="image-link image2 is-viewable-img"
+          href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3b508506-d810-4247-a118-61b4a16dc345_2507x2153.jpeg"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <img
+            style="display: block; margin: auto"
+            src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3b508506-d810-4247-a118-61b4a16dc345_2507x2153.jpeg"
+            alt=""
+            width="600"
+            height="450"
+        /></a>
+        <figcaption class="wp-element-caption">
+          Image from
+          <em
+            >Human Be-Ing: How to Have a Creative Relationship Instead of a
+            Power Struggle</em
+          >, copyright 1974. No infringement intended.
+        </figcaption>
+        <p><a id="footnote-anchor-2" href="#footnote-2">2</a></p>
+      </figure>
+      <p>
+        Like the phoenix, I don't believe in controlling human nature through
+        shame, guilt, or fear. We are organic, purposeful, and intelligent. We
+        don't need to be repressed; we need to be realized. I am Lava because I
+        move slowly, deliberately, and irreversibly. The phoenix is my avatar
+        because I faced death and have been reborn better, intuitive, and with
+        greater purpose.
+      </p>
+      <h3 class="wp-block-heading spec_font_h3">
+        From Ashes to Origin: My Path Begins
+      </h3>
+      <p>
+        When I was 21, I walked into a tattoo shop and etched my second mark
+        into my skin: A Phoenix—wings spread wide, flames licking its
+        silhouette. Beneath the feathers, my grandparents' initials rest
+        quietly, like embers buried in ash. My parents separated before I was
+        conscious, and because both parents worked, my grandparents were the
+        only people I felt safe around. I didn't understand it then, but the
+        Phoenix wasn't just the symbol of remembrance. It was a prophecy.
+      </p>
+      <figure class="wp-block-image">
+        <a
+          class="image-link image2 is-viewable-img"
+          href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8df34bc1-547a-42b7-ba18-59768bc33afb_2592x1936.jpeg"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <img
+            src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8df34bc1-547a-42b7-ba18-59768bc33afb_2592x1936.jpeg"
+            alt=""
+            width="600"
+            height="450"
+          />
+        </a>
+      </figure>
+      <h3 class="wp-block-heading spec_font_h3">
+        Fire Signs and Funeral Pyres
+      </h3>
+      <blockquote class="wp-block-quote">
+        <p><em>The Geat people built a pyre for Beowulf,</em></p>
+        <p><em>Stacked and decked it until it stood four-square,</em></p>
+        <p><em>Hung with helmets, heavy war-shields</em></p>
+        <p><em>And shining armor, just as he had ordered.</em></p>
+        <p><em>Then his warriors laid him in the middle of it,</em></p>
+        <p><em>Mourning a lord far-famed and beloved.</em></p>
+        <p><em>On a height they kindled the hugest of all</em></p>
+        <p><em>Funeral fires; fumes of wood smoke</em></p>
+        <p><em>Billowed darkly up, the blaze roared</em></p>
+        <p><em>And drowned out their weeping, wind died down</em></p>
+        <p><em>And flames wrought havoc in the hot bone-house,</em></p>
+        <p>
+          <em>Burning it to the core.</em
+          ><sup><a id="footnote-anchor-3" href="#footnote-3">3</a></sup>
+        </p>
+        <p>
+          <strong><em>— Beowulf</em></strong>
+        </p>
+      </blockquote>
+      <p>
+        My name is J "Lava" Leffel, and I am fire sign to the core. "Lava" isn't
+        some hokey PUA moniker or edgy online alias, it's a nickname that has
+        become a point of pride and identity. During the COVID lockdowns (while
+        I was brainstorming <em>Herd Immunity</em>), we were doing sales
+        trainings via Zoom. My lava lamps were in the background. One day, my
+        sales trainer called me "Lava," and it stuck. Like most things born in
+        fire, it had a way of claiming space. I wear lava rock bracelets on my
+        wrists; I wear a Tree of Life pendant and an ankh—symbols of
+        regeneration, immortality, and balance.
+      </p>
+      <figure class="wp-block-image">
+        <a
+          class="image-link image2 is-viewable-img"
+          href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F45099a2b-456b-4dbd-bb30-c4789135a7ec_4032x3024.jpeg"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <img
+            src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F45099a2b-456b-4dbd-bb30-c4789135a7ec_4032x3024.jpeg"
+            alt=""
+            width="600"
+            height="450"
+          />
+        </a>
+      </figure>
+      <p>
+        In November 2020, I walked away from a brakes failure and car fire that
+        should have killed me. The next morning, my father passed away in his
+        sleep, succumbing to cancer. My entire family lineage was almost
+        destroyed in a period of a few hours.
+      </p>
+      <p>
+        That moment—like so many I ignored before—was a flare from the deeper
+        self, trying to get out. The man I needed to burn so that J "Lava"
+        Leffel could finally emerge. I escaped my physical death, but it was the
+        first of many ego deaths on my journey of becoming…
+      </p>
+      <h3 class="wp-block-heading spec_font_h3">
+        The Phoenix: Gnosis and Secret Fire
+      </h3>
+      <blockquote class="wp-block-quote">
+        <p>
+          <em>The phœnix (which is the mythological Persian </em>roc<em
+            >) is also the name of a Southern constellation, and therefore it
+            has both an astronomical and an astrological significance. In all
+            probability, the phœnix was the swan of the Greeks, the eagle of the
+            Romans, and the peacock of the Far East. To the ancient mystics the
+            phœnix was a most appropriate symbol of the immortality of the human
+            soul, for just as the phœnix was reborn out of its own dead self
+            seven times seven, so again and again the spiritual nature of man
+            rises triumphant from his dead physical body.</em
+          ><sup><a id="footnote-anchor-4" href="#footnote-4">4</a></sup>
+        </p>
+        <p>
+          <strong><em>— Manly P. Hall.</em></strong
+          ><em>, The Secret Teachings of All Ages</em>
+        </p>
+      </blockquote>
+      <p>
+        The phoenix isn't just an avatar or a trendy symbol for resilience. It's
+        the ancient emblem of spiritual alchemy. In
+        <em>The Secret Teachings of All Ages</em>, Manly P. Hall writes, "In the
+        Mysteries, it was customary to refer to initiates as
+        <em>phœnixes </em>or<em> men who had been born again, </em>for just as
+        physical birth gives man consciousness in the physical world, so the
+        neophyte, after nine degrees in the womb of the Mysteries, was born into
+        a consciousness of the spiritual world."
+        <sup><a id="footnote-anchor-5" href="#footnote-5">5</a></sup> That
+        regenerative fire isn't comfort, it's confrontation. From an early age,
+        I've made confrontation my playground. Between a playground bully, an
+        internet troll, or being steeped in deviance decision-making,
+        confrontation is my various breads and butters.
+      </p>
+      <p>
+        Regenerative fire is the soul reclaiming itself through destruction, ego
+        deaths, and the end of false-identities. Through
+        <em>Herd Immunity</em> and my social media history, I became world-class
+        at calling out others' shortcomings, but the time came to call out my
+        own. My writings were the vehicle for this. I was calling out society
+        for its foibles, but within that regenerative fire, I had to turn the
+        pointed finger inward.
+      </p>
+      <p>
+        According to Gnostic teachings, the Phoenix represents the eternal
+        soul's ability to transcend time and illusion, dying not once, but
+        repeatedly as it sheds layers of falsehood and returns to its essential
+        self. "This mythical bird rises anew from its ashes after undergoing
+        fiery trials—metaphorically illustrating how individuals can emerge
+        transformed after facing personal hardships &amp; challenges encountered
+        during their own journeys toward spiritual awakening."<sup
+          ><a id="footnote-anchor-6" href="#footnote-6">6</a></sup
+        >
+      </p>
+      <p>
+        Speaking of spiritual awakening, the Qabbalists have a name for the
+        Supreme Deity, "signifying the expanse of the heavens, or spiritual
+        fiery waters. <em>Schamayim </em>is 'The Ocean of Spirit,' within which
+        all created and uncreated things exist and by the life of which they are
+        animated. In the lower worlds <em>Schamayim </em>becomes the astral
+        light."
+        <sup><a id="footnote-anchor-7" href="#footnote-7">7</a></sup> It's not
+        enough to say we are beings of light or "made of stars" to cite Moby.
+        <sup><a id="footnote-anchor-8" href="#footnote-8">8</a></sup> Some argue
+        we are made of spiritual fiery waters and that we don't die, we are just
+        recreated within the universe.
+      </p>
+      <h3 class="wp-block-heading spec_font_h3">
+        The Two-Headed Phoenix: Death and Desire
+      </h3>
+      <p>
+        The double-headed Phoenix, as described in esoteric traditions, is a
+        reminder that spiritual transformation isn't about blind optimism. It's
+        about witnessing your own funeral <em>and choosing</em> to walk away.
+        One head looks back, mourning what was; the other looks forward, burning
+        with what could be. As <em>SpiritualMojo</em> puts it:
+      </p>
+      <blockquote class="wp-block-quote">
+        <p>
+          <em
+            >The Double Headed Phoenix is a powerful symbol of rebirth and
+            renewal, embodying the cyclic nature of life, death, and
+            regeneration.</em
+          >
+        </p>
+        <p>
+          <em
+            >This majestic creature, with its two heads facing opposite
+            directions, signifies the continual process of self-transformation
+            and the potential for rebirth from one's ashes.</em
+          >
+        </p>
+        <p>
+          <em
+            >It serves as a potent reminder that endings are merely beginnings
+            in disguise, and that growth often comes from periods of difficulty
+            and destruction.</em
+          >
+        </p>
+        <p>
+          <em
+            >Just as a phoenix rises from the ashes, stronger and more beautiful
+            than before, so too can individuals experience spiritual renewal and
+            transformation after periods of adversity</em
+          >.<sup>9</sup>
+        </p>
+      </blockquote>
+      <p>
+        Writing the <em>Herd Immunity </em>series has become that for me. Every
+        page kills another part of whom I used to be—addicted to hyperreality,
+        chasing illusions, hiding behind vices and dopamine scrolls. The work is
+        a crucible; the book itself is fire. And every time I author another
+        work, I'm changed. Regeneration "is the key to spiritual existence…a
+        redemption of man through the union of a lower temporal nature with a
+        higher eternal figure."<sup
+          ><a id="footnote-anchor-10" href="#footnote-10">10</a></sup
+        >
+      </p>
+      <figure class="wp-block-image">
+        <a
+          class="image-link image2 is-viewable-img"
+          href="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe1509deb-bb2e-49a8-ae16-564e2182bc3e_1284x1856.jpeg"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <img
+            src="https://substackcdn.com/image/fetch/w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fe1509deb-bb2e-49a8-ae16-564e2182bc3e_1284x1856.jpeg"
+            alt=""
+            width="600"
+            height="450"
+          />
+        </a>
+      </figure>
+      <p>
+        It sounds pretentious, but so does the notion of physical reincarnation.
+        The birth of my spiritual understanding of the universe occurred after
+        the death of my literal, bookish knowledge of existence.
+      </p>
+      <h3 class="wp-block-heading spec_font_h3">Alchemy Begins in Ashes</h3>
+      <blockquote class="wp-block-quote">
+        <p>
+          <em
+            >Alchemy is the science of multiplication and is based upon the
+            natural phenomenon of growth. "Nothing from nothing comes," is an
+            extremely ancient adage. Alchemy is not the process of making
+            something from nothing; it is the process of increasing and
+            improving that which already exists.</em
+          ><sup><a id="footnote-anchor-11" href="#footnote-11">11</a></sup>
+        </p>
+        <p>
+          <strong><em>— Manly P. Hall.</em></strong
+          ><em>, The Secret Teachings of All Ages</em>
+        </p>
+      </blockquote>
+      <p>
+        Whether the medieval practitioners of alchemy meant alchemy to be a
+        discussion of the literal transmutation of metal or a metaphysical
+        transformation of the soul is heavily debated. Manly P. Hall discussed
+        this while researching the plurality of information regarding the
+        origins of the Rosicrucian Order: "…adepts possessed the secret of the
+        Philosopher's Stone and knew the process of transmuting the base metals
+        into gold, but taught that these were only allegorical terms concealing
+        the true mystery of human regeneration through the transmutation of the
+        'base elements' of man's lower nature into the 'gold' of intellectual
+        and spiritual realization."<sup
+          ><a id="footnote-anchor-12" href="#footnote-12">12</a></sup
+        >
+      </p>
+      <p>
+        He also directly cites the <em>Confessio Fraternitatis, </em>a sacred
+        Rosicrucian tome<em>:</em>
+      </p>
+      <blockquote class="wp-block-quote">
+        <p>
+          <em
+            >When to a man is given power to heal disease, to overcome poverty,
+            and to reach a position of worldly dignity, that man is beset by
+            numerous temptations and unless he possesses true knowledge and full
+            understanding, he will become a terrible menace to mankind. The
+            alchemist who attains to the art of transmuting base metals can do
+            all manner of evil unless his understanding be as great as his
+            self-created wealth.</em
+          ><sup><a id="footnote-anchor-13" href="#footnote-13">13</a></sup>
+        </p>
+      </blockquote>
+      <p>
+        Hall also argues that a popular theory of Rosicrucian origins is that
+        Sir Francis Bacon had a hand in writing the <em>Fama</em> and the
+        <em>Confessio Fraternitatis,</em> "on the basis that the rhetorical
+        style of these works is similar to that of Bacon's
+        <em>New Atlantis</em>."<sup
+          ><a id="footnote-anchor-14" href="#footnote-14">14</a></sup
+        >
+        As a fan of Bacon and of renegades, I could see many of my favorite
+        authors being "illuminated" or having belonged to the ancient Mysteries.
+        It's also argued that Hall himself was a 33<sup>rd</sup> degree Mason.
+        While I don't belong to any of these societies, nor was I schooled in
+        the ancient Mysteries, as a historian and philosopher I see value in
+        learning from both the ancient and modern philosophers. I can't just
+        cite <em>Seinfeld</em> and <em>The Simpsons</em> all the time…
+      </p>
+      <h3 class="wp-block-heading spec_font_h3">
+        <em>RealityUnveiled:</em> The Fire Has a Name
+      </h3>
+      <p>
+        This site represents the next phase in my evolution as a writer and
+        educator. It's not another hokey influencer brand or mask. This is where
+        I live out what I've written.<br />No more sleepwalking. No more hiding
+        behind irony or aesthetic. Just fire, focus, and truth.
+      </p>
+      <p>
+        From the past <em>Herd Immunity</em>, to the present
+        <em>RealityUnveiled</em>, and to the future <em>Phoenix</em>…
+      </p>
+      <p>Reality is not what we’re told. It’s what survives the flames.</p>
+      <p>
+        If you’ve felt that flicker inside you, if you’ve watched your old life
+        burn but haven’t yet stepped from the smoke, you’re not alone. You’re
+        just as the edge of the ash.
+      </p>
+      <p>So stand up. It’s time to rise…</p>
+      <br /><br />
+      <p>
+        <a id="footnote-1" href="#footnote-anchor-1">1</a>
+        <em>Seinfeld. </em>1996. Season 8 Episode 6. “The Fatigues.” Directed by
+        Andy Ackerman. Written by Larry David, Jerry Seinfeld, and Gregg Kavet.
+        Aired October 31, 1996, on NBC. https://www.netflix.com/title/70153373
+      </p>
+      <!-- wp:paragraph -->
+      <p>
+        <a id="footnote-2" href="#footnote-anchor-2">2</a> Pietsch, William V.
+        1974.
+        <em
+          >Human Be-Ing: How to Have a Creative Relationship Instead of a Power
+          Struggle</em
+        >. New York: Lawrence Hill &amp; Company, 52-53.
+      </p>
+      <p>
+        <a id="footnote-3" href="#footnote-anchor-3">3</a> Heaney, Seamus
+        [trans]. 2001.<em> Beowulf: A New Verse Translation. </em>New York: WW
+        Norton and Company, 3137-3148.
+      </p>
+      <p>
+        <a id="footnote-4" href="#footnote-anchor-4">4</a> Hall, Manly P. 2010.
+        <em>The Secret Teachings of All Ages.</em> Rev. ed. New York: Dover
+        Publications, 231-32.
+      </p>
+      <p><a id="footnote-5" href="#footnote-anchor-5">5</a> Ibid., 230-233.</p>
+      <p>
+        <a id="footnote-6" href="#footnote-anchor-6">6</a>
+        <em>Reality Pathing.</em> 2025. “Essential Gnostic Symbols and Their
+        Spiritual Significance.” RealityPathing.com (blog). March 1, 2025.
+        Accessed June 16, 2025.
+        https://realitypathing.com/10-essential-gnostic-symbols-and-their-spiritual-significance/.
+      </p>
+      <p><a id="footnote-7" href="#footnote-anchor-7">7</a> Hall, 411-12.</p>
+      <p>
+        <a id="footnote-8" href="#footnote-anchor-8">8</a> Moby. 2002. “We Are
+        All Made of Stars.” Track 1 on <em>18</em>, Mute/V2. Spotify streaming
+        audio, 320 kbps.
+      </p>
+      <p>
+        <a id="footnote-9" href="#footnote-anchor-9">9</a> Rivera, Elena M. n.d.
+        “Double Headed Phoenix Spiritual Meaning (Cycle of Rebirth).”
+        <em>Spiritual Mojo</em> [blog]. Accessed June 16, 2025.
+        https://spiritualmojo.com/double-headed-phoenix-spiritual-meaning/.
+      </p>
+      <p><a id="footnote-10" href="#footnote-anchor-10">10</a> Hall, 410.</p>
+      <p><a id="footnote-11" href="#footnote-anchor-11">11</a> Ibid., 440.</p>
+      <p>
+        <a id="footnote-12" href="#footnote-anchor-12">12</a> nIbid., 397-98.
+      </p>
+      <p><a id="footnote-13" href="#footnote-anchor-13">13</a> Ibid., 405.</p>
+      <p><a id="footnote-14" href="#footnote-anchor-14">14</a> Ibid., 397.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.hero-section-custom-bg-positioning {
+    background-image: url('https://res.cloudinary.com/dtcbirvxc/image/upload/v1748379204/santa-hero_axiq2l.jpg');
+    background-color: black;
+    background-position-x: 50%;
+    background-position-y: center;
+
+}
+
+@keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  
+
+  

@@ -1,19 +1,388 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@plugin "daisyui";
 
-.hero-section-custom-bg-positioning {
-    background-image: url('https://res.cloudinary.com/dtcbirvxc/image/upload/v1748379204/santa-hero_axiq2l.jpg');
-    background-color: black;
-    background-position-x: 50%;
-    background-position-y: center;
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary-foreground: 210 40% 98%;
+
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .darks {
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
 }
 
 
-@media screen and (max-width:1000px) {
-    .hidden1000 {
-        display: none;
-    }
-    .full1000 {
-        width: 100%;
-    }
+/*! DaisyUI Full Theme Output (Excluding Light & Dark) */
+[data-theme='dark'] {
+  --color-base-100: #fff7ed;         /* Dark background */
+  --color-base-content: #000000;     /* Light text for contrast */
+  --color-primary: #000000;          /* A cool blue primary */
+  --color-secondary: #9333ea;        /* Purple secondary */
+  --color-accent: #10b981;           /* Teal accent */
+  --color-info: #0ea5e9;             /* Light blue info */
+  --color-success: #22c55e;          /* Green success */
+  --color-warning: #eab308;          /* Amber warning */
+  --color-error: #ef4444;            /* Red error */
+}
+
+
+[data-theme='cupcake'] {
+  --color-base-100: #fdf1f7;
+  --color-base-content: #ff5f9e;
+  --color-primary: #ff80b5;
+  --color-secondary: #ff98c2;
+  --color-accent: #ffb3d6;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='bumblebee'] {
+  --color-base-100: #fef9c3;
+  --color-base-content: #f59e0b;
+  --color-primary: #fbbf24;
+  --color-secondary: #facc15;
+  --color-accent: #fdd835;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='emerald'] {
+  --color-base-100: #dafaf7;
+  --color-base-content: #059669;
+  --color-primary: #34d399;
+  --color-secondary: #6ee7b7;
+  --color-accent: #a7f3d0;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='corporate'] {
+  --color-base-100: #eef2ff;
+  --color-base-content: #3b82f6;
+  --color-primary: #6366f1;
+  --color-secondary: #818cf8;
+  --color-accent: #a5b4fc;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='synthwave'] {
+  --color-base-100: #2d1b69;
+  --color-base-content: #e879f9;
+  --color-primary: #9333ea;
+  --color-secondary: #c084fc;
+  --color-accent: #d8b4fe;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='retro'] {
+  --color-base-100: #fdf6e3;
+  --color-base-content: #855b33;
+  --color-primary: #b58900;
+  --color-secondary: #cb4b16;
+  --color-accent: #dc322f;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='cyberpunk'] {
+  --color-base-100: #ff00ff;
+  --color-base-content: #00ffff;
+  --color-primary: #ff00ff;
+  --color-secondary: #ff7700;
+  --color-accent: #ffff00;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='valentine'] {
+  --color-base-100: #ffe4e6;
+  --color-base-content: #ff477e;
+  --color-primary: #ff7592;
+  --color-secondary: #ff8fa3;
+  --color-accent: #ffb3c6;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='halloween'] {
+  --color-base-100: #1a1a1a;
+  --color-base-content: #ff7518;
+  --color-primary: #ff8c00;
+  --color-secondary: #ffae42;
+  --color-accent: #ffd700;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='garden'] {
+  --color-base-100: #e3f2fd;
+  --color-base-content: #43a047;
+  --color-primary: #66bb6a;
+  --color-secondary: #81c784;
+  --color-accent: #a5d6a7;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='forest'] {
+  --color-base-100: #0d2518;
+  --color-base-content: #76c893;
+  --color-primary: #4caf50;
+  --color-secondary: #81c784;
+  --color-accent: #a5d6a7;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='aqua'] {
+  --color-base-100: #e0f7fa;
+  --color-base-content: #006064;
+  --color-primary: #00acc1;
+  --color-secondary: #26c6da;
+  --color-accent: #4dd0e1;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='lofi'] {
+  --color-base-100: #ffffff;
+  --color-base-content: #696969;
+  --color-primary: #737373;
+  --color-secondary: #a3a3a3;
+  --color-accent: #d6d6d6;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='pastel'] {
+  --color-base-100: #f8f4ff;
+  --color-base-content: #a78bfa;
+  --color-primary: #c4b5fd;
+  --color-secondary: #d8b4fe;
+  --color-accent: #e9d5ff;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='fantasy'] {
+  --color-base-100: #ffebf0;
+  --color-base-content: #ff7eb3;
+  --color-primary: #ff99c8;
+  --color-secondary: #ffb3d9;
+  --color-accent: #ffccd9;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='wireframe'] {
+  --color-base-100: #f5f5f5;
+  --color-base-content: #969696;
+  --color-primary: #666666;
+  --color-secondary: #999999;
+  --color-accent: #bbbbbb;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='black'] {
+  --color-base-100: #000000;
+  --color-base-content: #ffffff;
+  --color-primary: #444444;
+  --color-secondary: #666666;
+  --color-accent: #888888;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='luxury'] {
+  --color-base-100: #1f2937;
+  --color-base-content: #facc15;
+  --color-primary: #d97706;
+  --color-secondary: #b45309;
+  --color-accent: #92400e;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='dracula'] {
+  --color-base-100: #282a36;
+  --color-base-content: #f8f8f2;
+  --color-primary: #ff79c6;
+  --color-secondary: #bd93f9;
+  --color-accent: #ffb86c;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='cmyk'] {
+  --color-base-100: #ffffff;
+  --color-base-content: #878787;
+  --color-primary: #00a0e4;
+  --color-secondary: #ec008c;
+  --color-accent: #ffed00;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='autumn'] {
+  --color-base-100: #fbf8cc;
+  --color-base-content: #c05621;
+  --color-primary: #dd6b20;
+  --color-secondary: #ea580c;
+  --color-accent: #f97316;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='business'] {
+  --color-base-100: #1e293b;
+  --color-base-content: #facc15;
+  --color-primary: #2563eb;
+  --color-secondary: #1d4ed8;
+  --color-accent: #1e40af;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+}
+
+[data-theme='christmas'] {
+  --color-base-100: #fff7ed;
+  --color-base-content: #1b1b1b;
+  --color-primary: #b91c1c;
+  --color-secondary: #047857;
+  --color-accent: #fbbf24;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+  --color-primary-90: rgba(185, 28, 28, 0.9);
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
 }

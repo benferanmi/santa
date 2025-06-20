@@ -10,6 +10,7 @@ import TermsOfServicePage from './pages/TermsOfService'
 import ProtectRoute from './hooks/ProtectRoute'
 import Dashboard from './pages/Dashboard'
 import PreviewVideo from './pages/PreviewVideo'
+import MarcusPhotoBoutique from './pages/outsourcingFB/marcusphotoboutique'
 
 const App = () => {
   return (
@@ -24,7 +25,9 @@ const App = () => {
         <Route path="/guides" element={<UserGuidesPage />} />
         <Route path='/contact-us' element={<ContactUsPage />} />
         <Route path='terms-of-service' element={<TermsOfServicePage />} />
+        <Route path='marcus' element={<MarcusPhotoBoutique />} />
         <Route path='/dashboard' element={<ProtectRoute>
+        
           <Dashboard />
         </ProtectRoute>} />
         <Route path='/preview' element={<PreviewVideo />} />
