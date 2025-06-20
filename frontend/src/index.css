@@ -88,8 +88,8 @@
 /*! DaisyUI Full Theme Output (Excluding Light & Dark) */
 [data-theme='dark'] {
   --color-base-100: #fff7ed;         /* Dark background */
-  --color-base-content: #000000;     /* Light text for contrast */
-  --color-primary: #000000;          /* A cool blue primary */
+  --color-base-content: #6a6a6a;     /* Light text for contrast */
+  --color-primary: rgb(0, 0, 0);          /* A cool blue primary */
   --color-secondary: #9333ea;        /* Purple secondary */
   --color-accent: #10b981;           /* Teal accent */
   --color-info: #0ea5e9;             /* Light blue info */

@@ -171,10 +171,10 @@ const HowItWorksSection = () => {
 
                     {/* Content */}
                     <div className="text-center">
-                      <h3 className="text-2xl font-semibold text-base-content mb-4">
+                      <h3 className="text-2xl font-semibold text-primary mb-4">
                         {step.title}
                       </h3>
-                      <p className="text-base-content/70 leading-relaxed">
+                      <p className="text-primary leading-relaxed">
                         {step.description}
                       </p>
                     </div>
