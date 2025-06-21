@@ -58,7 +58,7 @@ const Header = () => {
           {/* Right Side - Create Video Button and Profile */}
           <div className="flex items-center space-x-4">
             {}
-            {mode === "light" ? (
+            {mode === "christmas" ? (
               <Sun
                 className="text-white stroke-white cursor-pointer"
                 onClick={() => setMode("dark")}
@@ -66,7 +66,7 @@ const Header = () => {
             ) : (
               <Moon
                 className="cursor-pointer"
-                onClick={() => setMode("light")}
+                onClick={() => setMode("christmas")}
               />
             )}
             {isAuthenticated ? (

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Edit3, CreditCard, Video, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useThemes } from "@/context/ThemeContext";
 
 const HowItWorksSection = () => {
+  const { theme } = useThemes();
   const steps = [
     {
       number: "1",
@@ -151,7 +153,11 @@ const HowItWorksSection = () => {
 
                   {/* Step Card */}
                   <div
-                    className={`relative ${accentClasses.bg} ${accentClasses.hover} rounded-2xl p-8 transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 border border-base-200`}
+                    className={`relative ${
+                      ["christmas", "black"].includes(theme)
+                        ? accentClasses.bg + " " + accentClasses.hover
+                        : "bg-base-100 hover:bg-base-100/40"
+                    } rounded-2xl p-8 transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1 border border-base-200`}
                   >
                     {/* Step Number */}
                     <div
@@ -171,10 +177,22 @@ const HowItWorksSection = () => {
 
                     {/* Content */}
                     <div className="text-center">
-                      <h3 className="text-2xl font-semibold text-primary mb-4">
+                      <h3
+                        className={`${
+                          theme === "christmas"
+                            ? "text-base-100"
+                            : "text-base-content"
+                        }  text-2xl font-semibold mb-4 `}
+                      >
                         {step.title}
                       </h3>
-                      <p className="text-primary leading-relaxed">
+                      <p
+                        className={`${
+                          theme === "christmas"
+                            ? "text-base-100"
+                            : "text-base-content"
+                        } `}
+                      >
                         {step.description}
                       </p>
                     </div>

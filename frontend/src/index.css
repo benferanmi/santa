@@ -86,6 +86,7 @@
 
 
 /*! DaisyUI Full Theme Output (Excluding Light & Dark) */
+
 [data-theme='dark'] {
   --color-base-100: #fff7ed;         /* Dark background */
   --color-base-content: #6a6a6a;     /* Light text for contrast */
@@ -96,6 +97,7 @@
   --color-success: #22c55e;          /* Green success */
   --color-warning: #eab308;          /* Amber warning */
   --color-error: #ef4444;            /* Red error */
+  --color-special: #ffffff;
 }
 
 
@@ -109,6 +111,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='bumblebee'] {
@@ -121,6 +124,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='emerald'] {
@@ -133,6 +137,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='corporate'] {
@@ -145,6 +150,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='synthwave'] {
@@ -157,6 +163,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='retro'] {
@@ -169,6 +176,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='cyberpunk'] {
@@ -181,6 +189,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='valentine'] {
@@ -193,6 +202,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='halloween'] {
@@ -205,6 +215,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='garden'] {
@@ -217,6 +228,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='forest'] {
@@ -229,6 +241,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='aqua'] {
@@ -241,6 +254,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='lofi'] {
@@ -253,6 +267,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='pastel'] {
@@ -265,6 +280,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='fantasy'] {
@@ -277,6 +293,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='wireframe'] {
@@ -289,6 +306,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='black'] {
@@ -301,6 +319,22 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
+}
+
+
+[data-theme='christmas'] {
+  --color-base-100: #ffffff;
+  --color-base-content: #000000;
+  --color-primary: #b91c1c;
+  --color-secondary: #047857;
+  --color-accent: #fbbf24;
+  --color-info: #38bdf8;
+  --color-success: #22c55e;
+  --color-warning: #facc15;
+  --color-error: #ef4444;
+  --color-primary-90: rgba(185, 28, 28, 0.9);
+  --color-special: #ffffff;
 }
 
 [data-theme='luxury'] {
@@ -313,6 +347,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='dracula'] {
@@ -325,6 +360,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='cmyk'] {
@@ -337,6 +373,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='autumn'] {
@@ -349,6 +386,7 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
+  --color-special: #ffffff;
 }
 
 [data-theme='business'] {
@@ -361,28 +399,5 @@
   --color-success: #22c55e;
   --color-warning: #facc15;
   --color-error: #ef4444;
-}
-
-[data-theme='christmas'] {
-  --color-base-100: #fff7ed;
-  --color-base-content: #1b1b1b;
-  --color-primary: #b91c1c;
-  --color-secondary: #047857;
-  --color-accent: #fbbf24;
-  --color-info: #38bdf8;
-  --color-success: #22c55e;
-  --color-warning: #facc15;
-  --color-error: #ef4444;
-  --color-primary-90: rgba(185, 28, 28, 0.9);
-}
-
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-  }
+  --color-special: #ffffff;
 }

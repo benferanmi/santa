@@ -11,18 +11,14 @@ const ThemesContext = createContext<ThemesContextType | undefined>(undefined);
 export const ThemesProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [theme, setTheme] = useState<string>("christmas");
+  const [theme, setTheme] = useState<string>(() => {
+    return localStorage.getItem("activeTheme") || "christmas";
+  });
   console.log(theme);
 
   useEffect(() => {
-    const activeTheme = localStorage.getItem("activeTheme");
-
-    if (activeTheme) {
-      setTheme(activeTheme);
-    } else {
-      localStorage.setItem("activeTheme", "christmas");
-    }
-  }, []);
+    localStorage.setItem("activeTheme", theme);
+  }, [theme]);
 
   const changeTheme = async (themeName: string) => {
     try {
