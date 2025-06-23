@@ -37,7 +37,7 @@ const FAQSection = () => {
   };
 
   return (
-    <div className="py-10 bg-gradient-to-br from-secondary to-primary py-16">
+    <div className="md:py-10 bg-gradient py-16">
       <div className="container mx-auto px-6">
         {/* Header */}
         <motion.div

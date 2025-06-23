@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const SantaWishesSection = () => {
   return (
-    <div className="py-10 md:py-15 lg:py-20 bg-gradient-to-br from-red-900 via-red-800 to-green-900 relative overflow-hidden">
+    <div className="py-10 md:py-15 lg:py-20 bg-gradient relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         {/* Floating snowflakes */}

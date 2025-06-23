@@ -117,7 +117,7 @@ const HowItWorksSection = () => {
   };
 
   return (
-    <section className="py-24 bg-base-100">
+    <section className="py-24 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <AnimatedDiv variant={titleVariants} className="text-center mb-20">

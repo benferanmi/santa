@@ -1,6 +1,13 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Play, Gift, Star, Heart } from 'lucide-react';
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Gift,
+  Star,
+  Heart,
+} from "lucide-react";
 
 const VideoSlider = () => {
   const [currentIndex, setCurrentIndex] = useState(1); // Start with middle video as main
@@ -13,7 +20,8 @@ const VideoSlider = () => {
       thumbnail: "🎄",
       duration: "2:15",
       likes: 1234,
-      description: "Watch Emma's priceless reaction to Santa's special message!"
+      description:
+        "Watch Emma's priceless reaction to Santa's special message!",
     },
     {
       id: 2,
@@ -21,7 +29,7 @@ const VideoSlider = () => {
       thumbnail: "🎅",
       duration: "1:45",
       likes: 2156,
-      description: "Tommy couldn't believe Santa knew his name!"
+      description: "Tommy couldn't believe Santa knew his name!",
     },
     {
       id: 3,
@@ -29,7 +37,7 @@ const VideoSlider = () => {
       thumbnail: "🎁",
       duration: "3:02",
       likes: 987,
-      description: "The moment Sarah realized her wish came true!"
+      description: "The moment Sarah realized her wish came true!",
     },
     {
       id: 4,
@@ -37,7 +45,7 @@ const VideoSlider = () => {
       thumbnail: "⭐",
       duration: "2:30",
       likes: 1567,
-      description: "Pure magic captured in Jake's reaction!"
+      description: "Pure magic captured in Jake's reaction!",
     },
     {
       id: 5,
@@ -45,8 +53,8 @@ const VideoSlider = () => {
       thumbnail: "❄️",
       duration: "1:58",
       likes: 1890,
-      description: "Lily's dream of meeting Santa came true!"
-    }
+      description: "Lily's dream of meeting Santa came true!",
+    },
   ];
 
   const nextVideo = () => {
@@ -90,7 +98,11 @@ const VideoSlider = () => {
               ease: "linear",
             }}
           >
-            {['🎄', '🎅', '🎁', '⭐', '❄️', '🦌'][Math.floor(Math.random() * 6)]}
+            {
+              ["🎄", "🎅", "🎁", "⭐", "❄️", "🦌"][
+                Math.floor(Math.random() * 6)
+              ]
+            }
           </motion.div>
         ))}
       </div>
@@ -128,7 +140,9 @@ const VideoSlider = () => {
               🎬 Send us your video reaction and win a discount! 🎁
             </h2>
             <p className="text-lg md:text-xl text-white/90 leading-relaxed">
-              Share your child's magical moment receiving Santa's personal message and get a chance to win amazing discounts on future Santa videos!
+              Share your child's magical moment receiving Santa's personal
+              message and get a chance to win amazing discounts on future Santa
+              videos!
             </p>
 
             <motion.div
@@ -156,7 +170,7 @@ const VideoSlider = () => {
             onClick={nextVideo}
             whileHover={{ scale: 1.1, x: 5 }}
             whileTap={{ scale: 0.9 }}
-            className="absolute right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-20 bg-red-600/80 hover:bg-red-600 text-white p-3 md:p-4 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 shadow-xl"
+            className="absolute right-4 md:right-8 top-1/2 transform -translate-y-1/2 z-20 bg-gthree/80 hover:bg-one text-white p-3 md:p-4 rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 shadow-xl"
           >
             <ChevronRight size={24} />
           </motion.button>
@@ -182,23 +196,32 @@ const VideoSlider = () => {
                       }}
                       exit={{ opacity: 0, scale: 0.5 }}
                       transition={{ duration: 0.5, ease: "easeInOut" }}
-                      className={`relative ${isCenter
-                          ? 'w-full max-w-2xl'
-                          : 'w-64 md:w-80 hidden md:block'
-                        }`}
+                      className={`relative ${
+                        isCenter
+                          ? "w-full max-w-2xl"
+                          : "w-64 md:w-80 hidden md:block"
+                      }`}
                     >
                       {/* Video Container */}
-                      <div className={`relative bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 ${isCenter ? 'shadow-2xl' : 'shadow-lg'
-                        }`}>
+                      <div
+                        className={`relative bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20 ${
+                          isCenter ? "shadow-2xl" : "shadow-lg"
+                        }`}
+                      >
                         {/* Video Player */}
-                        <div className={`relative bg-gradient-to-br from-red-600 to-green-700 rounded-xl overflow-hidden group ${isCenter ? 'aspect-video' : 'aspect-video'
-                          }`}>
+                        <div
+                          className={`relative bg-gradient rounded-xl overflow-hidden group ${
+                            isCenter ? "aspect-video" : "aspect-video"
+                          }`}
+                        >
                           {/* Video Thumbnail */}
                           <div className="absolute inset-0 flex items-center justify-center">
                             <motion.div
                               animate={{ scale: [1, 1.1, 1] }}
                               transition={{ duration: 2, repeat: Infinity }}
-                              className={`text-6xl md:text-8xl ${isCenter ? 'text-8xl md:text-9xl' : ''}`}
+                              className={`text-6xl md:text-8xl ${
+                                isCenter ? "text-8xl md:text-9xl" : ""
+                              }`}
                             >
                               {video.thumbnail}
                             </motion.div>
@@ -223,12 +246,18 @@ const VideoSlider = () => {
 
                         {/* Video Info */}
                         <div className="mt-4">
-                          <h3 className={`font-semibold text-white mb-2 ${isCenter ? 'text-xl md:text-2xl' : 'text-lg'
-                            }`}>
+                          <h3
+                            className={`font-semibold text-white mb-2 ${
+                              isCenter ? "text-xl md:text-2xl" : "text-lg"
+                            }`}
+                          >
                             {video.title}
                           </h3>
-                          <p className={`text-white/80 mb-3 ${isCenter ? 'text-base' : 'text-sm hidden'
-                            }`}>
+                          <p
+                            className={`text-white/80 mb-3 ${
+                              isCenter ? "text-base" : "text-sm hidden"
+                            }`}
+                          >
                             {video.description}
                           </p>
 
@@ -236,11 +265,17 @@ const VideoSlider = () => {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
                               <Heart size={16} className="text-red-400" />
-                              <span className="text-white/70 text-sm">{video.likes.toLocaleString()}</span>
+                              <span className="text-white/70 text-sm">
+                                {video.likes.toLocaleString()}
+                              </span>
                             </div>
                             <div className="flex items-center space-x-1">
                               {[...Array(5)].map((_, i) => (
-                                <Star key={i} size={12} className="text-yellow-400 fill-current" />
+                                <Star
+                                  key={i}
+                                  size={12}
+                                  className="text-yellow-400 fill-current"
+                                />
                               ))}
                             </div>
                           </div>
@@ -273,10 +308,10 @@ const VideoSlider = () => {
             <motion.button
               whileHover={{
                 scale: 1.05,
-                boxShadow: "0 10px 40px rgba(239, 68, 68, 0.4)"
+                boxShadow: "0 10px 40px rgba(239, 68, 68, 0.4)",
               }}
               whileTap={{ scale: 0.95 }}
-              className="bg-gradient-to-r from-red-600 to-green-600 hover:from-red-700 hover:to-green-700 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl transition-all duration-300 mr-4 mb-4 md:mb-0"
+              className="bg-gradient hover:to-green-700 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-xl transition-all duration-300 mr-4 mb-4 md:mb-0"
             >
               🎬 Upload Your Video
             </motion.button>

@@ -231,7 +231,7 @@ const SantaHelpersSection = () => {
                       }}
                       className="relative"
                     >
-                      <div className="w-20 h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-2xl flex items-center justify-center shadow-xl border-2 border-white/30">
+                      <div className="w-20 h-20 bg-gradient rounded-2xl flex items-center justify-center shadow-xl border-2 border-white/30">
                         <motion.div
                           animate={{ 
                             scale: [1, 1.1, 1],
