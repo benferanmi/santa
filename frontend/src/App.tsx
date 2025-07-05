@@ -11,7 +11,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
 import UserAccount from "./pages/UserAccount";
-import UserSettings from "./pages/UserSettings";
+// import UserSettings from "./pages/UserSettings";
 import Personalise from "./pages/Personalise";
 import SantaCheckout from "./pages/SantaCheckout";
 import OrderSuccess from "./pages/OrderSuccess";
@@ -44,7 +44,7 @@ const App = () => (
                     <Route path="/order-success" element={<OrderSuccess />} />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/account" element={<UserAccount />} />
-                    <Route path="/settings" element={<UserSettings />} />
+                    {/* <Route path="/settings" element={<UserSettings />} /> */}
                     <Route path="/register" element={<Register />} />
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
