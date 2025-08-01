@@ -8,33 +8,23 @@ const Footer = () => {
   const { theme } = useThemes();
 
   return (
-    <footer
-      className={`${
-        theme === "christmas" ? "text-base-100" : "text-foreground"
-      } bg-gthree `}
-    >
+    <footer className="relative bg-base-100 border-t-2 border-primary">
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Logo and Description */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-foreground rounded-full flex items-center justify-center shadow-lg">
-                <span className="text-3xl">
-                  <img alt="" src={Logo} />{" "}
-                </span>
+              <div className="w-12 h-12 bg-base-content rounded-full flex items-center justify-center shadow-lg">
+                <img alt="Logo" src={Logo} className="w-8 h-8" />
               </div>
               <div>
-                <h3
-                  className={`text-2xl font-bold ${
-                    theme === "christmas" ? "text-base-100" : "text-foreground"
-                  }`}
-                >
+                <h3 className="text-2xl font-bold text-base-content">
                   International Elf HQ
                 </h3>
               </div>
             </div>
-            <p className="text-primary-content/70 leading-relaxed max-w-sm">
+            <p className="text-base-content/80 leading-relaxed max-w-sm">
               Creating magical Christmas memories with personalised videos from
               Santa Claus.
             </p>
@@ -44,26 +34,29 @@ const Footer = () => {
               <a
                 href="https://facebook.com/santa"
                 target="_blank"
-                className="bg-foreground bg-opacity-10 hover:bg-opacity-20 rounded-full p-3 transition-all duration-200 hover:scale-110"
+                rel="noopener noreferrer"
+                className="bg-secondary hover:bg-accent rounded-full p-3 transition-all duration-200 hover:scale-110 group"
                 aria-label="Facebook"
               >
-                <Facebook className="w-6 h-6 fill-background" />
+                <Facebook className="w-6 h-6 text-secondary-content group-hover:text-accent-content" />
               </a>
               <a
                 href="https://youtube.com/santa"
                 target="_blank"
-                className="bg-foreground bg-opacity-10 hover:bg-opacity-20 rounded-full p-3 transition-all duration-200 hover:scale-110"
+                rel="noopener noreferrer"
+                className="bg-secondary hover:bg-accent rounded-full p-3 transition-all duration-200 hover:scale-110 group"
                 aria-label="YouTube"
               >
-                <Youtube className="w-6 h-6 fill-background" />
+                <Youtube className="w-6 h-6 text-secondary-content group-hover:text-accent-content" />
               </a>
               <a
                 href="https://x.com/santa"
                 target="_blank"
-                className="bg-foreground bg-opacity-10 hover:bg-opacity-20 rounded-full p-3 transition-all duration-200 hover:scale-110"
+                rel="noopener noreferrer"
+                className="bg-secondary hover:bg-accent rounded-full p-3 transition-all duration-200 hover:scale-110 group"
                 aria-label="Twitter"
               >
-                <Twitter className="w-6 h-6 fill-background" />
+                <Twitter className="w-6 h-6 text-secondary-content group-hover:text-accent-content" />
               </a>
             </div>
           </div>
@@ -75,7 +68,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/privacy"
-                  className="text-primary-content/70 hover:text-accent transition-colors duration-200 flex items-center"
+                  className="text-base-content hover:text-accent transition-colors duration-200 flex items-center"
                 >
                   Privacy Policy
                 </Link>
@@ -83,7 +76,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/guides"
-                  className="text-primary-content/70 hover:text-accent transition-colors duration-200 flex items-center"
+                  className="text-base-content hover:text-accent transition-colors duration-200 flex items-center"
                 >
                   User Guides
                 </Link>
@@ -91,7 +84,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/#faq-section"
-                  className="text-primary-content/70 hover:text-accent transition-colors duration-200 flex items-center"
+                  className="text-base-content hover:text-accent transition-colors duration-200 flex items-center"
                 >
                   FAQ
                 </Link>
@@ -106,7 +99,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact-us"
-                  className="text-primary-content/70 hover:text-accent transition-colors duration-200 flex items-center"
+                  className="text-base-content hover:text-accent transition-colors duration-200 flex items-center"
                 >
                   Contact Us
                 </Link>
@@ -114,7 +107,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/about"
-                  className="text-primary-content/70 hover:text-accent transition-colors duration-200 flex items-center"
+                  className="text-base-content hover:text-accent transition-colors duration-200 flex items-center"
                 >
                   About
                 </Link>
@@ -122,7 +115,7 @@ const Footer = () => {
               <li>
                 <a
                   href="mailto:santa@santavideowishes.com"
-                  className="text-primary-content/70 hover:text-accent transition-colors duration-200 flex items-center space-x-2"
+                  className="text-base-content hover:text-accent transition-colors duration-200 flex items-center space-x-2"
                 >
                   <Mail className="w-4 h-4" />
                   <span>santa@santavideowishes.com</span>
@@ -134,15 +127,15 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-primary bg-primary/90">
+      <div className="border-t border-secondary bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
-            <p className="text-primary-content/70 text-sm">
+            <p className="text-sm text-primary-content">
               © {currentYear} Santa Video Wishes. All rights reserved.
             </p>
             <Link
               to="/terms-of-service"
-              className="text-primary-content/70 hover:text-accent text-sm transition-colors duration-200"
+              className="text-sm text-primary-content hover:text-accent transition-colors duration-200"
             >
               Terms of Service
             </Link>

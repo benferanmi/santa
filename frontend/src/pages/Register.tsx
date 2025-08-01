@@ -1,24 +1,23 @@
-
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { User, Mail, Lock, Gift, Eye, EyeOff } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import AppLayout from '../components/layout/AppLayout';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { User, Mail, Lock, Gift, Eye, EyeOff } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import AppLayout from "../components/layout/AppLayout";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
@@ -26,29 +25,34 @@ const Register = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       if (isSignIn) {
         await signIn(formData.email, formData.password);
       } else {
         if (formData.password !== formData.confirmPassword) {
-          setError('Passwords do not match');
+          setError("Passwords do not match");
           setLoading(false);
           return;
         }
-        await signUp(formData.email, formData.password, formData.firstName, formData.lastName);
+        await signUp(
+          formData.email,
+          formData.password,
+          formData.firstName,
+          formData.lastName
+        );
       }
-      navigate('/dashboard');
+      navigate("/dashboard");
     } catch (err) {
-      setError('Authentication failed. Please try again.');
+      setError("Authentication failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -59,14 +63,14 @@ const Register = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    visible: { opacity: 1, y: 0 },
   };
 
   return (
@@ -79,18 +83,20 @@ const Register = () => {
           animate="visible"
         >
           {/* Header */}
-          <motion.div
-            className="text-center mb-8"
-            variants={itemVariants}
-          >
+          <motion.div className="text-center mb-8" variants={itemVariants}>
             <div className="flex items-center justify-center gap-2 mb-4">
               <Gift className="text-red-500 w-8 h-8" />
-              <h1 className="text-3xl font-bold text-red-700" style={{ fontFamily: 'cursive' }}>
-                {isSignIn ? 'Welcome Back!' : 'Join Santa\'s Workshop'}
+              <h1
+                className="text-3xl font-bold text-red-700"
+                style={{ fontFamily: "cursive" }}
+              >
+                {isSignIn ? "Welcome Back!" : "Join Santa's Workshop"}
               </h1>
             </div>
             <p className="text-green-700">
-              {isSignIn ? 'Sign in to create magical videos' : 'Create an account to get started'}
+              {isSignIn
+                ? "Sign in to create magical videos"
+                : "Create an account to get started"}
             </p>
           </motion.div>
 
@@ -115,7 +121,9 @@ const Register = () => {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <label className="block text-sm font-semibold text-green-700 mb-2">Last Name</label>
+                  <label className="block text-sm font-semibold text-green-700 mb-2">
+                    Last Name
+                  </label>
                   <input
                     type="text"
                     name="lastName"
@@ -152,7 +160,7 @@ const Register = () => {
               </label>
               <div className="relative">
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
@@ -165,7 +173,11 @@ const Register = () => {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? (
+                    <EyeOff className="w-5 h-5" />
+                  ) : (
+                    <Eye className="w-5 h-5" />
+                  )}
                 </button>
               </div>
             </motion.div>
@@ -178,7 +190,7 @@ const Register = () => {
                 </label>
                 <div className="relative">
                   <input
-                    type={showConfirmPassword ? 'text' : 'password'}
+                    type={showConfirmPassword ? "text" : "password"}
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
@@ -191,7 +203,11 @@ const Register = () => {
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
                   >
-                    {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    {showConfirmPassword ? (
+                      <EyeOff className="w-5 h-5" />
+                    ) : (
+                      <Eye className="w-5 h-5" />
+                    )}
                   </button>
                 </div>
               </motion.div>
@@ -211,37 +227,37 @@ const Register = () => {
               type="submit"
               disabled={loading}
               className="w-full bg-gradient-to-r from-red-500 to-green-500 text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg disabled:opacity-50"
-              style={{ fontFamily: 'cursive' }}
+              style={{ fontFamily: "cursive" }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               variants={itemVariants}
             >
-              {loading ? 'Please wait...' : (isSignIn ? '🎅 Sign In' : '🎁 Create Account')}
+              {loading
+                ? "Please wait..."
+                : isSignIn
+                ? "🎅 Sign In"
+                : "🎁 Create Account"}
             </motion.button>
           </form>
 
           {/* Toggle between Sign In/Sign Up */}
-          <motion.div
-            className="text-center mt-6"
-            variants={itemVariants}
-          >
+          <motion.div className="text-center mt-6" variants={itemVariants}>
             <p className="text-green-700">
-              {isSignIn ? "Don't have an account? " : "Already have an account? "}
+              {isSignIn
+                ? "Don't have an account? "
+                : "Already have an account? "}
               <button
                 type="button"
                 onClick={() => setIsSignIn(!isSignIn)}
                 className="text-red-600 font-bold hover:text-red-800 underline"
               >
-                {isSignIn ? 'Sign up here' : 'Sign in here'}
+                {isSignIn ? "Sign up here" : "Sign in here"}
               </button>
             </p>
           </motion.div>
 
           {/* Back to Home */}
-          <motion.div
-            className="text-center mt-4"
-            variants={itemVariants}
-          >
+          <motion.div className="text-center mt-4" variants={itemVariants}>
             <Link
               to="/"
               className="text-green-600 hover:text-green-800 font-medium"

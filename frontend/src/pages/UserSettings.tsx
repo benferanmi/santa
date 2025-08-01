@@ -55,7 +55,7 @@ const UserSettings = ({ activeTab }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[--color-primary]/10 to-[--color-secondary]/10 py-8">
+    <div className="bg-gradient-to-br from-primary/10 to-secondary/10 py-8">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
           variants={containerVariants}
@@ -83,9 +83,9 @@ const UserSettings = ({ activeTab }) => {
 
                   <motion.div
                     variants={itemVariants}
-                    className="bg-background rounded-2xl shadow-lg p-6 border-2 border-secondary/20"
+                    className="bg-base-100 rounded-2xl shadow-lg p-6 border-2 border-secondary/20"
                   >
-                    <h3 className="text-lg font-semibold text-foreground mb-4">
+                    <h3 className="text-lg font-semibold text-base-content mb-4">
                       Basic Information
                     </h3>
                     <div className="space-y-4">
@@ -102,7 +102,7 @@ const UserSettings = ({ activeTab }) => {
                           />
                         </div>
                         <div>
-                          <label className="block text-sm font-semibold text-foreground mb-2">
+                          <label className="block text-sm font-semibold text-base-content mb-2">
                             Email
                           </label>
                           <input
@@ -117,7 +117,7 @@ const UserSettings = ({ activeTab }) => {
                         <label className="block text-sm font-semibold text-primary mb-2">
                           Time Zone
                         </label>
-                        <select className="w-full px-4 py-3 border-2 border-primary/30 rounded-lg focus:border-primary focus:outline-none transition-colors bg-background">
+                        <select className="w-full px-4 py-3 border-2 border-primary/30 rounded-lg focus:border-primary focus:outline-none transition-colors bg-base-100">
                           <option>North Pole Time (UTC-12)</option>
                           <option>Eastern Time (UTC-5)</option>
                           <option>Pacific Time (UTC-8)</option>
@@ -137,7 +137,7 @@ const UserSettings = ({ activeTab }) => {
                 >
                   <motion.h2
                     variants={itemVariants}
-                    className="text-2xl font-bold text-foreground"
+                    className="text-2xl font-bold text-base-content"
                     style={{ fontFamily: "cursive" }}
                   >
                     🔔 Notification Settings
@@ -145,7 +145,7 @@ const UserSettings = ({ activeTab }) => {
 
                   <motion.div
                     variants={itemVariants}
-                    className="bg-background rounded-2xl shadow-lg p-6 border-2 border-primary/20"
+                    className="bg-base-100 rounded-2xl shadow-lg p-6 border-2 border-primary/20"
                   >
                     <div className="space-y-6">
                       <div>
@@ -193,7 +193,7 @@ const UserSettings = ({ activeTab }) => {
                                   onChange={() => handleSettingChange(item.key)}
                                   className="sr-only peer"
                                 />
-                                <div className="w-11 h-6 bg-base-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-success"></div>
+                                <div className="w-11 h-6 bg-secondary peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-success"></div>
                               </label>
                             </div>
                           ))}
@@ -221,17 +221,17 @@ const UserSettings = ({ activeTab }) => {
 
                   <motion.div
                     variants={itemVariants}
-                    className="bg-background rounded-2xl shadow-lg p-6 border-2 border-secondary/20"
+                    className="bg-base-100 rounded-2xl shadow-lg p-6 border-2 border-secondary/20"
                   >
                     <div className="space-y-6">
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-4">
+                        <h3 className="text-lg font-semibold text-base-content mb-4">
                           Password & Authentication
                         </h3>
                         <div className="space-y-4">
                           <div className="flex items-center justify-between p-4 bg-secondary/5 rounded-lg border border-secondary/30">
                             <div>
-                              <div className="font-medium text-foreground">
+                              <div className="font-medium text-base-content">
                                 Change Password
                               </div>
                               <div className="text-sm text-base-content/70">
@@ -241,7 +241,7 @@ const UserSettings = ({ activeTab }) => {
                             <motion.button
                               whileHover={{ scale: 1.02 }}
                               whileTap={{ scale: 0.98 }}
-                              className="px-4 py-2 bg-secondary text-white rounded-lg hover:brightness-110 transition-colors"
+                              className="px-4 py-2 bg-secondary text-base-100 rounded-lg hover:brightness-110 transition-colors"
                             >
                               <Lock className="inline w-4 h-4 mr-2" />
                               Change
@@ -250,7 +250,7 @@ const UserSettings = ({ activeTab }) => {
 
                           <div className="flex items-center justify-between p-4 bg-secondary/5 rounded-lg border border-secondary/30">
                             <div>
-                              <div className="font-medium text-foreground">
+                              <div className="font-medium text-base-content">
                                 Two-Factor Authentication
                               </div>
                               <div className="text-sm text-base-content/70">
@@ -266,7 +266,7 @@ const UserSettings = ({ activeTab }) => {
                                 }
                                 className="sr-only peer"
                               />
-                              <div className="w-11 h-6 bg-base-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-error"></div>
+                              <div className="w-11 h-6 bg-secondary peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-error"></div>
                             </label>
                           </div>
                         </div>
@@ -285,7 +285,7 @@ const UserSettings = ({ activeTab }) => {
                 >
                   <motion.h2
                     variants={itemVariants}
-                    className="text-2xl font-bold text-foreground"
+                    className="text-2xl font-bold text-base-content"
                     style={{ fontFamily: "cursive" }}
                   >
                     💳 Billing Settings
@@ -293,7 +293,7 @@ const UserSettings = ({ activeTab }) => {
 
                   <motion.div
                     variants={itemVariants}
-                    className="bg-background rounded-2xl shadow-lg p-6 border-2 border-primary/20"
+                    className="bg-base-100 rounded-2xl shadow-lg p-6 border-2 border-primary/20"
                   >
                     <div className="space-y-6">
                       <div>
@@ -330,12 +330,12 @@ const UserSettings = ({ activeTab }) => {
                       </div>
 
                       <div>
-                        <h3 className="text-lg font-semibold text-foreground mb-4">
+                        <h3 className="text-lg font-semibold text-base-content mb-4">
                           Billing Preferences
                         </h3>
                         <div className="flex items-center justify-between p-4 bg-secondary/5 rounded-lg border border-secondary/30">
                           <div>
-                            <div className="font-medium text-foreground">
+                            <div className="font-medium text-base-content">
                               Auto-renewal
                             </div>
                             <div className="text-sm text-base-content/70">
@@ -351,7 +351,7 @@ const UserSettings = ({ activeTab }) => {
                               }
                               className="sr-only peer"
                             />
-                            <div className="w-11 h-6 bg-base-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-success"></div>
+                            <div className="w-11 h-6 bg-secondary peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-success"></div>
                           </label>
                         </div>
                       </div>
@@ -374,7 +374,7 @@ const UserSettings = ({ activeTab }) => {
                       <button
                         key={t}
                         className={`group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors ${
-                          theme === t ? "bg-secondary" : "hover:bg-base-200/50"
+                          theme === t ? "bg-secondary" : "hover:bg-secondary/20"
                         }`}
                         onClick={() => handleThemeToggle(t)}
                       >
@@ -384,7 +384,7 @@ const UserSettings = ({ activeTab }) => {
                         >
                           <div className="absolute inset-0 grid grid-cols-4 gap-px p-1">
                             <div className="rounded bg-secondary"></div>
-                            <div className="rounded bg-background"></div>
+                            <div className="rounded bg-base-100"></div>
                             <div className="rounded bg-primary"></div>
                             <div className="rounded bg-base-content"></div>
                           </div>
@@ -397,7 +397,7 @@ const UserSettings = ({ activeTab }) => {
                     ))}
                   </div>
 
-                  <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-6 p-6">
+                  <div className="min-h-screen bg-base-100 flex flex-col items-center justify-center gap-6 p-6">
                     <h1 className="text-3xl font-bold text-primary">
                       DaisyUI is Working 🎉
                     </h1>
@@ -408,7 +408,7 @@ const UserSettings = ({ activeTab }) => {
                     </button>
                     <button className="btn btn-accent">Accent Button</button>
 
-                    <div className="card w-96 bg-base-200 shadow-xl">
+                    <div className="card w-96 bg-secondary shadow-xl">
                       <div className="card-body">
                         <h2 className="card-title">DaisyUI Card</h2>
                         <p>

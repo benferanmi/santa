@@ -77,19 +77,19 @@ const Personalise = () => {
 
   const videoFeatures = [
     {
-      icon: <User className="text-gone" size={20} />,
+      icon: <User className="text-success" size={20} />,
       text: "Personalised greeting with your child's name",
     },
     {
-      icon: <Calendar className="text-gtwo" size={20} />,
+      icon: <Calendar className="text-info" size={20} />,
       text: "Reference to your child's age",
     },
     {
-      icon: <Image className="text-blue-400" size={20} />,
+      icon: <Image className="text-accent" size={20} />,
       text: "Santa showing your front door in the video (if photo provided)",
     },
     {
-      icon: <Gift className="text-yellow-400" size={20} />,
+      icon: <Gift className="text-warning" size={20} />,
       text: "Magical Christmas message from Santa",
     },
   ];
@@ -100,7 +100,7 @@ const Personalise = () => {
 
   return (
     <AppLayout>
-      <div className="py-10 bg-background text-foreground relative overflow-hidden">
+      <div className="py-10 bg-base-100 text-base-content relative overflow-hidden">
         {/* Subtle Background Animation */}
         <div className="absolute inset-0">
           {/* Gentle floating elements */}
@@ -147,15 +147,15 @@ const Personalise = () => {
               animate={{ scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <span className="text-foreground/90">
+              <span className="text-base-content/90">
                 Fill in the details below to create a
               </span>
               <br />
-              <span className="bg-gradient bg-clip-text text-transparent drop-shadow-lg">
+              <span className="bg-gradient-to-r from-success to-error bg-clip-text text-transparent drop-shadow-lg">
                 magical personalised video
               </span>
               <br />
-              <span className="text-foreground/90">
+              <span className="text-base-content/90">
                 from Santa for your child.
               </span>
             </motion.h1>
@@ -170,18 +170,18 @@ const Personalise = () => {
               className="space-y-8"
             >
               {/* Child's Information Card */}
-              <div className="bg-foreground/5 backdrop-blur-lg rounded-3xl p-8 border border-foreground/10 shadow-2xl">
+              <div className="bg-base-content/5 backdrop-blur-lg rounded-3xl p-8 border border-base-content/10 shadow-2xl">
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                   className="text-2xl md:text-3xl font-bold mb-2"
                 >
-                  <span className="bg-gradient bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-success to-info bg-clip-text text-transparent">
                     Child's Information
                   </span>
                 </motion.h2>
-                <p className="text-foreground/70 mb-6">
+                <p className="text-base-content/70 mb-6">
                   This information will be used by Santa in the personalised
                   video.
                 </p>
@@ -193,12 +193,12 @@ const Personalise = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
                   >
-                    <label className="block text-foreground font-semibold mb-3 text-lg">
+                    <label className="block text-base-content font-semibold mb-3 text-lg">
                       Child's Name *
                     </label>
                     <div className="relative">
                       <User
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-foreground/40"
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-base-content/40"
                         size={20}
                       />
                       <input
@@ -206,7 +206,7 @@ const Personalise = () => {
                         name="childName"
                         value={formData.childName}
                         onChange={handleInputChange}
-                        className="w-full bg-foreground/10 border border-background/70 rounded-2xl py-4 pl-12 pr-4 text-background placeholder-foreground/50 focus:outline-none focus:border-blue-400 focus:bg-foreground/15 transition-all duration-300"
+                        className="w-full bg-secondary border border-secondary/70 rounded-2xl py-4 pl-12 pr-4 text-secondary-content placeholder-base-content/50 focus:outline-none focus:border-accent focus:bg-secondary/80 transition-all duration-300"
                         placeholder="Enter your child's name"
                         required
                       />
@@ -219,24 +219,24 @@ const Personalise = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
                   >
-                    <label className="block text-foreground font-semibold mb-3 text-lg">
+                    <label className="block text-base-content font-semibold mb-3 text-lg">
                       Child's Age *
                     </label>
                     <div className="relative">
                       <Calendar
-                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-foreground/40"
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-base-content/40"
                         size={20}
                       />
                       <select
                         name="childAge"
                         value={formData.childAge}
                         onChange={handleInputChange}
-                        className="w-full bg-foreground/10 border border-foreground/70 rounded-2xl py-4 pl-12 pr-4 text-background focus:outline-none focus:border-blue-400 focus:bg-foreground/15 transition-all duration-300 appearance-none cursor-pointer"
+                        className="w-full bg-secondary border border-secondary/70 rounded-2xl py-4 pl-12 pr-4 text-secondary-content focus:outline-none focus:border-accent focus:bg-secondary/80 transition-all duration-300 appearance-none cursor-pointer"
                         required
                       >
                         <option
                           value=""
-                          className="bg-background text-foreground"
+                          className="bg-base-100 text-base-content"
                         >
                           Select age
                         </option>
@@ -244,7 +244,7 @@ const Personalise = () => {
                           <option
                             key={i + 3}
                             value={i + 3}
-                            className="bg-background text-foreground"
+                            className="bg-base-100 text-base-content"
                           >
                             {i + 3} years old
                           </option>
@@ -259,13 +259,13 @@ const Personalise = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.7 }}
                   >
-                    <label className="block text-foreground font-semibold mb-3 text-lg">
+                    <label className="block text-base-content font-semibold mb-3 text-lg">
                       Front Door Photo
-                      <span className="text-foreground/60 font-normal">
+                      <span className="text-base-content/60 font-normal">
                         (Optional)
                       </span>
                     </label>
-                    <p className="text-foreground/60 text-sm mb-4">
+                    <p className="text-base-content/60 text-sm mb-4">
                       Upload a photo of your front door for Santa to include in
                       the video.
                     </p>
@@ -281,16 +281,16 @@ const Personalise = () => {
                       <motion.div
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="bg-foreground/10 border-2 border-dashed border-foreground/30 rounded-2xl p-8 text-center hover:border-blue-400 hover:bg-foreground/15 transition-all duration-300 cursor-pointer"
+                        className="bg-base-content/10 border-2 border-dashed border-base-content/30 rounded-2xl p-8 text-center hover:border-accent hover:bg-base-content/15 transition-all duration-300 cursor-pointer"
                       >
                         <Upload
-                          className="mx-auto mb-4 text-foreground/60"
+                          className="mx-auto mb-4 text-base-content/60"
                           size={32}
                         />
-                        <p className="text-foreground font-medium mb-2">
+                        <p className="text-base-content font-medium mb-2">
                           Choose File
                         </p>
-                        <p className="text-foreground/60 text-sm">
+                        <p className="text-base-content/60 text-sm">
                           {fileName || "No file chosen"}
                         </p>
                       </motion.div>
@@ -309,14 +309,14 @@ const Personalise = () => {
                 <motion.button
                   whileHover={{
                     scale: 1.05,
-                    boxShadow: "0 10px 30px rgba(59, 130, 246, 0.4)",
+                    boxShadow: "0 10px 30px rgba(34, 197, 94, 0.4)",
                   }}
                   whileTap={{ scale: 0.95 }}
                   onClick={handleContinueToCheckout}
                   disabled={
                     loading || !formData.childName || !formData.childAge
                   }
-                  className="flex-1 bg-gradient text-foreground font-semibold py-4 px-8 rounded-2xl transition-all duration-300 shadow-lg text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-gradient-to-r from-success to-info text-base-100 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 shadow-lg text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? "Processing..." : "Continue to Checkout 🛒"}
                 </motion.button>
@@ -325,9 +325,9 @@ const Personalise = () => {
                   onClick={togglePreview}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="bg-gray-100 hover:bg-foreground/20 text-background border border-4 border-gone font-semibold py-4 px-8 rounded-2xl transition-all duration-300 backdrop-blur-sm"
+                  className="bg-secondary hover:bg-secondary/80 text-secondary-content border border-accent font-semibold py-4 px-8 rounded-2xl transition-all duration-300 backdrop-blur-sm"
                 >
-                  <Play className="inline mr-2 stroke-gtwo" size={20} />
+                  <Play className="inline mr-2 text-accent" size={20} />
                   Preview
                 </motion.button>
               </motion.div>
@@ -341,14 +341,14 @@ const Personalise = () => {
               className="space-y-8"
             >
               {/* Video Features */}
-              <div className="bg-foreground/5 backdrop-blur-lg rounded-3xl p-8 border border-foreground/10 shadow-2xl">
+              <div className="bg-base-content/5 backdrop-blur-lg rounded-3xl p-8 border border-base-content/10 shadow-2xl">
                 <motion.h3
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
                   className="text-2xl md:text-3xl font-bold mb-6"
                 >
-                  <span className="bg-gradient-to-r from-green-400 to-red-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-success to-error bg-clip-text text-transparent">
                     Your Santa Video will include:
                   </span>
                 </motion.h3>
@@ -360,10 +360,10 @@ const Personalise = () => {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.6 + index * 0.1 }}
-                      className="flex items-start space-x-4 p-4 bg-foreground/5 rounded-xl border border-foreground/10"
+                      className="flex items-start space-x-4 p-4 bg-base-content/5 rounded-xl border border-base-content/10"
                     >
                       <div className="flex-shrink-0 mt-1">{feature.icon}</div>
-                      <p className="text-foreground/90 leading-relaxed">
+                      <p className="text-base-content/90 leading-relaxed">
                         {feature.text}
                       </p>
                     </motion.div>
@@ -379,12 +379,12 @@ const Personalise = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
                     transition={{ duration: 0.5 }}
-                    className="bg-foreground/5 backdrop-blur-lg rounded-3xl p-8 border border-foreground/10 shadow-2xl"
+                    className="bg-base-content/5 backdrop-blur-lg rounded-3xl p-8 border border-base-content/10 shadow-2xl"
                   >
-                    <h4 className="text-xl font-bold text-foreground mb-4">
+                    <h4 className="text-xl font-bold text-base-content mb-4">
                       Video Preview
                     </h4>
-                    <div className="aspect-video bg-gradient-to-br from-red-600 to-green-700 rounded-2xl flex items-center justify-center relative overflow-hidden">
+                    <div className="aspect-video bg-gradient-to-br from-error to-success rounded-2xl flex items-center justify-center relative overflow-hidden">
                       <motion.div
                         animate={{ scale: [1, 1.1, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
@@ -392,18 +392,18 @@ const Personalise = () => {
                       >
                         🎅
                       </motion.div>
-                      <div className="absolute inset-0 bg-foreground/20 flex items-center justify-center">
+                      <div className="absolute inset-0 bg-base-content/20 flex items-center justify-center">
                         <motion.div
                           whileHover={{ scale: 1.1 }}
-                          className="bg-foreground/20 backdrop-blur-sm rounded-full p-4 cursor-pointer"
+                          className="bg-base-content/20 backdrop-blur-sm rounded-full p-4 cursor-pointer"
                         >
-                          <Play className="text-foreground" size={32} />
+                          <Play className="text-base-content" size={32} />
                         </motion.div>
                       </div>
                     </div>
                     {formData.childName && (
-                      <div className="mt-4 p-4 bg-foreground/10 rounded-lg">
-                        <p className="text-foreground font-medium">
+                      <div className="mt-4 p-4 bg-base-content/10 rounded-lg">
+                        <p className="text-base-content font-medium">
                           Preview: "Ho ho ho! Hello {formData.childName}! I hear
                           you're {formData.childAge} years old..."
                         </p>
@@ -418,7 +418,7 @@ const Personalise = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.9 }}
-                className="bg-amber-500/10 backdrop-blur-lg rounded-2xl p-6 border border-amber-400/20"
+                className="bg-warning/10 backdrop-blur-lg rounded-2xl p-6 border border-warning/20"
               >
                 <div className="flex items-start space-x-3">
                   <div className="flex-shrink-0 mt-1">
@@ -430,10 +430,10 @@ const Personalise = () => {
                     </motion.div>
                   </div>
                   <div>
-                    <h4 className="text-amber-600 font-semibold mb-2">
+                    <h4 className="text-warning font-semibold mb-2">
                       Delivery Info:
                     </h4>
-                    <p className="text-amber-500/90 text-sm leading-relaxed">
+                    <p className="text-warning/90 text-sm leading-relaxed">
                       Your personalized Santa video will be delivered to your
                       email within 24 hours after payment confirmation.
                     </p>

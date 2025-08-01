@@ -26,6 +26,8 @@ const Header = () => {
     changeTheme(mode);
   }, [mode]);
 
+  console.log(isAuthenticated);
+
   return (
     <header className="bg-gradient shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -80,30 +82,30 @@ const Header = () => {
                 <div className="flex items-center space-x-3">
                   <Link to="/account" className="flex items-center space-x-2">
                     <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                      <User className="w-5 h-5 text-red-600" />
+                      {user?.avatar ? (
+                        <img alt="" src={user?.avatar} />
+                      ) : (
+                        <User className="w-5 h-5 text-red-600" />
+                      )}
                     </div>
                     <span className="text-white font-medium hidden sm:block">
                       {user?.firstName || "User"}
                     </span>
                   </Link>
-                  <button
-                    onClick={handleSignOut}
-                    className="text-white hover:text-yellow-200 font-medium"
-                  >
-                    Sign Out
-                  </button>
+                  <div className=" border-l-2 pl-4">
+                    <button
+                      onClick={handleSignOut}
+                      className="text-white hover:text-yellow-200 font-medium"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
                 </div>
               </>
             ) : (
               <>
                 <Link
-                  to="/personalise"
-                  className="bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 hidden sm:block"
-                >
-                  Create Your Video
-                </Link>
-                <Link
-                  to={"/account"}
+                  to={"/register"}
                   className="text-white hover:text-yellow-200 font-medium"
                 >
                   Sign In
@@ -142,7 +144,7 @@ const Header = () => {
             ))}
             {!isAuthenticated && (
               <Link
-                to="/account"
+                to="/register"
                 className="w-full bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg mt-3 block text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
