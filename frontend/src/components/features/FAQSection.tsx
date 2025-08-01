@@ -37,7 +37,7 @@ const FAQSection = () => {
   };
 
   return (
-    <div className="md:py-10 bg-gradient py-16">
+    <div className="md:py-10 bg-gradient-to-br from-primary to-secondary py-16">
       <div className="container mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -47,17 +47,20 @@ const FAQSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl lg:text-6xl font-bold text-base-100 mb-6">
+          <h2 className="text-5xl lg:text-6xl font-bold text-base-content mb-6 drop-shadow-lg">
             Frequently Asked Questions
           </h2>
           <motion.button
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 10px 30px rgba(100, 104, 103, 0.4)"
+            }}
             whileTap={{ scale: 0.95 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-primary hover:bg-primary/80 text-white px-8 py-3 rounded-full font-semibold text-lg transition-colors duration-300"
+            className="bg-accent hover:bg-accent/80 text-accent-content px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg"
           >
             Contact us
           </motion.button>
@@ -72,20 +75,20 @@ const FAQSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="bg-base-content/5 backdrop-blur-sm rounded-2xl border border-base-content/10 overflow-hidden"
+              className="bg-base-content/10 backdrop-blur-lg rounded-2xl border border-base-content/20 overflow-hidden shadow-lg"
             >
               <motion.button
                 onClick={() => toggleFAQ(index)}
-                whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.1)" }}
+                whileHover={{ backgroundColor: "rgba(255, 255, 255, 0.05)" }}
                 className="w-full px-8 py-6 text-left flex justify-between items-center transition-colors duration-300"
               >
-                <h3 className="text-xl font-semibold text-base-100 pr-4">
+                <h3 className="text-xl font-semibold text-base-content pr-4">
                   {faq.question}
                 </h3>
                 <motion.div
                   animate={{ rotate: openIndex === index ? 180 : 0 }}
                   transition={{ duration: 0.3 }}
-                  className="text-2xl text-base-100 flex-shrink-0"
+                  className="text-2xl text-accent flex-shrink-0"
                 >
                   ↓
                 </motion.div>
@@ -101,7 +104,7 @@ const FAQSection = () => {
                 className="overflow-hidden"
               >
                 <div className="px-8 pb-6">
-                  <p className="text-base-100/70 leading-relaxed text-lg border-t border-base-100/10 pt-6">
+                  <p className="text-base-content/80 leading-relaxed text-lg border-t border-base-content/20 pt-6">
                     {faq.answer}
                   </p>
                 </div>
@@ -118,7 +121,7 @@ const FAQSection = () => {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="text-center mt-16"
         >
-          <p className="text-special text-lg italic">
+          <p className="text-base-content/90 text-lg italic bg-base-content/10 backdrop-blur-sm rounded-2xl px-6 py-4 inline-block border border-base-content/20 shadow-lg">
             Still have questions? We're here to help! 🎅
           </p>
         </motion.div>
