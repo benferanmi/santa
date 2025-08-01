@@ -86,34 +86,34 @@ const Dashboard = () => {
     visible: { opacity: 1, y: 0 },
   };
 
-  // if (!isAuthenticated) {
-  //   return (
-  //     <AppLayout>
-  //       <div className="space-y-6 flex items-center justify-center w-full py-[50px] lg:py-[100px] ">
-  //         <div className="bg-base-100 rounded-2xl shadow-xl p-8 w-full max-w-md text-center">
-  //           <div className="bg-error/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-  //             <Lock className="w-8 h-8 text-error" />
-  //           </div>
+  if (!isAuthenticated) {
+    return (
+      <AppLayout>
+        <div className="space-y-6 flex items-center justify-center w-full py-[50px] lg:py-[100px] ">
+          <div className="bg-base-100 rounded-2xl shadow-xl p-8 w-full max-w-md text-center">
+            <div className="bg-error/20 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+              <Lock className="w-8 h-8 text-error" />
+            </div>
 
-  //           <h1 className="text-2xl font-bold text-base-content mb-4">
-  //             Authentication Required
-  //           </h1>
+            <h1 className="text-2xl font-bold text-base-content mb-4">
+              Authentication Required
+            </h1>
 
-  //           <p className="text-base-content/60 mb-8">
-  //             You have to be authenticated before you can view this page
-  //           </p>
+            <p className="text-base-content/60 mb-8">
+              You have to be authenticated before you can view this page
+            </p>
 
-  //           <Link
-  //             to={"/register"}
-  //             className="w-full bg-background hover:bg-base-content hover:text-background text-foreground font-base-content py-3 px-6 rounded-lg transition-colors focus:ring-2 focus:ring-info focus:ring-offset-2 outline-none"
-  //           >
-  //             Go to Registration
-  //           </Link>
-  //         </div>
-  //       </div>
-  //     </AppLayout>
-  //   );
-  // }
+            <Link
+              to={"/register"}
+              className="w-full bg-background hover:bg-base-content hover:text-background text-foreground font-base-content py-3 px-6 rounded-lg transition-colors focus:ring-2 focus:ring-info focus:ring-offset-2 outline-none"
+            >
+              Go to Registration
+            </Link>
+          </div>
+        </div>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout>
