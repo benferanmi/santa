@@ -1,4 +1,3 @@
-
 // API Response Types and Expected JSON Data Structures
 
 // User Account Types
@@ -59,7 +58,7 @@ export interface AuthResponse {
 // Payment Types
 export interface PaymentMethod {
   id: string;
-  type: 'card' | 'paypal' | 'stripe';
+  type: "card" | "paypal" | "stripe";
   last4?: string;
   brand?: string;
   expiryMonth?: number;
@@ -80,11 +79,17 @@ export interface PaymentRequest {
 
 export interface PaymentResponse {
   id: string;
-  status: 'pending' | 'completed' | 'failed';
+  status: "pending" | "completed" | "failed";
   amount: number;
   currency: string;
   paymentUrl?: string; // For redirects (Stripe, PayPal)
   orderId: string;
+}
+
+export interface StripePaymentIntentResponse {
+  client_secret: string;
+  payment_intent_id: string;
+  success: boolean;
 }
 
 // Video Generation Types
@@ -93,22 +98,27 @@ export interface VideoRequest {
   childAge: string;
   frontDoorImage?: File;
   customMessage?: string;
-  videoStyle?: 'classic' | 'modern' | 'animated';
+  videoStyle?: "classic" | "modern" | "animated";
 }
 
 export interface VideoOrder {
-  id: string;
+  order_id: string;
   userId: string;
-  childName: string;
-  childAge: string;
+  child_name: string;
+  order_status: string;
+  child_age: string;
+  amount_paid: number;
+  currency: string;
+  video_status: string;
+  video_url: string;
   frontDoorImage?: string;
   customMessage?: string;
   videoStyle: string;
-  status: 'pending' | 'processing' | 'completed' | 'failed';
+  status: "pending" | "processing" | "completed" | "failed";
   videoUrl?: string;
   thumbnailUrl?: string;
-  paymentStatus: 'pending' | 'paid' | 'failed';
-  createdAt: string;
+  paymentStatus: "pending" | "paid" | "failed";
+  created_at: string;
   updatedAt: string;
   estimatedCompletion?: string;
 }
@@ -130,11 +140,31 @@ export interface ApiResponse<T> {
 
 // Pagination
 export interface PaginatedResponse<T> {
-  data: T[];
+  data?: T[];
+  orders?: T[];
   pagination: {
     page: number;
     limit: number;
     total: number;
     totalPages: number;
   };
+  success?: boolean;
+}
+
+export interface Plan {
+  created_at: string;
+  description: string;
+  id: string;
+  price: number;
+  videos_included: number;
+}
+
+export interface GetPlansResponse {
+  data: Plan[];
+  success: boolean;
+}
+
+export interface GenerateVideoResponse {
+  success: string;
+  message: string;
 }

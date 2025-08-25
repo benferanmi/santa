@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -50,20 +51,15 @@ const FAQSection = () => {
           <h2 className="text-5xl lg:text-6xl font-bold text-base-content mb-6 drop-shadow-lg">
             Frequently Asked Questions
           </h2>
-          <motion.button
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            whileHover={{ 
-              scale: 1.05,
-              boxShadow: "0 10px 30px rgba(100, 104, 103, 0.4)"
-            }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="bg-accent hover:bg-accent/80 text-accent-content px-8 py-3 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg"
+          <Link
+            to="/contact"
+            className="bg-accent hover:bg-accent/80 text-foreground px-8
+            py-3 rounded-full font-semibold text-lg transition-all duration-300
+            shadow-lg"
           >
+            {" "}
             Contact us
-          </motion.button>
+          </Link>
         </motion.div>
 
         {/* FAQ Items */}

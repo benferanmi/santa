@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { User, Mail, Lock, Gift, Eye, EyeOff } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AppLayout from "../components/layout/AppLayout";
 
@@ -15,21 +15,32 @@ const Register = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Set initial state based on the current route
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === "/login") {
+      setIsSignIn(true);
+    } else if (path === "/signup" || path === "/register") {
+      setIsSignIn(false);
+    }
+  }, [location.pathname]);
+
+  const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -46,15 +57,30 @@ const Register = () => {
         await signUp(
           formData.email,
           formData.password,
+          formData.confirmPassword,
           formData.firstName,
           formData.lastName
         );
       }
       navigate("/dashboard");
     } catch (err) {
-      setError("Authentication failed. Please try again.");
+      console.log(err.message);
+      setError(err.message || "Authentication failed. Please try again.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Handle toggle and navigation
+  const handleToggle = () => {
+    const newIsSignIn = !isSignIn;
+    setIsSignIn(newIsSignIn);
+
+    // Navigate to the appropriate route
+    if (newIsSignIn) {
+      navigate("/login", { replace: true });
+    } else {
+      navigate("/signup", { replace: true });
     }
   };
 
@@ -248,7 +274,7 @@ const Register = () => {
                 : "Already have an account? "}
               <button
                 type="button"
-                onClick={() => setIsSignIn(!isSignIn)}
+                onClick={handleToggle}
                 className="text-red-600 font-bold hover:text-red-800 underline"
               >
                 {isSignIn ? "Sign up here" : "Sign in here"}

@@ -20,7 +20,7 @@ const Footer = () => {
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-base-content">
-                  International Elf HQ
+                 Santa Video Wishes
                 </h3>
               </div>
             </div>

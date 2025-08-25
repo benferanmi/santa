@@ -1,17 +1,17 @@
-
-import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { User, AuthState } from '../types';
+import React, { createContext, useContext, useReducer, ReactNode } from "react";
+import { User, AuthState } from "../types";
+import { authAPI } from "../services/api";
 
 type AuthAction =
-  | { type: 'LOGIN_START' }
-  | { type: 'LOGIN_SUCCESS'; payload: User }
-  | { type: 'LOGIN_FAILURE'; payload: string }
-  | { type: 'LOGOUT' }
-  | { type: 'CLEAR_ERROR' };
+  | { type: "LOGIN_START" }
+  | { type: "LOGIN_SUCCESS"; payload: User }
+  | { type: "LOGIN_FAILURE"; payload: string }
+  | { type: "LOGOUT" }
+  | { type: "CLEAR_ERROR" };
 
 interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   clearError: () => void;
 }
 
@@ -19,13 +19,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case 'LOGIN_START':
+    case "LOGIN_START":
       return {
         ...state,
         isLoading: true,
         error: null,
       };
-    case 'LOGIN_SUCCESS':
+    case "LOGIN_SUCCESS":
       return {
         ...state,
         user: action.payload,
@@ -33,7 +33,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isLoading: false,
         error: null,
       };
-    case 'LOGIN_FAILURE':
+    case "LOGIN_FAILURE":
       return {
         ...state,
         user: null,
@@ -41,7 +41,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isLoading: false,
         error: action.payload,
       };
-    case 'LOGOUT':
+    case "LOGOUT":
       return {
         ...state,
         user: null,
@@ -49,7 +49,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         isLoading: false,
         error: null,
       };
-    case 'CLEAR_ERROR':
+    case "CLEAR_ERROR":
       return {
         ...state,
         error: null,
@@ -66,65 +66,53 @@ const initialState: AuthState = {
   error: null,
 };
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const login = async (email: string, password: string): Promise<void> => {
-    dispatch({ type: 'LOGIN_START' });
+    dispatch({ type: "LOGIN_START" });
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Mock admin credentials
-      if (email === 'admin@admin.com' && password === 'admin123') {
-        const user: User = {
-          id: '1',
-          email: 'admin@admin.com',
-          name: 'Admin User',
-          role: 'admin',
-        };
-
-        // Store in localStorage for persistence
-        localStorage.setItem('admin_user', JSON.stringify(user));
-        localStorage.setItem('admin_token', 'mock_admin_token_12345');
-
-        dispatch({ type: 'LOGIN_SUCCESS', payload: user });
-      } else {
-        throw new Error('Invalid email or password');
-      }
+      const response = await authAPI.login({ email, password });
+      dispatch({ type: "LOGIN_SUCCESS", payload: response.data });
     } catch (error) {
-      dispatch({ 
-        type: 'LOGIN_FAILURE', 
-        payload: error instanceof Error ? error.message : 'Login failed' 
+      dispatch({
+        type: "LOGIN_FAILURE",
+        payload: error instanceof Error ? error.message : "Login failed",
       });
+      throw error;
     }
   };
 
-  const logout = (): void => {
-    // Clear localStorage
-    localStorage.removeItem('admin_user');
-    localStorage.removeItem('admin_token');
-    
-    dispatch({ type: 'LOGOUT' });
+  const logout = async (): Promise<void> => {
+    try {
+      await authAPI.logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      dispatch({ type: "LOGOUT" });
+    }
   };
 
   const clearError = (): void => {
-    dispatch({ type: 'CLEAR_ERROR' });
+    dispatch({ type: "CLEAR_ERROR" });
   };
 
   // Check for existing session on mount
   React.useEffect(() => {
-    const storedUser = localStorage.getItem('admin_user');
-    const storedToken = localStorage.getItem('admin_token');
+    const storedUser = localStorage.getItem("admin_user");
+    const storedToken = localStorage.getItem("admin_token");
 
     if (storedUser && storedToken) {
       try {
         const user = JSON.parse(storedUser);
-        dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+        dispatch({ type: "LOGIN_SUCCESS", payload: user });
       } catch (error) {
-        localStorage.removeItem('admin_user');
-        localStorage.removeItem('admin_token');
+        console.error("Failed to parse stored user:", error);
+        localStorage.removeItem("admin_user");
+        localStorage.removeItem("admin_token");
       }
     }
   }, []);
@@ -142,7 +130,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };

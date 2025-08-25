@@ -8,6 +8,7 @@ interface User {
   avatar?: string;
   phone: string;
   dateOfBirth: string;
+  totalOrders:number;
   address: string;
   city: string;
   zipcode: string;
@@ -21,6 +22,7 @@ interface AuthContextType {
   signUp: (
     email: string,
     password: string,
+    confirmPassword: string,
     firstName: string,
     lastName: string
   ) => Promise<void>;
@@ -34,7 +36,39 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // In-memory token storage (replace with localStorage in your actual environment)
 let authToken: string | null = null;
 
-const BASE_API = "http://api.santavideowishes.co.uk";
+const BASE_API = "https://api.santavideowishes.co.uk";
+
+// Helper function to safely access localStorage
+const getStoredToken = (): string | null => {
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      return localStorage.getItem("authToken");
+    }
+  } catch (error) {
+    console.error("Error accessing localStorage:", error);
+  }
+  return null;
+};
+
+const setStoredToken = (token: string): void => {
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.setItem("authToken", token);
+    }
+  } catch (error) {
+    console.error("Error setting localStorage:", error);
+  }
+};
+
+const removeStoredToken = (): void => {
+  try {
+    if (typeof window !== "undefined" && window.localStorage) {
+      localStorage.removeItem("authToken");
+    }
+  } catch (error) {
+    console.error("Error removing from localStorage:", error);
+  }
+};
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -44,34 +78,62 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const initializeAuth = async () => {
-      const token = localStorage.getItem("authToken");
+      console.log("Initializing auth...");
 
-      if (authToken) {
+      // Get token from localStorage
+      const storedToken = getStoredToken();
+      console.log("Stored token found:", !!storedToken);
+
+      if (storedToken) {
+        authToken = storedToken;
+        console.log("Token set, fetching user profile...");
+
         try {
-          const response = await fetch(`${BASE_API}/user/me`, {
+          const response = await fetch(`${BASE_API}/user/profile`, {
             headers: {
               Authorization: `Bearer ${authToken}`,
               "Content-Type": "application/json",
             },
           });
 
+          console.log("Profile fetch response status:", response.status);
+
           if (response.ok) {
             const result = await response.json();
+            console.log("Profile fetch result:", result);
+
             if (result.success && result.data) {
               setUser(result.data);
+              console.log("User profile set successfully");
+            } else {
+              console.log("Profile fetch unsuccessful:", result);
             }
-          } else {
-            // Token is invalid, clear it
+          } else if (response.status === 401 || response.status === 403) {
+            // Only clear token for authentication errors
             authToken = null;
-            localStorage.removeItem("authToken");
+            removeStoredToken();
+            console.log("Token expired or invalid, cleared from storage");
+          } else {
+            console.log("API error, but keeping token:", response.status);
+            // Log the error response for debugging
+            try {
+              const errorResult = await response.json();
+              console.log("Error response:", errorResult);
+            } catch (e) {
+              console.log("Could not parse error response");
+            }
           }
         } catch (error) {
-          console.error("Error fetching user profile:", error);
-          authToken = null;
-          localStorage.removeItem("authToken");
+          console.error("Network error fetching user profile:", error);
+          // Don't clear token for network errors
+          // User might be offline or server temporarily down
         }
+      } else {
+        console.log("No stored token found");
       }
+
       setLoading(false);
+      console.log("Auth initialization complete");
     };
 
     initializeAuth();
@@ -91,7 +153,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
       if (response.ok && result.success) {
         authToken = result.token;
-        localStorage.setItem("authToken", result.token);
+        setStoredToken(result.token);
         setUser(result.data);
       } else {
         throw new Error(result.message || "Login failed");
@@ -105,6 +167,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const signUp = async (
     email: string,
     password: string,
+    confirmPassword: string,
     firstName: string,
     lastName: string
   ) => {
@@ -114,14 +177,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, firstName, lastName }),
+        body: JSON.stringify({
+          email,
+          password,
+          confirmPassword: password,
+          firstName,
+          lastName,
+        }),
       });
 
       const result = await response.json();
 
       if (response.ok && result.success) {
         authToken = result.token;
-        localStorage.setItem("authToken", result.token);
+        setStoredToken(result.token);
         setUser(result.data);
       } else {
         throw new Error(result.message || "Signup failed");
@@ -134,7 +203,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const signOut = () => {
     authToken = null;
-    localStorage.removeItem("authToken");
+    removeStoredToken();
     setUser(null);
   };
 
@@ -144,7 +213,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
 
     try {
-      const response = await fetch(`${BASE_API}/user/me`, {
+      const response = await fetch(`${BASE_API}/user/update`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${authToken}`,

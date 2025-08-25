@@ -1,25 +1,40 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Upload,
   User,
   Calendar,
   Image,
-  Play,
   Check,
   Gift,
-  Star,
-  Heart,
+  Crown,
+  Sparkles,
+  Video,
 } from "lucide-react";
-import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useVideoOrder } from "../hooks/useVideoOrder";
 import AppLayout from "@/components/layout/AppLayout";
+import { usePayment } from "@/context/PaymentContext";
+import SantaCheckout from "./SantaCheckout";
+
+interface Plan {
+  created_at: string;
+  description: string;
+  id: string;
+  price: number;
+  videos_included: number;
+}
 
 const Personalise = () => {
   const { isAuthenticated } = useAuth();
-  const { createOrder, loading } = useVideoOrder();
-  const navigate = useNavigate();
+  const { createOrder, loading: orderLoading } = useVideoOrder();
+  const { createStripePaymentIntent, getPlans } = usePayment();
+  const [clientSecret, setClientSecret] = useState<string>("");
+  const [plans, setPlans] = useState<Plan[]>([]);
+  const [selectedPlanId, setSelectedPlanId] = useState<string>("");
+  const [plansLoading, setPlansLoading] = useState(true);
+  const [plansError, setPlansError] = useState<string>("");
 
   const [formData, setFormData] = useState({
     childName: "",
@@ -27,7 +42,33 @@ const Personalise = () => {
     frontDoorPhoto: null as File | null,
   });
   const [fileName, setFileName] = useState("");
-  const [showPreview, setShowPreview] = useState(false);
+
+  useEffect(() => {
+    const fetchPlans = async () => {
+      try {
+        setPlansLoading(true);
+        setPlansError("");
+        const result = await getPlans();
+
+        if (result?.success && result.data) {
+          setPlans(result.data);
+          // If there's only one plan, auto-select it
+          if (result.data.length === 1) {
+            setSelectedPlanId(result.data[0].id);
+          }
+        } else {
+          setPlansError("Failed to fetch plans");
+        }
+      } catch (error) {
+        console.error("Error fetching plans:", error);
+        setPlansError("Failed to fetch plans");
+      } finally {
+        setPlansLoading(false);
+      }
+    };
+
+    fetchPlans();
+  }, [getPlans]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -50,29 +91,49 @@ const Personalise = () => {
     }
   };
 
+  const handlePlanSelect = (planId: string) => {
+    setSelectedPlanId(planId);
+  };
+
+  const formatPrice = (price: number) => {
+    return (price / 100).toFixed(2);
+  };
+
+  const getSelectedPlan = () => {
+    return plans.find((plan) => plan.id === selectedPlanId);
+  };
+
   const handleContinueToCheckout = async () => {
     if (!formData.childName || !formData.childAge) {
       alert("Please fill in all required fields");
       return;
     }
 
+    if (!selectedPlanId) {
+      alert("Please select a plan");
+      return;
+    }
+
     try {
-      const order = await createOrder({
+      const orderData = {
         childName: formData.childName,
         childAge: formData.childAge,
+        pricingId: selectedPlanId,
         frontDoorImage: formData.frontDoorPhoto,
-      });
+      };
 
-      // Navigate to checkout with order data
-      navigate("/checkout", { state: { order } });
+      const res = await createStripePaymentIntent(orderData);
+
+      if (res?.success) {
+        setClientSecret(res.client_secret);
+      } else {
+        alert("Failed to create payment intent. Please try again.");
+        return;
+      }
     } catch (error) {
       console.error("Failed to create order:", error);
       alert("Failed to create order. Please try again.");
     }
-  };
-
-  const togglePreview = () => {
-    setShowPreview(!showPreview);
   };
 
   const videoFeatures = [
@@ -94,8 +155,13 @@ const Personalise = () => {
     },
   ];
 
-  if (isAuthenticated) {
-    return <Navigate to="/login" replace />;
+  if (clientSecret) {
+    const orderData = {
+      childName: formData.childName,
+      childAge: Number(formData.childAge),
+      pricingId: selectedPlanId,
+    };
+    return <SantaCheckout clientSecret={clientSecret} orderData={orderData} />;
   }
 
   return (
@@ -169,6 +235,165 @@ const Personalise = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="space-y-8"
             >
+              {/* Plans Section */}
+              {plansLoading ? (
+                <div className="bg-base-content/5 backdrop-blur-lg rounded-3xl p-8 border border-base-content/10 shadow-2xl">
+                  <div className="flex items-center justify-center py-12">
+                    <div className="flex flex-col items-center space-y-4">
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="text-4xl"
+                      >
+                        ✨
+                      </motion.div>
+                      <p className="text-base-content/70">
+                        Loading magical plans...
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : plansError ? (
+                <div className="bg-error/10 backdrop-blur-lg rounded-3xl p-8 border border-error/20 shadow-2xl">
+                  <p className="text-error text-center">{plansError}</p>
+                </div>
+              ) : plans.length > 1 ? (
+                <div className="bg-base-content/5 backdrop-blur-lg rounded-3xl p-8 border border-base-content/10 shadow-2xl">
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-2xl md:text-3xl font-bold mb-2"
+                  >
+                    <span className="bg-gradient-to-r from-success to-error bg-clip-text text-transparent">
+                      Choose Your Plan 🎄
+                    </span>
+                  </motion.h2>
+                  <p className="text-base-content/70 mb-6">
+                    Select the perfect plan for creating Santa's magical
+                    message.
+                  </p>
+
+                  <div className="grid gap-4">
+                    {plans.map((plan, index) => (
+                      <motion.div
+                        key={plan.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.5 + index * 0.1 }}
+                        className={`relative cursor-pointer rounded-2xl border-2 transition-all duration-300 ${
+                          selectedPlanId === plan.id
+                            ? "border-success bg-success/10 shadow-lg"
+                            : "border-base-content/20 bg-base-content/5 hover:border-success/50 hover:bg-success/5"
+                        }`}
+                        onClick={() => handlePlanSelect(plan.id)}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <div className="p-6">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                              <div className="flex-shrink-0">
+                                <div className="w-12 h-12 bg-gradient-to-r from-success to-error rounded-full flex items-center justify-center">
+                                  {plan.videos_included === 1 ? (
+                                    <Video className="text-white" size={24} />
+                                  ) : (
+                                    <Crown className="text-white" size={24} />
+                                  )}
+                                </div>
+                              </div>
+                              <div>
+                                <h3 className="text-xl font-bold text-base-content">
+                                  {plan.videos_included === 1
+                                    ? "Single Video"
+                                    : `${plan.videos_included} Videos`}
+                                </h3>
+                                <p className="text-base-content/70">
+                                  {plan.description}
+                                </p>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-2xl font-bold text-success">
+                                £{formatPrice(plan.price)}
+                              </div>
+                              <div className="text-sm text-base-content/60">
+                                {plan.videos_included > 1
+                                  ? `£${formatPrice(
+                                      plan.price / plan.videos_included
+                                    )} per video`
+                                  : "One-time payment"}
+                              </div>
+                            </div>
+                          </div>
+
+                          {selectedPlanId === plan.id && (
+                            <motion.div
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              className="absolute top-4 right-4"
+                            >
+                              <div className="w-6 h-6 bg-success rounded-full flex items-center justify-center">
+                                <Check className="text-white" size={16} />
+                              </div>
+                            </motion.div>
+                          )}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              ) : plans.length === 1 ? (
+                <div className="bg-base-content/5 backdrop-blur-lg rounded-3xl p-8 border border-base-content/10 shadow-2xl">
+                  <motion.h2
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                    className="text-2xl md:text-3xl font-bold mb-2"
+                  >
+                    <span className="bg-gradient-to-r from-success to-error bg-clip-text text-transparent">
+                      Your Santa Video Plan 🎅
+                    </span>
+                  </motion.h2>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                    className="bg-gradient-to-r from-success/10 to-error/10 rounded-2xl p-6 border border-success/20"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-success to-error rounded-full flex items-center justify-center">
+                          <Gift className="text-white" size={24} />
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-base-content">
+                            {plans[0].description}
+                          </h3>
+                          <p className="text-base-content/70">
+                            {plans[0].videos_included} magical video
+                            {plans[0].videos_included > 1 ? "s" : ""}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-3xl font-bold text-success">
+                          £{formatPrice(plans[0].price)}
+                        </div>
+                        <div className="text-sm text-base-content/60">
+                          One-time payment
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              ) : null}
+
               {/* Child's Information Card */}
               <div className="bg-base-content/5 backdrop-blur-lg rounded-3xl p-8 border border-base-content/10 shadow-2xl">
                 <motion.h2
@@ -314,23 +539,62 @@ const Personalise = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={handleContinueToCheckout}
                   disabled={
-                    loading || !formData.childName || !formData.childAge
+                    orderLoading ||
+                    !formData.childName ||
+                    !formData.childAge ||
+                    !selectedPlanId ||
+                    plansLoading
                   }
-                  className="flex-1 bg-gradient-to-r from-success to-info text-base-100 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 shadow-lg text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 bg-gradient-to-r from-success to-info text-base-100 font-semibold py-4 px-8 rounded-2xl transition-all duration-300 shadow-lg text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 >
-                  {loading ? "Processing..." : "Continue to Checkout 🛒"}
-                </motion.button>
-
-                <motion.button
-                  onClick={togglePreview}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-secondary hover:bg-secondary/80 text-secondary-content border border-accent font-semibold py-4 px-8 rounded-2xl transition-all duration-300 backdrop-blur-sm"
-                >
-                  <Play className="inline mr-2 text-accent" size={20} />
-                  Preview
+                  {orderLoading ? (
+                    <>
+                      <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{
+                          duration: 1,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
+                        className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                      />
+                      <span>Processing...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Continue to Checkout</span>
+                      <span>🛒</span>
+                    </>
+                  )}
                 </motion.button>
               </motion.div>
+
+              {/* Selected Plan Summary */}
+              {selectedPlanId && getSelectedPlan() && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.9 }}
+                  className="bg-success/10 backdrop-blur-lg rounded-2xl p-6 border border-success/20"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <Sparkles className="text-success" size={24} />
+                      <div>
+                        <h4 className="text-success font-semibold">
+                          Selected Plan
+                        </h4>
+                        <p className="text-success/80 text-sm">
+                          {getSelectedPlan()?.description}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-success font-bold text-xl">
+                      £{formatPrice(getSelectedPlan()?.price || 0)}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
             </motion.div>
 
             {/* Preview Section */}
@@ -370,48 +634,6 @@ const Personalise = () => {
                   ))}
                 </div>
               </div>
-
-              {/* Preview Video Mockup */}
-              <AnimatePresence>
-                {showPreview && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.5 }}
-                    className="bg-base-content/5 backdrop-blur-lg rounded-3xl p-8 border border-base-content/10 shadow-2xl"
-                  >
-                    <h4 className="text-xl font-bold text-base-content mb-4">
-                      Video Preview
-                    </h4>
-                    <div className="aspect-video bg-gradient-to-br from-error to-success rounded-2xl flex items-center justify-center relative overflow-hidden">
-                      <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="text-6xl"
-                      >
-                        🎅
-                      </motion.div>
-                      <div className="absolute inset-0 bg-base-content/20 flex items-center justify-center">
-                        <motion.div
-                          whileHover={{ scale: 1.1 }}
-                          className="bg-base-content/20 backdrop-blur-sm rounded-full p-4 cursor-pointer"
-                        >
-                          <Play className="text-base-content" size={32} />
-                        </motion.div>
-                      </div>
-                    </div>
-                    {formData.childName && (
-                      <div className="mt-4 p-4 bg-base-content/10 rounded-lg">
-                        <p className="text-base-content font-medium">
-                          Preview: "Ho ho ho! Hello {formData.childName}! I hear
-                          you're {formData.childAge} years old..."
-                        </p>
-                      </div>
-                    )}
-                  </motion.div>
-                )}
-              </AnimatePresence>
 
               {/* Delivery Info */}
               <motion.div

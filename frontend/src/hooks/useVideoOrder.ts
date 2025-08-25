@@ -1,7 +1,6 @@
 
 import { useVideo } from '../context/VideoContext';
 
-// Re-export the video context hook for backward compatibility
 export const useVideoOrder = () => {
   const videoContext = useVideo();
   

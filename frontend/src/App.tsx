@@ -7,6 +7,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { PaymentProvider } from "./context/PaymentContext";
 import { VideoProvider } from "./context/VideoContext";
 import { UserProvider } from "./context/UserContext";
+import { ThemesProvider } from "./context/ThemeContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Dashboard from "./pages/Dashboard";
@@ -23,7 +24,7 @@ import UserGuidesPage from "./pages/LegalAndGuides/UserGuidesPage";
 import ContactUsPage from "./pages/public/Contact";
 import TermsOfServicePage from "./pages/LegalAndGuides/TermsOfService";
 import "./App.css";
-import { ThemesProvider } from "./context/ThemeContext";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -39,20 +40,71 @@ const App = () => (
                 <Sonner />
                 <BrowserRouter>
                   <Routes>
-                    <Route path="/personalise" element={<Personalise />} />
-                    <Route path="/checkout" element={<SantaCheckout />} />
-                    <Route path="/order-success" element={<OrderSuccess />} />
-                    <Route path="/dashboard" element={<Dashboard />} />
-                    <Route path="/account" element={<UserAccount />} />
-                    {/* <Route path="/settings" element={<UserSettings />} /> */}
+                    {/* Protected Routes - Require Authentication */}
+                    <Route
+                      path="/personalise"
+                      element={
+                        <ProtectedRoute>
+                          <Personalise />
+                        </ProtectedRoute>
+                      }
+                    />
+                    {/* <Route
+                      path="/checkout"
+                      element={
+                        <ProtectedRoute>
+                          <SantaCheckout cl/>
+                        </ProtectedRoute>
+                      }
+                    /> */}
+                    <Route
+                      path="/order-success"
+                      element={
+                        <ProtectedRoute>
+                          <OrderSuccess />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/dashboard"
+                      element={
+                        <ProtectedRoute>
+                          <Dashboard />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/account"
+                      element={
+                        <ProtectedRoute>
+                          <UserAccount />
+                        </ProtectedRoute>
+                      }
+                    />
+                    {/* Uncomment when UserSettings is ready */}
+                    {/* 
+                    <Route
+                      path="/settings"
+                      element={
+                        <ProtectedRoute>
+                          <UserSettings />
+                        </ProtectedRoute>
+                      }
+                    />
+                    */}
+
+                    {/* Public Routes - No Authentication Required */}
                     <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Register />} />
+                    <Route path="/signup" element={<Register />} />
                     <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/privacy" element={<PrivacyPolicyPage />} />
                     <Route path="/guides" element={<UserGuidesPage />} />
                     <Route path="/contact-us" element={<ContactUsPage />} />
                     <Route
-                      path="terms-of-service"
+                      path="/terms-of-service"
                       element={<TermsOfServicePage />}
                     />
 

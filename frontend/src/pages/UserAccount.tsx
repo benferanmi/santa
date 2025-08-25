@@ -3,10 +3,19 @@ import { motion } from "framer-motion";
 import { User, Mail, Calendar, Camera, Save, Edit } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import AppLayout from "@/components/layout/AppLayout";
+import ProfileCard from "@/components/features/ProfileCard";
 
 const UserAccount = () => {
   const { user, updateProfile } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const dateUserJoined = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "long",
+      })
+    : "N/A";
+
   const [formData, setFormData] = useState({
     firstName: user?.firstName || "",
     lastName: user?.lastName || "",
@@ -85,54 +94,11 @@ const UserAccount = () => {
           </motion.div>
 
           {/* Profile Picture Section */}
-          <motion.div
-            variants={itemVariants}
-            className="rounded-2xl shadow-xl p-8 border-2"
-            style={{
-              backgroundColor: "var(--color-base-100)",
-              borderColor: "var(--color-primary)",
-            }}
-          >
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <div className="relative">
-                <div
-                  className="w-32 h-32 rounded-full flex items-center justify-center text-white text-4xl font-bold"
-                  style={{
-                    background: `linear-gradient(to right, var(--color-primary), var(--color-secondary))`,
-                  }}
-                >
-                  {user?.firstName?.[0]}
-                  {user?.lastName?.[0]}
-                </div>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="absolute bottom-0 right-0 text-white p-2 rounded-full shadow-lg"
-                  style={{ backgroundColor: "var(--color-primary)" }}
-                >
-                  <Camera className="w-4 h-4" />
-                </motion.button>
-              </div>
-              <div className="text-center md:text-left">
-                <h2
-                  className="text-3xl font-bold"
-                  style={{ color: "var(--foreground)" }}
-                >
-                  {user?.firstName} {user?.lastName}
-                </h2>
-                <p className="text-lg" style={{ color: "var(--foreground)" }}>
-                  {user?.email}
-                </p>
-                <div
-                  className="flex items-center gap-2 mt-2"
-                  style={{ color: "var(--color-base-content)" }}
-                >
-                  <Calendar className="w-4 h-4" />
-                  <span>Member since {user && user.createdAt}</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <ProfileCard
+            user={user}
+            updateProfile={updateProfile}
+            itemVariants={itemVariants}
+          />
 
           {/* Account Information */}
           <motion.div
@@ -463,27 +429,11 @@ const UserAccount = () => {
                 className="text-3xl font-bold"
                 style={{ color: "var(--foreground)" }}
               >
-                3
+                {user?.totalOrders || 0}
               </div>
               <div style={{ color: "var(--foreground)" }}>Videos Created</div>
             </div>
-            <div
-              className="rounded-2xl shadow-lg p-6 border-2 text-center"
-              style={{
-                backgroundColor: "var(--background)",
-                borderColor: "var(--color-secondary)",
-              }}
-            >
-              <div
-                className="text-3xl font-bold"
-                style={{ color: "var(--foreground)" }}
-              >
-                2
-              </div>
-              <div style={{ color: "var(--foreground)" }}>
-                Children Registered
-              </div>
-            </div>
+
             <div
               className="rounded-2xl shadow-lg p-6 border-2 text-center"
               style={{
@@ -495,7 +445,7 @@ const UserAccount = () => {
                 className="text-3xl font-bold"
                 style={{ color: "var(--color-accent)" }}
               >
-                Dec 2024
+                {dateUserJoined}
               </div>
               <div style={{ color: "var(--color-accent)" }}>Member Since</div>
             </div>

@@ -1,286 +1,406 @@
+import {
+  User,
+  Order,
+  DashboardStats,
+  ApiResponse,
+  LoginCredentials,
+} from "../types";
 
-import { User, Order, DashboardStats, ApiResponse, LoginCredentials } from '../types';
+const BASE_URL = "https://api.santavideowishes.co.uk";
 
-// Mock API delay
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+// Helper function to get auth token
+const getAuthToken = (): string | null => {
+  return localStorage.getItem("admin_token");
+};
 
-// Mock data
-const mockOrders: Order[] = [
-  {
-    id: 'ORD-001',
-    date: '2025-05-28',
-    name: 'John Smith',
-    age: 28,
-    status: 'delivered',
-    amount: 1250,
-    customerEmail: 'john.smith@email.com'
-  },
-  {
-    id: 'ORD-002',
-    date: '2025-05-27',
-    name: 'Sarah Johnson',
-    age: 34,
-    status: 'pending',
-    amount: 890,
-    customerEmail: 'sarah.johnson@email.com'
-  },
-  {
-    id: 'ORD-003',
-    date: '2025-05-26',
-    name: 'Michael Brown',
-    age: 42,
-    status: 'delivered',
-    amount: 2100,
-    customerEmail: 'michael.brown@email.com'
-  },
-  {
-    id: 'ORD-004',
-    date: '2025-05-25',
-    name: 'Emily Davis',
-    age: 29,
-    status: 'pending',
-    amount: 750,
-    customerEmail: 'emily.davis@email.com'
-  },
-  {
-    id: 'ORD-005',
-    date: '2025-05-24',
-    name: 'David Wilson',
-    age: 37,
-    status: 'delivered',
-    amount: 1680,
-    customerEmail: 'david.wilson@email.com'
-  },
-  {
-    id: 'ORD-006',
-    date: '2025-05-23',
-    name: 'Lisa Anderson',
-    age: 31,
-    status: 'pending',
-    amount: 945,
-    customerEmail: 'lisa.anderson@email.com'
-  },
-  {
-    id: 'ORD-007',
-    date: '2025-05-22',
-    name: 'Robert Martinez',
-    age: 45,
-    status: 'delivered',
-    amount: 1320,
-    customerEmail: 'robert.martinez@email.com'
-  },
-  {
-    id: 'ORD-008',
-    date: '2025-05-21',
-    name: 'Jennifer Taylor',
-    age: 26,
-    status: 'pending',
-    amount: 560,
-    customerEmail: 'jennifer.taylor@email.com'
+// Helper function to make authenticated requests
+const makeAuthenticatedRequest = async (
+  endpoint: string,
+  options: RequestInit = {}
+): Promise<Response> => {
+  const token = getAuthToken();
+
+  const config: RequestInit = {
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+      ...options.headers,
+    },
+  };
+
+  const response = await fetch(`${BASE_URL}${endpoint}`, config);
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(
+      errorData.message || `HTTP error! status: ${response.status}`
+    );
   }
-];
 
-const mockUsers = [
-  {
-    id: 'USR-001',
-    name: 'John Smith',
-    email: 'john.smith@email.com'
-  },
-  {
-    id: 'USR-002',
-    name: 'Sarah Johnson',
-    email: 'sarah.johnson@email.com'
-  },
-  {
-    id: 'USR-003',
-    name: 'Michael Brown',
-    email: 'michael.brown@email.com'
-  },
-  {
-    id: 'USR-004',
-    name: 'Emily Davis',
-    email: 'emily.davis@email.com'
-  },
-  {
-    id: 'USR-005',
-    name: 'David Wilson',
-    email: 'david.wilson@email.com'
-  },
-  {
-    id: 'USR-006',
-    name: 'Lisa Anderson',
-    email: 'lisa.anderson@email.com'
-  },
-  {
-    id: 'USR-007',
-    name: 'Robert Martinez',
-    email: 'robert.martinez@email.com'
-  },
-  {
-    id: 'USR-008',
-    name: 'Jennifer Taylor',
-    email: 'jennifer.taylor@email.com'
-  }
-];
+  return response;
+};
+
+// Types for pricing
+export interface PricingPlan {
+  id: string;
+  price: number; // amount in cents
+  videos_included: number;
+  description: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface CreatePricingPlan {
+  price: number;
+  videos_included: number;
+  description: string;
+}
+
+export interface UpdatePricingPlan {
+  price: number;
+  videos_included: number;
+  description: string;
+}
 
 // API functions
 export const authAPI = {
   login: async (credentials: LoginCredentials): Promise<ApiResponse<User>> => {
-    await delay(1000);
-    
-    if (credentials.email === 'admin@admin.com' && credentials.password === 'admin123') {
-      const user: User = {
-        id: '1',
-        email: 'admin@admin.com',
-        name: 'Admin User',
-        role: 'admin',
-      };
-      
+    try {
+      const response = await fetch(`${BASE_URL}/admin/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Login failed");
+      }
+
+      const data = await response.json();
+
+      // Store token if provided
+      if (data.token) {
+        localStorage.setItem("admin_token", data.token);
+      }
+
+      // Store user data
+      if (data.user || data.data) {
+        localStorage.setItem(
+          "admin_user",
+          JSON.stringify(data.user || data.data)
+        );
+      }
+
       return {
-        data: user,
-        message: 'Login successful',
+        data: data.user || data.data,
+        message: data.message || "Login successful",
         success: true,
       };
+    } catch (error) {
+      throw new Error(error instanceof Error ? error.message : "Login failed");
     }
-    
-    throw new Error('Invalid credentials');
   },
 
   logout: async (): Promise<ApiResponse<null>> => {
-    await delay(500);
-    return {
-      data: null,
-      message: 'Logout successful',
-      success: true,
-    };
+    try {
+      await makeAuthenticatedRequest("/auth/logout", {
+        method: "POST",
+      });
+      console.log("reached");
+
+      // Clear local storage
+      localStorage.removeItem("admin_token");
+      localStorage.removeItem("admin_user");
+
+      return {
+        data: null,
+        message: "Logout successful",
+        success: true,
+      };
+    } catch (error) {
+      // Clear local storage even if API call fails
+      localStorage.removeItem("admin_token");
+      localStorage.removeItem("admin_user");
+
+      return {
+        data: null,
+        message: "Logout successful",
+        success: true,
+      };
+    }
   },
 };
 
 export const dashboardAPI = {
   getStats: async (): Promise<ApiResponse<DashboardStats>> => {
-    await delay(800);
-    
-    const stats: DashboardStats = {
-      revenue: 48352,
-      totalOrders: mockOrders.length,
-      videosCompleted: 856,
-      revenueChange: 12.5,
-      ordersChange: 8.2,
-      videosChange: -2.4,
-    };
-    
-    return {
-      data: stats,
-      message: 'Stats fetched successfully',
-      success: true,
-    };
+    try {
+      const response = await makeAuthenticatedRequest(
+        "/admin/dashboard/analytics"
+      );
+      const data = await response.json();
+
+      return {
+        data: data.data || data,
+        message: data.message || "Stats fetched successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to fetch stats"
+      );
+    }
   },
 };
 
 export const ordersAPI = {
   getOrders: async (): Promise<ApiResponse<Order[]>> => {
-    await delay(600);
-    return {
-      data: mockOrders,
-      message: 'Orders fetched successfully',
-      success: true,
-    };
+    try {
+      const response = await makeAuthenticatedRequest("/admin/orders");
+      const data = await response.json();
+
+      console.log(data.data.orders);
+
+      return {
+        data: data.data.orders || data,
+        message: data.message || "Orders fetched successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to fetch orders"
+      );
+    }
   },
 
-  updateOrderStatus: async (orderId: string, status: 'delivered' | 'pending'): Promise<ApiResponse<Order>> => {
-    await delay(500);
-    
-    const orderIndex = mockOrders.findIndex(order => order.id === orderId);
-    if (orderIndex === -1) {
-      throw new Error('Order not found');
+  updateOrderStatus: async (
+    orderId: string,
+    status: "delivered" | "pending"
+  ): Promise<ApiResponse<Order>> => {
+    try {
+      const response = await makeAuthenticatedRequest(
+        `/orders/${orderId}/status`,
+        {
+          method: "PUT",
+          body: JSON.stringify({ status }),
+        }
+      );
+
+      const data = await response.json();
+
+      return {
+        data: data.data || data,
+        message: data.message || "Order status updated successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to update order status"
+      );
     }
-    
-    mockOrders[orderIndex].status = status;
-    
-    return {
-      data: mockOrders[orderIndex],
-      message: 'Order status updated successfully',
-      success: true,
-    };
   },
 
   deleteOrder: async (orderId: string): Promise<ApiResponse<null>> => {
-    await delay(500);
-    
-    const orderIndex = mockOrders.findIndex(order => order.id === orderId);
-    if (orderIndex === -1) {
-      throw new Error('Order not found');
+    try {
+      const response = await makeAuthenticatedRequest(`/orders/${orderId}`, {
+        method: "DELETE",
+      });
+
+      const data = await response.json();
+
+      return {
+        data: null,
+        message: data.message || "Order deleted successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to delete order"
+      );
     }
-    
-    mockOrders.splice(orderIndex, 1);
-    
-    return {
-      data: null,
-      message: 'Order deleted successfully',
-      success: true,
-    };
   },
 };
 
 export const usersAPI = {
   getUsers: async () => {
-    await delay(600);
-    return {
-      data: mockUsers,
-      message: 'Users fetched successfully',
-      success: true,
-    };
+    try {
+      const response = await makeAuthenticatedRequest("/users");
+      const data = await response.json();
+
+      return {
+        data: data.data || data,
+        message: data.message || "Users fetched successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to fetch users"
+      );
+    }
   },
 
   createUser: async (userData: { name: string; email: string }) => {
-    await delay(500);
-    
-    const newUser = {
-      id: `USR-${String(mockUsers.length + 1).padStart(3, '0')}`,
-      name: userData.name,
-      email: userData.email,
-    };
-    
-    mockUsers.push(newUser);
-    
-    return {
-      data: newUser,
-      message: 'User created successfully',
-      success: true,
-    };
+    try {
+      const response = await makeAuthenticatedRequest("/users", {
+        method: "POST",
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      return {
+        data: data.data || data,
+        message: data.message || "User created successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to create user"
+      );
+    }
   },
 
-  updateUser: async (userId: string, userData: { name: string; email: string }) => {
-    await delay(500);
-    
-    const userIndex = mockUsers.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      throw new Error('User not found');
+  updateUser: async (
+    userId: string,
+    userData: { name: string; email: string }
+  ) => {
+    try {
+      const response = await makeAuthenticatedRequest(`/users/${userId}`, {
+        method: "PUT",
+        body: JSON.stringify(userData),
+      });
+
+      const data = await response.json();
+
+      return {
+        data: data.data || data,
+        message: data.message || "User updated successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to update user"
+      );
     }
-    
-    mockUsers[userIndex] = { ...mockUsers[userIndex], ...userData };
-    
-    return {
-      data: mockUsers[userIndex],
-      message: 'User updated successfully',
-      success: true,
-    };
   },
 
   deleteUser: async (userId: string) => {
-    await delay(500);
-    
-    const userIndex = mockUsers.findIndex(user => user.id === userId);
-    if (userIndex === -1) {
-      throw new Error('User not found');
+    try {
+      const response = await makeAuthenticatedRequest(`/users/${userId}`, {
+        method: "DELETE",
+      });
+
+      const data = await response.json();
+
+      return {
+        data: null,
+        message: data.message || "User deleted successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to delete user"
+      );
     }
-    
-    mockUsers.splice(userIndex, 1);
-    
-    return {
-      data: null,
-      message: 'User deleted successfully',
-      success: true,
-    };
+  },
+};
+
+// New Pricing API
+export const pricingAPI = {
+  // Get all pricing plans
+  getAllPlans: async (): Promise<ApiResponse<PricingPlan[]>> => {
+    try {
+      const response = await makeAuthenticatedRequest("/admin/pricing");
+      const data = await response.json();
+
+      return {
+        data: data.data || data,
+        message: data.message || "Pricing plans fetched successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to fetch pricing plans"
+      );
+    }
+  },
+
+  // Create new pricing plan
+  createPlan: async (
+    planData: CreatePricingPlan
+  ): Promise<ApiResponse<PricingPlan>> => {
+    try {
+      const response = await makeAuthenticatedRequest("/admin/pricing/add", {
+        method: "POST",
+        body: JSON.stringify(planData),
+      });
+
+      const data = await response.json();
+
+      return {
+        data: data.data || data,
+        message: data.message || "Pricing plan created successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to create pricing plan"
+      );
+    }
+  },
+
+  // Update existing pricing plan
+  updatePlan: async (
+    planId: string,
+    planData: UpdatePricingPlan
+  ): Promise<ApiResponse<PricingPlan>> => {
+    try {
+      const response = await makeAuthenticatedRequest(
+        `/admin/pricing/${planId}`,
+        {
+          method: "PUT",
+          body: JSON.stringify(planData),
+        }
+      );
+
+      const data = await response.json();
+
+      return {
+        data: data.data || data,
+        message: data.message || "Pricing plan updated successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to update pricing plan"
+      );
+    }
+  },
+
+  // Delete pricing plan
+  deletePlan: async (planId: string): Promise<ApiResponse<null>> => {
+    try {
+      const response = await makeAuthenticatedRequest(
+        `/admin/pricing/${planId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      const data = await response.json();
+
+      return {
+        data: null,
+        message: data.message || "Pricing plan deleted successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to delete pricing plan"
+      );
+    }
   },
 };

@@ -11,10 +11,18 @@ const Header = () => {
   const { theme, changeTheme } = useThemes();
   const [mode, setMode] = useState(theme);
 
-  const navigationItems = [
+  const authNavigationItems = [
     { name: "Home", href: "/" },
     { name: "Personalise", href: "/personalise" },
     { name: "Dashboard", href: "/dashboard" },
+    { name: "About", href: "/about" },
+    { name: "Contact Us", href: "/contact-us" },
+  ];
+
+  const navigationItems = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Contact Us", href: "/contact-us" },
   ];
 
   const handleSignOut = () => {
@@ -26,36 +34,51 @@ const Header = () => {
     changeTheme(mode);
   }, [mode]);
 
-  console.log(isAuthenticated);
-
   return (
-    <header className="bg-gradient shadow-lg">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header className="bg-header-gradient shadow-lg">
+      <div className="w-[95%] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo and Brand */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md">
+            <Link
+              to={"/"}
+              className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md"
+            >
               <span className="text-2xl">
                 <img alt="" src={Logo} />
               </span>
-            </div>
+            </Link>
             <div className="text-white">
-              <h1 className="text-xl font-bold">International Elf HQ</h1>
+              <h1 className="text-xl font-bold">Santa Video Wishes</h1>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
-            {navigationItems?.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className="text-white hover:text-amber-300 px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white hover:bg-opacity-10"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
+          {!isAuthenticated ? (
+            <nav className="hidden md:flex space-x-8">
+              {navigationItems?.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-white hover:text-amber-300 px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white hover:bg-opacity-10"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          ) : (
+            <nav className="hidden md:flex space-x-8">
+              {authNavigationItems?.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-white hover:text-amber-300 px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 hover:bg-white hover:bg-opacity-10"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          )}
 
           {/* Right Side - Create Video Button and Profile */}
           <div className="flex items-center space-x-4">
@@ -72,7 +95,7 @@ const Header = () => {
               />
             )}
             {isAuthenticated ? (
-              <>
+              <div className="md:hidden lg:flex flex-row space-x-2">
                 <Link
                   to="/personalise"
                   className="bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 hidden sm:block"
@@ -80,10 +103,17 @@ const Header = () => {
                   Create Your Video
                 </Link>
                 <div className="flex items-center space-x-3">
-                  <Link to="/account" className="flex items-center space-x-2">
+                  <Link
+                    to="/dashboard#account"
+                    className="flex items-center space-x-2"
+                  >
                     <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
                       {user?.avatar ? (
-                        <img alt="" src={user?.avatar} />
+                        <img
+                          alt=""
+                          src={user?.avatar}
+                          className="w-[100%] h-[100%] rounded-full"
+                        />
                       ) : (
                         <User className="w-5 h-5 text-red-600" />
                       )}
@@ -101,11 +131,11 @@ const Header = () => {
                     </button>
                   </div>
                 </div>
-              </>
+              </div>
             ) : (
               <>
                 <Link
-                  to={"/register"}
+                  to={"/login"}
                   className="text-white hover:text-yellow-200 font-medium"
                 >
                   Sign In
@@ -132,19 +162,36 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 bg-red-800 bg-opacity-50 rounded-lg mt-2">
-            {navigationItems?.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className="text-white hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {isAuthenticated ? (
+              <div>
+                {authNavigationItems?.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-white hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {navigationItems?.map((item) => (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-white hover:text-yellow-200 block px-3 py-2 rounded-md text-base font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            )}
             {!isAuthenticated && (
               <Link
-                to="/register"
+                to="/login"
                 className="w-full bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg mt-3 block text-center"
                 onClick={() => setIsMenuOpen(false)}
               >

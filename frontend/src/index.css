@@ -3,10 +3,166 @@
 @tailwind utilities;
 @plugin "daisyui";
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+
+@keyframes snow-fall {
+  from {
+    transform: translateY(-20px);
+  }
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes santa-sway {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.05) rotate(2deg); }
+  75% { transform: scale(1.05) rotate(-2deg); }
+}
+
+@keyframes reindeer-fly {
+  from { transform: translateX(-100px); }
+  to { transform: translateX(calc(100vw + 100px)); }
+}
+
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.animate-snow-fall {
+  animation: snow-fall linear infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+.animate-santa-sway {
+  animation: santa-sway 4s ease-in-out infinite;
+}
+
+.animate-reindeer-fly {
+  animation: reindeer-fly 8s linear infinite;
+}
+
+.animate-pulse-scale {
+  animation: pulse-scale 2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 15s linear infinite;
+}
+
+.animate-snow-fall,
+.animate-twinkle,
+.animate-santa-sway,
+.animate-reindeer-fly,
+.animate-pulse-scale,
+.animate-spin-slow,
+.animate-spin-reverse {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(10px, -10px) rotate(90deg);
+  }
+  50% {
+    transform: translate(-5px, -20px) rotate(180deg);
+  }
+  75% {
+    transform: translate(-10px, -10px) rotate(270deg);
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 25s ease-in-out infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 3s ease-in-out infinite;
+}
+
+.bg-gradient {
+  background: linear-gradient(-45deg, #ef4444, #22c55e, #3b82f6, #f59e0b);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.animate-float-slow,
+.animate-bounce-slow,
+.bg-gradient {
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float-slow,
+  .animate-bounce-slow {
+    animation: none;
+  }
+  
+  .bg-gradient {
+    background: linear-gradient(-45deg, #ef4444, #22c55e);
+    animation: none;
+  }
+}
+
 .bg-effect {
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.bg-header-gradient {
+  background: linear-gradient(-45deg, var(--from-color), var(--via-color), var(--to-color));
 }
 @layer base {
   :root {

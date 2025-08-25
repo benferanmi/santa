@@ -1,14 +1,22 @@
-
-import api from '../lib/api';
-import { PaymentMethod, PaymentRequest, PaymentResponse, ApiResponse } from '../types/api';
+import { GenerateVideoData, OrderData } from "@/context/PaymentContext";
+import api from "../lib/api";
+import {
+  PaymentMethod,
+  PaymentRequest,
+  PaymentResponse,
+  ApiResponse,
+  StripePaymentIntentResponse,
+  GetPlansResponse,
+  GenerateVideoResponse,
+} from "../types/api";
 
 export class PaymentApiService {
   // Get user's payment methods
   static async getPaymentMethods(): Promise<ApiResponse<PaymentMethod[]>> {
     try {
-      const response = await api.get('/payments/methods');
+      const response = await api.get("/payments/methods");
       return response;
-      
+
       // Expected JSON from backend:
       // {
       //   "success": true,
@@ -30,74 +38,86 @@ export class PaymentApiService {
       //   ]
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to fetch payment methods' };
+      return { success: false, error: "Failed to fetch payment methods" };
     }
   }
 
   // Add new payment method
-  static async addPaymentMethod(type: 'card' | 'paypal' | 'stripe', data: any): Promise<ApiResponse<PaymentMethod>> {
-    try {
-      const response = await api.post('/payments/methods', { type, ...data });
-      return response;
+  // static async addPaymentMethod(
+  //   type: "card" | "paypal" | "stripe",
+  //   data: any
+  // ): Promise<ApiResponse<PaymentMethod>> {
+  //   try {
+  //     const response = await api.post("/payments/methods", { type, ...data });
+  //     return response;
 
-      // Expected request body for card:
-      // {
-      //   "type": "card",
-      //   "cardNumber": "4242424242424242",
-      //   "expiryMonth": 12,
-      //   "expiryYear": 2025,
-      //   "cvv": "123",
-      //   "nameOnCard": "John Doe"
-      // }
-      
-      // Expected request body for PayPal:
-      // {
-      //   "type": "paypal",
-      //   "paypalEmail": "user@paypal.com"
-      // }
-      
-      // Expected response: Single PaymentMethod object
-    } catch (error) {
-      return { success: false, error: 'Failed to add payment method' };
-    }
-  }
+  //     // Expected request body for card:
+  //     // {
+  //     //   "type": "card",
+  //     //   "cardNumber": "4242424242424242",
+  //     //   "expiryMonth": 12,
+  //     //   "expiryYear": 2025,
+  //     //   "cvv": "123",
+  //     //   "nameOnCard": "John Doe"
+  //     // }
+
+  //     // Expected request body for PayPal:
+  //     // {
+  //     //   "type": "paypal",
+  //     //   "paypalEmail": "user@paypal.com"
+  //     // }
+
+  //     // Expected response: Single PaymentMethod object
+  //   } catch (error) {
+  //     return { success: false, error: "Failed to add payment method" };
+  //   }
+  // }
 
   // Remove payment method
-  static async removePaymentMethod(methodId: string): Promise<ApiResponse<void>> {
+  static async removePaymentMethod(
+    methodId: string
+  ): Promise<ApiResponse<void>> {
     try {
       const response = await api.delete(`/payments/methods/${methodId}`);
       return response;
-      
+
       // Expected response:
       // {
       //   "success": true,
       //   "message": "Payment method removed successfully"
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to remove payment method' };
+      return { success: false, error: "Failed to remove payment method" };
     }
   }
 
   // Set default payment method
-  static async setDefaultPaymentMethod(methodId: string): Promise<ApiResponse<void>> {
+  static async setDefaultPaymentMethod(
+    methodId: string
+  ): Promise<ApiResponse<void>> {
     try {
-      const response = await api.put(`/payments/methods/${methodId}/default`, {});
+      const response = await api.put(
+        `/payments/methods/${methodId}/default`,
+        {}
+      );
       return response;
-      
+
       // Expected response:
       // {
       //   "success": true,
       //   "message": "Default payment method updated"
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to set default payment method' };
+      return { success: false, error: "Failed to set default payment method" };
     }
   }
 
   // Process payment
-  static async processPayment(paymentData: PaymentRequest): Promise<ApiResponse<PaymentResponse>> {
+  static async processPayment(
+    paymentData: PaymentRequest
+  ): Promise<ApiResponse<PaymentResponse>> {
     try {
-      const response = await api.post('/payments/process', paymentData);
+      const response = await api.post("/payments/process", paymentData);
       return response;
 
       // Expected request body:
@@ -111,7 +131,7 @@ export class PaymentApiService {
       //     "frontDoorImage": "base64_string_or_url"
       //   }
       // }
-      
+
       // Expected response:
       // {
       //   "success": true,
@@ -125,38 +145,71 @@ export class PaymentApiService {
       //   }
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to process payment' };
+      return { success: false, error: "Failed to process payment" };
     }
   }
 
   // Create Stripe payment intent
-  static async createStripePaymentIntent(amount: number, currency: string = 'usd'): Promise<ApiResponse<{ clientSecret: string }>> {
+  static async createStripePaymentIntent(
+    orderData: OrderData
+  ): Promise<StripePaymentIntentResponse> {
     try {
-      const response = await api.post('/payments/stripe/intent', { amount, currency });
-      return response;
+      const response = await api.post("/user/create-payment-intent", {
+        childName: orderData.childName,
+        childAge: orderData.childAge,
+        pricingId: orderData.pricingId,
+      });
 
-      // Expected request body:
-      // {
-      //   "amount": 4999,
-      //   "currency": "usd"
-      // }
-      
-      // Expected response:
-      // {
-      //   "success": true,
-      //   "data": {
-      //     "clientSecret": "pi_123_secret_456"
-      //   }
-      // }
+      return response;
     } catch (error) {
-      return { success: false, error: 'Failed to create payment intent' };
+      console.log(error);
+      return {
+        client_secret: "",
+        payment_intent_id: "",
+        success: false,
+      };
+    }
+  }
+  static async generateVideo(data: GenerateVideoData): Promise<GenerateVideoResponse> {
+    try {
+      const response = await api.post("/user/generate-video", data);
+
+      if (!response.success) {
+        throw new Error(`HTTP error! status: ${response.success}`);
+      }
+
+      return response;
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+      throw error;
+    }
+  }
+
+  static async getPlans(): Promise<GetPlansResponse> {
+    try {
+      const response = await api.get("/user/pricing");
+
+      if (!response.success) {
+        throw new Error(`HTTP error! status: ${response.success}`);
+      }
+
+      return response;
+    } catch (error) {
+      console.error("Error fetching plans:", error);
+      throw error;
     }
   }
 
   // Create PayPal order
-  static async createPayPalOrder(amount: number, currency: string = 'USD'): Promise<ApiResponse<{ orderId: string, approvalUrl: string }>> {
+  static async createPayPalOrder(
+    amount: number,
+    currency: string = "USD"
+  ): Promise<ApiResponse<{ orderId: string; approvalUrl: string }>> {
     try {
-      const response = await api.post('/payments/paypal/order', { amount, currency });
+      const response = await api.post("/payments/paypal/order", {
+        amount,
+        currency,
+      });
       return response;
 
       // Expected request body:
@@ -164,7 +217,7 @@ export class PaymentApiService {
       //   "amount": 49.99,
       //   "currency": "USD"
       // }
-      
+
       // Expected response:
       // {
       //   "success": true,
@@ -174,19 +227,21 @@ export class PaymentApiService {
       //   }
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to create PayPal order' };
+      return { success: false, error: "Failed to create PayPal order" };
     }
   }
 
   // Verify payment status
-  static async verifyPayment(paymentId: string): Promise<ApiResponse<PaymentResponse>> {
+  static async verifyPayment(
+    paymentId: string
+  ): Promise<ApiResponse<PaymentResponse>> {
     try {
       const response = await api.get(`/payments/verify/${paymentId}`);
       return response;
-      
+
       // Expected response: Same as processPayment response
     } catch (error) {
-      return { success: false, error: 'Failed to verify payment' };
+      return { success: false, error: "Failed to verify payment" };
     }
   }
 }

@@ -1,23 +1,30 @@
-
-import api from '../lib/api';
-import { VideoRequest, VideoOrder, VideoGenerationResponse, ApiResponse, PaginatedResponse } from '../types/api';
+import api from "../lib/api";
+import {
+  VideoRequest,
+  VideoOrder,
+  VideoGenerationResponse,
+  ApiResponse,
+  PaginatedResponse,
+} from "../types/api";
 
 export class VideoApiService {
   // Create new video order
-  static async createVideoOrder(videoData: VideoRequest): Promise<ApiResponse<VideoGenerationResponse>> {
+  static async createVideoOrder(
+    videoData: VideoRequest
+  ): Promise<ApiResponse<VideoGenerationResponse>> {
     try {
       const formData = new FormData();
-      formData.append('childName', videoData.childName);
-      formData.append('childAge', videoData.childAge);
+      formData.append("childName", videoData.childName);
+      formData.append("childAge", videoData.childAge);
       if (videoData.frontDoorImage) {
-        formData.append('frontDoorImage', videoData.frontDoorImage);
+        formData.append("frontDoorImage", videoData.frontDoorImage);
       }
       if (videoData.customMessage) {
-        formData.append('customMessage', videoData.customMessage);
+        formData.append("customMessage", videoData.customMessage);
       }
-      formData.append('videoStyle', videoData.videoStyle || 'classic');
+      formData.append("videoStyle", videoData.videoStyle || "classic");
 
-      const response = await api.post('/videos/create', formData);
+      const response = await api.post("/videos/create", formData);
       return response;
 
       // Expected request body (FormData):
@@ -26,7 +33,7 @@ export class VideoApiService {
       // - frontDoorImage: File object
       // - customMessage: "Emma has been very good this year"
       // - videoStyle: "classic" | "modern" | "animated"
-      
+
       // Expected response:
       // {
       //   "success": true,
@@ -38,16 +45,21 @@ export class VideoApiService {
       //   }
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to create video order' };
+      return { success: false, error: "Failed to create video order" };
     }
   }
 
   // Get user's video orders
-  static async getVideoOrders(page: number = 1, limit: number = 10): Promise<ApiResponse<PaginatedResponse<VideoOrder>>> {
+  static async getVideoOrders(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<PaginatedResponse<VideoOrder>> {
     try {
-      const response = await api.get(`/videos/orders?page=${page}&limit=${limit}`);
+      const response = await api.get(
+        `/user/orders?page=${page}&limit=${limit}`
+      );
       return response;
-      
+
       // Expected response:
       // {
       //   "success": true,
@@ -79,28 +91,38 @@ export class VideoApiService {
       //   }
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to fetch video orders' };
+      return { success: false, error: "Failed to fetch video orders" };
     }
   }
 
   // Get specific video order
-  static async getVideoOrder(orderId: string): Promise<ApiResponse<VideoOrder>> {
+  static async getVideoOrder(
+    orderId: string
+  ): Promise<ApiResponse<VideoOrder>> {
     try {
       const response = await api.get(`/videos/orders/${orderId}`);
       return response;
-      
+
       // Expected response: Single VideoOrder object
     } catch (error) {
-      return { success: false, error: 'Failed to fetch video order' };
+      return { success: false, error: "Failed to fetch video order" };
     }
   }
 
   // Check video generation status
-  static async checkVideoStatus(orderId: string): Promise<ApiResponse<{ status: string, progress: number, estimatedCompletion?: string }>> {
+  static async checkVideoStatus(
+    orderId: string
+  ): Promise<
+    ApiResponse<{
+      status: string;
+      progress: number;
+      estimatedCompletion?: string;
+    }>
+  > {
     try {
       const response = await api.get(`/videos/status/${orderId}`);
       return response;
-      
+
       // Expected response:
       // {
       //   "success": true,
@@ -111,16 +133,18 @@ export class VideoApiService {
       //   }
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to check video status' };
+      return { success: false, error: "Failed to check video status" };
     }
   }
 
   // Download video
-  static async downloadVideo(orderId: string): Promise<ApiResponse<{ downloadUrl: string, expiresAt: string }>> {
+  static async downloadVideo(
+    orderId: string
+  ): Promise<ApiResponse<{ downloadUrl: string; expiresAt: string }>> {
     try {
       const response = await api.get(`/videos/download/${orderId}`);
       return response;
-      
+
       // Expected response:
       // {
       //   "success": true,
@@ -130,7 +154,7 @@ export class VideoApiService {
       //   }
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to get download link' };
+      return { success: false, error: "Failed to get download link" };
     }
   }
 
@@ -139,40 +163,47 @@ export class VideoApiService {
     try {
       const response = await api.delete(`/videos/orders/${orderId}`);
       return response;
-      
+
       // Expected response:
       // {
       //   "success": true,
       //   "message": "Video order cancelled successfully"
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to cancel video order' };
+      return { success: false, error: "Failed to cancel video order" };
     }
   }
 
   // Request video regeneration (if failed)
-  static async regenerateVideo(orderId: string): Promise<ApiResponse<VideoGenerationResponse>> {
+  static async regenerateVideo(
+    orderId: string
+  ): Promise<ApiResponse<VideoGenerationResponse>> {
     try {
       const response = await api.post(`/videos/regenerate/${orderId}`, {});
       return response;
-      
+
       // Expected response: Same as createVideoOrder
     } catch (error) {
-      return { success: false, error: 'Failed to regenerate video' };
+      return { success: false, error: "Failed to regenerate video" };
     }
   }
 
   // Share video (get shareable link)
-  static async shareVideo(orderId: string, expirationDays: number = 30): Promise<ApiResponse<{ shareUrl: string, expiresAt: string }>> {
+  static async shareVideo(
+    orderId: string,
+    expirationDays: number = 30
+  ): Promise<ApiResponse<{ shareUrl: string; expiresAt: string }>> {
     try {
-      const response = await api.post(`/videos/share/${orderId}`, { expirationDays });
+      const response = await api.post(`/videos/share/${orderId}`, {
+        expirationDays,
+      });
       return response;
 
       // Expected request body:
       // {
       //   "expirationDays": 30
       // }
-      
+
       // Expected response:
       // {
       //   "success": true,
@@ -182,7 +213,7 @@ export class VideoApiService {
       //   }
       // }
     } catch (error) {
-      return { success: false, error: 'Failed to create share link' };
+      return { success: false, error: "Failed to create share link" };
     }
   }
 }

@@ -1,9 +1,8 @@
-
 export interface User {
   id: string;
   email: string;
   name: string;
-  role: 'admin' | 'user';
+  role: "admin" | "user";
 }
 
 export interface AuthState {
@@ -16,9 +15,10 @@ export interface AuthState {
 export interface Order {
   id: string;
   date: string;
+  order_id: string;
   name: string;
   age: number;
-  status: 'delivered' | 'pending';
+  status: "delivered" | "pending";
   amount?: number;
   customerEmail?: string;
 }

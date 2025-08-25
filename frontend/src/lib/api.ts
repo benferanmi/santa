@@ -1,8 +1,7 @@
-// API configuration and utilities
-const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:3001/api";
+const BASE_API = "https://api.santavideowishes.co.uk";
 
-// Simple fetch wrapper since axios isn't installed yet
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || BASE_API;
+
 export const api = {
   get: async (url: string) => {
     const response = await fetch(`${API_BASE_URL}${url}`, {
@@ -15,25 +14,37 @@ export const api = {
   },
 
   post: async (url: string, data: any) => {
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+
+    if (!(data instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+      data = JSON.stringify(data);
+    }
+
     const response = await fetch(`${API_BASE_URL}${url}`, {
       method: "POST",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      headers,
+      body: data,
     });
     return response.json();
   },
 
   put: async (url: string, data: any) => {
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    };
+
+    if (!(data instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+      data = JSON.stringify(data);
+    }
+
     const response = await fetch(`${API_BASE_URL}${url}`, {
       method: "PUT",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      headers,
+      body: data,
     });
     return response.json();
   },
