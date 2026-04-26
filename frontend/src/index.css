@@ -225,7 +225,7 @@
   --custom-opacity: 0.5; /* ✅ Remove quotes so it works in CSS */
 
   /* Images */
-  --image2: url(""); /* No image */
+  --image2: url(""); 
   --image3: url("/images/3.jpg");
   --image4: url("/images/4.jpg");
   --image5: url("/images/5.jpg");

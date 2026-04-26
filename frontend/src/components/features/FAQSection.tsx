@@ -7,9 +7,9 @@ const FAQSection = () => {
 
   const faqs = [
     {
-      question: "How does the personalised Santa video work?",
+      question: "How does the Personalized Santa video work?",
       answer:
-        "Our magical elves create a custom video featuring Santa mentioning your child's name and personal details you provide. Santa will talk about their good behavior, wishes, and deliver a personalized Christmas message just for them.",
+        "Our magical elves create a custom video featuring Santa mentioning your child's name and personal details you provide. Santa will talk about their good behavior, wishes, and deliver a Personalized Christmas message just for them.",
     },
     {
       question: "How long does it take to receive the video?",
@@ -19,7 +19,7 @@ const FAQSection = () => {
     {
       question: "Can I customize the message in the video?",
       answer:
-        "Absolutely! You can include specific details about your child's interests, achievements, wishes, and any special messages you'd like Santa to mention. The more details you provide, the more personalized the video becomes.",
+        "Absolutely! You can include specific details about your child's interests, achievements, wishes, and any special messages you'd like Santa to mention. The more details you provide, the more Personalized the video becomes.",
     },
     {
       question: "What if I need the video urgently?",
@@ -29,7 +29,7 @@ const FAQSection = () => {
     {
       question: "Can I order videos for more than one child?",
       answer:
-        "Yes! You can order individual personalized videos for multiple children. Each video will be uniquely crafted with that specific child's name and personalized details.",
+        "Yes! You can order individual Personalized videos for multiple children. Each video will be uniquely crafted with that specific child's name and Personalized details.",
     },
   ];
 

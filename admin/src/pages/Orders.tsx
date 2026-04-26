@@ -63,7 +63,7 @@ const Orders = () => {
       status,
     }: {
       orderId: string;
-      status: "delivered" | "pending";
+      status: "completed" | "processing";
     }) => ordersAPI.updateOrderStatus(orderId, status),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
@@ -100,11 +100,29 @@ const Orders = () => {
     },
   });
 
+  const reprocessOrderMutation = useMutation({
+    mutationFn: (orderId: string) => ordersAPI.reprocessOrder(orderId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      toast({
+        title: "Success",
+        description: "Order Reprocessed successfully",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
   const StatusBadge = ({ status }: { status: string }) => {
     const config = {
-      delivered: {
+      completed: {
         variant: "default" as const,
-        label: "Delivered",
+        label: "Completed",
         icon: CheckCircle,
       },
       pending: { variant: "secondary" as const, label: "Pending", icon: Clock },
@@ -144,14 +162,14 @@ const Orders = () => {
   const filteredOrders = orders
     .filter((order: Order) => {
       const matchesSearch =
-        order.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        order.id.toLowerCase().includes(searchTerm.toLowerCase());
+        order.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        order.order_id?.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesStatus =
         statusFilter === "all" || order.status === statusFilter;
       return matchesSearch && matchesStatus;
     })
     .sort((a: Order, b: Order) => {
-      let aValue: any, bValue: any;
+      let aValue: unknown, bValue: unknown;
 
       switch (sortBy) {
         case "date":
@@ -171,8 +189,8 @@ const Orders = () => {
           bValue = b.status;
           break;
         default:
-          aValue = a.id;
-          bValue = b.id;
+          aValue = a.order_id;
+          bValue = b.order_id;
       }
 
       if (sortOrder === "asc") {
@@ -193,7 +211,7 @@ const Orders = () => {
 
   const handleUpdateStatus = (
     orderId: string,
-    status: "delivered" | "pending"
+    status: "completed" | "processing"
   ) => {
     updateOrderMutation.mutate({ orderId, status });
   };
@@ -202,16 +220,20 @@ const Orders = () => {
     deleteOrderMutation.mutate(orderId);
   };
 
+  const handleReprocessOrder = (orderId: string) => {
+    reprocessOrderMutation.mutate(orderId);
+  };
+
   const handleExport = () => {
     console.log("Export orders data");
   };
 
   const totalOrders = orders.length;
   const deliveredOrders = orders.filter(
-    (order: Order) => order.status === "delivered"
+    (order: Order) => order.status === "completed"
   ).length;
   const pendingOrders = orders.filter(
-    (order: Order) => order.status === "pending"
+    (order: Order) => order.status === "processing"
   ).length;
 
   if (isLoading) {
@@ -270,7 +292,7 @@ const Orders = () => {
                   <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">Delivered</p>
+                  <p className="text-sm font-medium text-gray-600">Completed</p>
                   <p className="text-2xl font-semibold text-gray-900">
                     {deliveredOrders}
                   </p>
@@ -317,7 +339,7 @@ const Orders = () => {
                   className="appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-1 focus:ring-red-500 focus:border-red-500"
                 >
                   <option value="all">All Status</option>
-                  <option value="delivered">Delivered</option>
+                  <option value="completed">Completed</option>
                   <option value="pending">Pending</option>
                 </select>
                 <Filter className="absolute right-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
@@ -397,8 +419,10 @@ const Orders = () => {
               </TableHeader>
               <TableBody>
                 {filteredOrders.map((order: Order) => (
-                  <TableRow key={order.id}>
-                    <TableCell className="font-medium">{order.id}</TableCell>
+                  <TableRow key={order.order_id}>
+                    <TableCell className="font-medium">
+                      {order.order_id}
+                    </TableCell>
                     <TableCell>{formatDate(order.date)}</TableCell>
                     <TableCell>{order.name}</TableCell>
                     <TableCell>{order.age}</TableCell>
@@ -409,26 +433,11 @@ const Orders = () => {
                       <div className="flex space-x-2">
                         <Button
                           size="sm"
-                          variant="outline"
-                          onClick={() =>
-                            handleUpdateStatus(
-                              order.id,
-                              order.status === "pending"
-                                ? "delivered"
-                                : "pending"
-                            )
-                          }
-                          disabled={updateOrderMutation.isPending}
-                        >
-                          <Edit className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          size="sm"
                           variant="destructive"
-                          onClick={() => handleDeleteOrder(order.id)}
-                          disabled={deleteOrderMutation.isPending}
+                          onClick={() => handleReprocessOrder(order.order_id)}
+                          disabled={reprocessOrderMutation.isPending}
                         >
-                          <Trash2 className="w-3 h-3" />
+                          Reprocess
                         </Button>
                       </div>
                     </TableCell>

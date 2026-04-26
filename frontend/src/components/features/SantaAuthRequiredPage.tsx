@@ -47,7 +47,7 @@ export default function SantaAuthPage() {
             Please login or register to start your
           </p>
           <p className="text-red-600 font-semibold text-lg mb-4">
-            personalised Santa video! 🎬
+            Personalized Santa video! 🎬
           </p>
 
           <p className="text-sm text-gray-500 mb-8 leading-relaxed">

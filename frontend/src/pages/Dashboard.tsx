@@ -75,10 +75,10 @@ const Dashboard = () => {
   };
 
   const settingSections = [
-    { id: "account", label: "Account", icon: User },
-    { id: "notifications", label: "Notifications", icon: Bell },
+    // { id: "account", label: "Account", icon: User },
+    // { id: "notifications", label: "Notifications", icon: Bell },
     { id: "security", label: "Security", icon: Shield },
-    { id: "billing", label: "Billing", icon: CreditCard },
+    // { id: "billing", label: "Billing", icon: CreditCard },
     { id: "theme", label: "Select Theme", icon: RainbowIcon },
   ];
 
@@ -254,8 +254,8 @@ const Dashboard = () => {
                         Create your first magical Santa video for your child.
                       </p>
                       <Link
-                        to="/personalise"
-                        className="bg-primary text-base-100 px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-shadow"
+                        to="/personalize"
+                        className="bg-background text-base-content px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-shadow"
                       >
                         Create First Video
                       </Link>
@@ -324,7 +324,7 @@ const Dashboard = () => {
                             </div>
                           </div>
 
-                          {order.order_status === "completed" &&
+                          {/* {order.order_status === "completed" &&
                             order.video_url && (
                               <motion.button
                                 whileHover={{ scale: 1.02 }}
@@ -334,7 +334,7 @@ const Dashboard = () => {
                                 <Play className="w-5 h-5" />
                                 Watch Video
                               </motion.button>
-                            )}
+                            )} */}
                         </motion.div>
                       ))}
                     </div>

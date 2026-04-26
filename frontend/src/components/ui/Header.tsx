@@ -13,7 +13,7 @@ const Header = () => {
 
   const authNavigationItems = [
     { name: "Home", href: "/" },
-    { name: "Personalise", href: "/personalise" },
+    { name: "Personalise", href: "/personalize" },
     { name: "Dashboard", href: "/dashboard" },
     { name: "About", href: "/about" },
     { name: "Contact Us", href: "/contact-us" },
@@ -97,7 +97,7 @@ const Header = () => {
             {isAuthenticated ? (
               <div className="md:hidden lg:flex flex-row space-x-2">
                 <Link
-                  to="/personalise"
+                  to="/personalize"
                   className="bg-yellow-400 hover:bg-yellow-300 text-red-800 font-bold py-2 px-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-200 hidden sm:block"
                 >
                   Create Your Video

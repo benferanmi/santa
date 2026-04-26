@@ -25,7 +25,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-base-content/80 leading-relaxed max-w-sm">
-              Creating magical Christmas memories with personalised videos from
+              Creating magical Christmas memories with Personalized videos from
               Santa Claus.
             </p>
 

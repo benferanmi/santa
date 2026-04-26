@@ -21,7 +21,7 @@ const SantaReviewsSlider = () => {
       id: 3,
       name: "Lisa Martinez",
       image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face",
-      review: "This was the best Christmas surprise ever! Both my kids were amazed by their personalized messages. The production quality is professional and heartwarming."
+      review: "This was the best Christmas surprise ever! Both my kids were amazed by their Personalized messages. The production quality is professional and heartwarming."
     },
     {
       id: 4,

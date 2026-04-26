@@ -10,7 +10,7 @@ import {
 export class VideoApiService {
   // Create new video order
   static async createVideoOrder(
-    videoData: VideoRequest
+    videoData: VideoRequest,
   ): Promise<ApiResponse<VideoGenerationResponse>> {
     try {
       const formData = new FormData();
@@ -21,6 +21,16 @@ export class VideoApiService {
       }
       if (videoData.customMessage) {
         formData.append("customMessage", videoData.customMessage);
+      }
+
+      if (videoData.childName2) {
+        formData.append("childName2", videoData.childName2);
+      }
+      if (videoData.childAge2) {
+        formData.append("childAge2", videoData.childAge2);
+      }
+      if (videoData.paymentMethodId) {
+        formData.append("paymentMethodId", videoData.paymentMethodId);
       }
       formData.append("videoStyle", videoData.videoStyle || "classic");
 
@@ -52,11 +62,11 @@ export class VideoApiService {
   // Get user's video orders
   static async getVideoOrders(
     page: number = 1,
-    limit: number = 10
+    limit: number = 10,
   ): Promise<PaginatedResponse<VideoOrder>> {
     try {
       const response = await api.get(
-        `/user/orders?page=${page}&limit=${limit}`
+        `/user/orders?page=${page}&limit=${limit}`,
       );
       return response;
 
@@ -97,7 +107,7 @@ export class VideoApiService {
 
   // Get specific video order
   static async getVideoOrder(
-    orderId: string
+    orderId: string,
   ): Promise<ApiResponse<VideoOrder>> {
     try {
       const response = await api.get(`/videos/orders/${orderId}`);
@@ -110,9 +120,7 @@ export class VideoApiService {
   }
 
   // Check video generation status
-  static async checkVideoStatus(
-    orderId: string
-  ): Promise<
+  static async checkVideoStatus(orderId: string): Promise<
     ApiResponse<{
       status: string;
       progress: number;
@@ -139,7 +147,7 @@ export class VideoApiService {
 
   // Download video
   static async downloadVideo(
-    orderId: string
+    orderId: string,
   ): Promise<ApiResponse<{ downloadUrl: string; expiresAt: string }>> {
     try {
       const response = await api.get(`/videos/download/${orderId}`);
@@ -176,7 +184,7 @@ export class VideoApiService {
 
   // Request video regeneration (if failed)
   static async regenerateVideo(
-    orderId: string
+    orderId: string,
   ): Promise<ApiResponse<VideoGenerationResponse>> {
     try {
       const response = await api.post(`/videos/regenerate/${orderId}`, {});
@@ -191,7 +199,7 @@ export class VideoApiService {
   // Share video (get shareable link)
   static async shareVideo(
     orderId: string,
-    expirationDays: number = 30
+    expirationDays: number = 30,
   ): Promise<ApiResponse<{ shareUrl: string; expiresAt: string }>> {
     try {
       const response = await api.post(`/videos/share/${orderId}`, {

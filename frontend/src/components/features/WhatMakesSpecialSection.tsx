@@ -169,7 +169,7 @@ const WhatMakesSpecialSection = () => {
             </div>
             
             <p className="text-gray-600 mb-6 text-lg">
-              Join thousands of families who've already experienced the joy of personalized Santa videos.
+              Join thousands of families who've already experienced the joy of Personalized Santa videos.
             </p>
             
             <button className="group relative px-8 py-4 bg-red-600 text-white font-semibold rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-xl hover:bg-red-700">

@@ -18,14 +18,21 @@ export interface Order {
   order_id: string;
   name: string;
   age: number;
-  status: "delivered" | "pending";
+  status: "completed" | "processing";
   amount?: number;
   customerEmail?: string;
 }
 
+export type DailyVolume = Record<string, number>;
+
+export interface ChartData {
+  day: string;
+  orders: number;
+}
 export interface DashboardStats {
   revenue: number;
-  totalOrders: number;
+  total_orders: number;
+  daily_volume: any;
   videosCompleted: number;
   revenueChange: number;
   ordersChange: number;

@@ -35,7 +35,7 @@ const SantaMagicCTASection = () => {
           >
             <p className="text-xl lg:text-2xl text-white leading-relaxed max-w-3xl mx-auto px-6 py-4 bg-black/30 backdrop-blur-sm rounded-2xl border border-white/20 shadow-2xl">
               Give your child a Christmas memory they'll never forget with a
-              personalised video message from{" "}
+              Personalized video message from{" "}
               <span className="text-red-300 font-semibold">Santa Claus</span>
               <span className="ml-2">🎅</span>.
             </p>
@@ -62,7 +62,7 @@ const SantaMagicCTASection = () => {
               whileTap={{ scale: 0.95 }}
               className="bg-gradient-to-r from-red-600 to-red-700 text-white px-12 py-6 rounded-full font-bold text-xl lg:text-2xl shadow-2xl transition-all duration-300 border-2 border-white/30 backdrop-blur-sm"
             >
-              <Link to="/personalise" className="flex items-center gap-4">
+              <Link to="/personalize" className="flex items-center gap-4">
                 Create Your Video Now
                 <span className="text-2xl">🎬</span>
               </Link>

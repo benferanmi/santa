@@ -94,7 +94,7 @@ const OrderSuccess = () => {
                 <CheckCircle className="w-5 h-5 text-green-500 mt-1" />
                 <div>
                   <p className="font-semibold text-gray-800">Email Delivery</p>
-                  <p className="text-gray-600 text-sm">Your video will be delivered within 24 hours</p>
+                  <p className="text-gray-600 text-sm">Your video will be delivered within 24-72 hours</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
@@ -141,7 +141,7 @@ const OrderSuccess = () => {
                 </motion.button>
               </Link>
               
-              <Link to="/personalise">
+              <Link to="/personalize">
                 <motion.button
                   className="bg-white text-red-600 border-2 border-red-600 px-8 py-3 rounded-full font-bold shadow-lg hover:bg-red-50"
                   whileHover={{ scale: 1.05 }}

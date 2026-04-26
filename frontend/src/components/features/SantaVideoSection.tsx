@@ -105,13 +105,13 @@ const VideoPreview: React.FC<{ onPlay: () => void; isVisible: boolean }> = memo(
         <div className="absolute inset-0 bg-black/20" />
 
         {/* Santa Silhouette - only animate when visible */}
-        <div
+        {/* <div
           className={`absolute right-10 bottom-10 text-6xl opacity-30 ${
             isVisible ? "animate-santa-sway" : ""
           }`}
         >
           🎅
-        </div>
+        </div> */}
 
         {/* Reindeer - only animate when visible */}
         <div
@@ -302,13 +302,13 @@ const SantaVideoSection: React.FC = memo(() => {
           >
             ❄️
           </div>
-          <div
+          {/* <div
             className={`absolute -bottom-4 -left-4 text-4xl ${
               isVisible ? "animate-spin-reverse" : ""
             }`}
           >
             🎁
-          </div>
+          </div> */}
         </div>
 
         {/* Call to Action */}

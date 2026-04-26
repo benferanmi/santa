@@ -1,27 +1,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Settings,
-  Lock,
-  Mail,
-  User,
-  CreditCard,
-  Gift,
-  Bell,
-  Shield,
-  RainbowIcon,
-  X,
-  EyeOff,
-  Eye,
-} from "lucide-react";
+import { Lock, CreditCard, X, EyeOff, Eye } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { THEMES } from "@/constants";
 import { useThemes } from "@/context/ThemeContext";
-import AppLayout from "@/components/layout/AppLayout";
 import { UserApiService } from "@/services/userApi";
+import { useUser } from "@/context/UserContext";
+import { toast } from "sonner";
 
 const UserSettings = ({ activeTab }) => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
   const { theme, changeTheme } = useThemes();
   const [settings, setSettings] = useState({
     emailNotifications: true,
@@ -42,6 +30,7 @@ const UserSettings = ({ activeTab }) => {
   const [passwordLoading, setPasswordLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [passwordSuccess, setPasswordSuccess] = useState(false);
+  const { deleteAccount } = useUser();
 
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,6 +72,18 @@ const UserSettings = ({ activeTab }) => {
       setPasswordError("An error occurred while changing password");
     } finally {
       setPasswordLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async (e: React.FormEvent) => {
+    try {
+      const result = await deleteAccount();
+      if (result) {
+        toast.success("Account Deleted Successfully");
+        signOut();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -136,68 +137,6 @@ const UserSettings = ({ activeTab }) => {
           <div className="block relative gap-8">
             {/* Settings Content */}
             <div className="lg:col-span-3">
-              {activeTab === "account" && (
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  className="space-y-6"
-                >
-                  <motion.h2
-                    variants={itemVariants}
-                    className="text-2xl font-bold text-primary"
-                    style={{ fontFamily: "cursive" }}
-                  >
-                    👤 Account Settings
-                  </motion.h2>
-
-                  <motion.div
-                    variants={itemVariants}
-                    className="bg-base-100 rounded-2xl shadow-lg p-6 border-2 border-secondary/20"
-                  >
-                    <h3 className="text-lg font-semibold text-base-content mb-4">
-                      Basic Information
-                    </h3>
-                    <div className="space-y-4">
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-semibold text-primary mb-2">
-                            Display Name
-                          </label>
-                          <input
-                            type="text"
-                            value={`${user?.firstName} ${user?.lastName}`}
-                            className="w-full px-4 py-3 border-2 border-primary/30 rounded-lg focus:border-primary focus:outline-none transition-colors bg-primary/5"
-                            readOnly
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-sm font-semibold text-base-content mb-2">
-                            Email
-                          </label>
-                          <input
-                            type="email"
-                            value={user?.email || ""}
-                            className="w-full px-4 py-3 border-2 border-secondary/30 rounded-lg focus:border-secondary focus:outline-none transition-colors bg-secondary/5"
-                            readOnly
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <label className="block text-sm font-semibold text-primary mb-2">
-                          Time Zone
-                        </label>
-                        <select className="w-full px-4 py-3 border-2 border-primary/30 rounded-lg focus:border-primary focus:outline-none transition-colors bg-base-100">
-                          <option>North Pole Time (UTC-12)</option>
-                          <option>Eastern Time (UTC-5)</option>
-                          <option>Pacific Time (UTC-8)</option>
-                        </select>
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              )}
-
               {activeTab === "notifications" && (
                 <motion.div
                   variants={containerVariants}
@@ -341,7 +280,10 @@ const UserSettings = ({ activeTab }) => {
                             </label>
                           </div>
 
-                          <button className="w-full text-left px-4 py-3 bg-error/20 text-error rounded-lg border border-error/30 hover:bg-error/30 transition-colors">
+                          <button
+                            onClick={handleDeleteAccount}
+                            className="w-full text-left px-4 py-3 bg-error/20 text-error rounded-lg border border-error/30 hover:bg-error/30 transition-colors"
+                          >
                             Delete Account
                           </button>
                         </div>

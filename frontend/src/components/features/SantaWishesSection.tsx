@@ -101,7 +101,7 @@ const SantaWishesSection = () => {
                 At{" "}
                 <span className="text-red-400 font-semibold">Santa Wishes</span>
                 , Santa and his elves have found a new way to spread even more
-                magic — personalised video messages for children around the
+                magic — Personalized video messages for children around the
                 world!
               </p>
 
@@ -132,7 +132,7 @@ const SantaWishesSection = () => {
 
             <Link
               className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white px-8 py-4 rounded-full font-semibold text-lg shadow-2xl transition-all duration-300"
-              to="/personalise"
+              to="/personalize"
             >
               <motion.button
                 initial={{ opacity: 0, y: 30 }}

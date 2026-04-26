@@ -177,7 +177,7 @@ const PrivacyPolicyPage = () => {
                       privacy and ensuring the security of your personal
                       information. This Privacy Policy explains how we collect,
                       use, disclose, and safeguard your information when you use
-                      our personalized Santa video service.
+                      our Personalized Santa video service.
                     </p>
                     <p className="text-gray-600 leading-relaxed">
                       By using our service, you agree to the collection and use
@@ -246,7 +246,7 @@ const PrivacyPolicyPage = () => {
                             Service Delivery
                           </h4>
                           <p className="text-gray-600 text-sm">
-                            Create and deliver personalized Santa videos
+                            Create and deliver Personalized Santa videos
                           </p>
                         </div>
                       </div>
@@ -436,7 +436,7 @@ const PrivacyPolicyPage = () => {
                   </h2>
                   <p className="text-gray-700 leading-relaxed mb-4">
                     We use cookies and similar technologies to enhance your
-                    experience, analyze usage, and provide personalized content.
+                    experience, analyze usage, and provide Personalized content.
                     You can control cookie preferences through your browser
                     settings.
                   </p>
@@ -467,7 +467,7 @@ const PrivacyPolicyPage = () => {
                     </p>
                     <p className="text-blue-700 text-sm leading-relaxed">
                       We take extra care with children's information. We only
-                      collect the minimum necessary data to create personalized
+                      collect the minimum necessary data to create Personalized
                       videos, and we never use children's information for
                       marketing purposes. Parents have full control over their
                       child's data and can request deletion at any time.
@@ -502,7 +502,7 @@ const PrivacyPolicyPage = () => {
                     </p>
                     <div className="space-y-2 text-gray-600">
                       <p>📧 Email: privacy@wishes.com</p>
-                      <p>📞 Phone: +1 (555) 123-4567</p>
+                      <p>📞 Phone: +44 7123 456 789</p>
                       <p>
                         📍 Address: 123 Christmas Lane, North Pole, NP 12345
                       </p>

@@ -99,6 +99,9 @@ export interface VideoRequest {
   frontDoorImage?: File;
   customMessage?: string;
   videoStyle?: "classic" | "modern" | "animated";
+  childName2?: string;
+  childAge2?: string;
+  paymentMethodId?: string;
 }
 
 export interface VideoOrder {
@@ -121,6 +124,9 @@ export interface VideoOrder {
   created_at: string;
   updatedAt: string;
   estimatedCompletion?: string;
+  childName2?: string;
+  childAge2?: string;
+  paymentMethodId?: string;
 }
 
 export interface VideoGenerationResponse {

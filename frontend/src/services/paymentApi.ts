@@ -154,11 +154,25 @@ export class PaymentApiService {
     orderData: OrderData
   ): Promise<StripePaymentIntentResponse> {
     try {
-      const response = await api.post("/user/create-payment-intent", {
+      const payload: OrderData = {
         childName: orderData.childName,
         childAge: orderData.childAge,
         pricingId: orderData.pricingId,
-      });
+      };
+
+      // Add optional fields only if they have values
+      if (orderData.door_url && orderData.door_url.trim() !== "") {
+        payload.door_url = orderData.door_url;
+      }
+
+      if (
+        orderData.someone_special &&
+        orderData.someone_special.trim() !== ""
+      ) {
+        payload.someone_special = orderData.someone_special;
+      }
+
+      const response = await api.post("/user/create-payment-intent", payload);
 
       return response;
     } catch (error) {
@@ -170,7 +184,9 @@ export class PaymentApiService {
       };
     }
   }
-  static async generateVideo(data: GenerateVideoData): Promise<GenerateVideoResponse> {
+  static async generateVideo(
+    data: GenerateVideoData
+  ): Promise<GenerateVideoResponse> {
     try {
       const response = await api.post("/user/generate-video", data);
 

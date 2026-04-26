@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import { Camera, Calendar } from "lucide-react";
+import { CloudinaryResponse, uploadToCloudinary } from "@/utils/cloudinary";
 
 // Types (same as before)
 interface User {
@@ -15,16 +16,6 @@ interface User {
 interface ProfileUpdate {
   avatar: string;
 }
-
-interface CloudinaryResponse {
-  secure_url: string;
-  public_id: string;
-  error?: {
-    message: string;
-  };
-  [key: string]: any;
-}
-
 interface ProfileCardProps {
   user?: User;
   updateProfile: (data: ProfileUpdate) => Promise<void>;
@@ -38,67 +29,6 @@ const ProfileCard: React.FC<ProfileCardProps> = ({
 }) => {
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  // Upload function with better error handling
-  const uploadToCloudinary = async (file: File): Promise<string> => {
-    const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
-
-    // Better error checking
-    if (!cloudName) {
-      throw new Error(
-        "VITE_CLOUDINARY_CLOUD_NAME is not set in environment variables"
-      );
-    }
-
-    if (!uploadPreset) {
-      throw new Error(
-        "VITE_CLOUDINARY_UPLOAD_PRESET is not set in environment variables"
-      );
-    }
-
-    console.log("Using cloud name:", cloudName);
-    console.log("Using upload preset:", uploadPreset);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", uploadPreset);
-    // Remove this line - don't send API key for unsigned uploads
-    // formData.append("api_key", "your_api_key");
-
-    try {
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const data: CloudinaryResponse = await response.json();
-
-      // Check for Cloudinary-specific errors
-      if (data.error) {
-        throw new Error(`Cloudinary error: ${data.error.message}`);
-      }
-
-      if (!response.ok) {
-        throw new Error(
-          `HTTP error! status: ${response.status}, message: ${JSON.stringify(
-            data
-          )}`
-        );
-      }
-
-      if (!data.secure_url) {
-        throw new Error("Upload successful but no secure_url returned");
-      }
-
-      return data.secure_url;
-    } catch (error) {
-      console.error("Error uploading to Cloudinary:", error);
-      throw error;
-    }
-  };
 
   // Handle upload function (same as before but with better error messages)
   const handleUpload = (): void => {

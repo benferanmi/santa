@@ -11,7 +11,7 @@ const HowItWorksSection = () => {
       icon: Edit3,
       title: "Enter Details",
       description:
-        "Provide your child's name, age, and upload a photo of your front door.",
+        "Provide your child's name, age, special person and upload a photo of your front door.",
       accent: "emerald",
     },
     {
@@ -26,7 +26,7 @@ const HowItWorksSection = () => {
       icon: Video,
       title: "Receive Your Video",
       description:
-        "Get your personalised Santa video ready to share with your child.",
+        "Get your Personalized Santa video ready to share with your child.",
       accent: "purple",
     },
   ];
@@ -125,7 +125,7 @@ const HowItWorksSection = () => {
             How It Works
           </h2>
           <p className="text-xl text-base-content/70 max-w-2xl mx-auto leading-relaxed">
-            Creating your personalized Santa video is simple and takes just a
+            Creating your Personalized Santa video is simple and takes just a
             few minutes
           </p>
         </AnimatedDiv>
@@ -266,7 +266,7 @@ const HowItWorksSection = () => {
           className="text-center mt-20"
         >
           <button className="group bg-base-content hover:bg-base-content/90 text-base-100 font-semibold text-lg px-10 py-4 rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 hover:shadow-xl">
-            <Link to="/personalise" className="flex items-center space-x-2">
+            <Link to="/personalize" className="flex items-center space-x-2">
               <span>Get Started Now</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </Link>

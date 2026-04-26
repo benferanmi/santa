@@ -49,7 +49,7 @@ const SantaVideoForm = () => {
   const videoFeatures = [
     {
       icon: <User className="text-red-400" size={20} />,
-      text: "Personalised greeting with your child's name",
+      text: "Personalized greeting with your child's name",
     },
     {
       icon: <Calendar className="text-green-400" size={20} />,
@@ -118,7 +118,7 @@ const SantaVideoForm = () => {
             </span>
             <br />
             <span className="bg-gradient-to-r from-red-400 via-yellow-300 to-green-400 bg-clip-text text-transparent drop-shadow-lg">
-              magical personalised video
+              magical Personalized video
             </span>
             <br />
             <span className="text-black/90">from Santa for your child.</span>
@@ -146,7 +146,7 @@ const SantaVideoForm = () => {
                 </span>
               </motion.h2>
               <p className="text-black/70 mb-6">
-                This information will be used by Santa in the personalised
+                This information will be used by Santa in the Personalized
                 video.
               </p>
 

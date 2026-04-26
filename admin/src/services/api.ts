@@ -178,7 +178,7 @@ export const ordersAPI = {
 
   updateOrderStatus: async (
     orderId: string,
-    status: "delivered" | "pending"
+    status: "completed" | "processing"
   ): Promise<ApiResponse<Order>> => {
     try {
       const response = await makeAuthenticatedRequest(
@@ -222,17 +222,44 @@ export const ordersAPI = {
       );
     }
   },
-};
 
-export const usersAPI = {
-  getUsers: async () => {
+  reprocessOrder: async (orderId: string): Promise<ApiResponse<null>> => {
     try {
-      const response = await makeAuthenticatedRequest("/users");
+      const response = await makeAuthenticatedRequest(
+        `/admin/orders/${orderId}/reprocess`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            resendEmail: true,
+          }),
+        }
+      );
+
       const data = await response.json();
 
       return {
-        data: data.data || data,
-        message: data.message || "Users fetched successfully",
+        data: null,
+        message: data.message || "Order deleted successfully",
+        success: true,
+      };
+    } catch (error) {
+      throw new Error(
+        error instanceof Error ? error.message : "Failed to delete order"
+      );
+    }
+  },
+};
+
+export const usersAPI = {
+  getUsers: async ({ page }) => {
+    try {
+      const response = await makeAuthenticatedRequest(`/admin/users?page=${page}&limit=50`);
+      const data = await response.json();
+      console.log(data.data);
+
+      return {
+        data: data.data,
+        message: "Users fetched successfully",
         success: true,
       };
     } catch (error) {

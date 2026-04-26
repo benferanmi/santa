@@ -263,7 +263,7 @@ const UserAccount = () => {
                   onBlur={(e) =>
                     (e.target.style.borderColor = "var(--color-secondary)")
                   }
-                  placeholder="(555) 123-4567"
+                  placeholder="+44 7123 456 789"
                 />
               </div>
 

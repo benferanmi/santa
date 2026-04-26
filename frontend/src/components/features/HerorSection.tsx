@@ -114,11 +114,11 @@ const HeroSection: React.FC = memo(() => {
       {/* Content Container */}
       <div className="relative z-10 text-center px-6 md:px-12 max-w-4xl">
         {/* Santa Emoji */}
-        <AnimatedDiv variant={ANIMATION_VARIANTS.bounceIn} className="mb-6">
+        {/* <AnimatedDiv variant={ANIMATION_VARIANTS.bounceIn} className="mb-6">
           <div className="text-8xl md:text-9xl drop-shadow-lg animate-float">
             🎅
           </div>
-        </AnimatedDiv>
+        </AnimatedDiv> */}
 
         {/* Title */}
         <AnimatedDiv variant={ANIMATION_VARIANTS.fadeInUp}>
@@ -130,8 +130,8 @@ const HeroSection: React.FC = memo(() => {
         {/* Subtitle */}
         <AnimatedDiv variant={ANIMATION_VARIANTS.fadeInUp}>
           <p className="text-red-100 text-lg md:text-xl mb-8 font-light max-w-2xl mx-auto">
-            Get a personalized video message from Santa with your child's name,
-            age, and even their home mentioned!
+            Get a Personalized video message from Santa with your child's name,
+            age, special person and even their home mentioned!
           </p>
         </AnimatedDiv>
 

@@ -64,7 +64,7 @@ export default function PreviewVideo() {
             {/* Header */}
             <motion.div className="text-center mb-8" variants={itemVariants}>
                 <h1 className="text-4xl font-bold text-red-700 mb-2" style={{ fontFamily: 'cursive' }}>
-                    🎅 Here is your personalised Santa message
+                    🎅 Here is your Personalized Santa message
                 </h1>
                 <p className="text-green-600 font-medium">Made with Christmas magic just for you!</p>
             </motion.div>
@@ -110,7 +110,7 @@ export default function PreviewVideo() {
                                 <h3 className="text-2xl font-bold mb-2" style={{ fontFamily: 'cursive' }}>
                                     Ho Ho Ho! Playing Your Video...
                                 </h3>
-                                <p className="text-red-100">Santa is delivering your personalized message!</p>
+                                <p className="text-red-100">Santa is delivering your Personalized message!</p>
                             </div>
                         </div>
                     )}

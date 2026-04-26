@@ -42,7 +42,7 @@ const App = () => (
                   <Routes>
                     {/* Protected Routes - Require Authentication */}
                     <Route
-                      path="/personalise"
+                      path="/personalize"
                       element={
                         <ProtectedRoute>
                           <Personalise />

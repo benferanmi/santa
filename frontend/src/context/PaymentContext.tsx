@@ -21,13 +21,15 @@ interface PaymentContextType {
   removePaymentMethod: (methodId: string) => Promise<boolean>;
   setDefaultPaymentMethod: (methodId: string) => Promise<boolean>;
   processPayment: (
-    paymentData: PaymentRequest
+    paymentData: PaymentRequest,
   ) => Promise<PaymentResponse | null>;
-  createStripePaymentIntent: (orderData) => void;
+  createStripePaymentIntent: (
+    orderData,
+  ) => Promise<StripePaymentIntentResponse | null>;
   generateVideo: (data: GenerateVideoData) => Promise<GenerateVideoResponse>;
   getPlans: () => Promise<GetPlansResponse>;
   createPayPalOrder: (
-    amount: number
+    amount: number,
   ) => Promise<{ orderId: string; approvalUrl: string } | null>;
   clearError: () => void;
 }
@@ -36,7 +38,8 @@ export interface OrderData {
   childName: string;
   childAge: number;
   pricingId: string;
-  frontDoorImage?: string;
+  door_url?: string;
+  someone_special?: string;
 }
 
 export interface GenerateVideoData {
@@ -106,7 +109,7 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({
         const response = await PaymentApiService.removePaymentMethod(methodId);
         if (response.success) {
           setPaymentMethods((prev) =>
-            prev.filter((method) => method.id !== methodId)
+            prev.filter((method) => method.id !== methodId),
           );
           return true;
         } else {
@@ -120,7 +123,7 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const setDefaultPaymentMethod = useCallback(
@@ -128,15 +131,14 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({
       setLoading(true);
       setError(null);
       try {
-        const response = await PaymentApiService.setDefaultPaymentMethod(
-          methodId
-        );
+        const response =
+          await PaymentApiService.setDefaultPaymentMethod(methodId);
         if (response.success) {
           setPaymentMethods((prev) =>
             prev.map((method) => ({
               ...method,
               isDefault: method.id === methodId,
-            }))
+            })),
           );
           return true;
         } else {
@@ -150,7 +152,7 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const processPayment = useCallback(
@@ -172,20 +174,19 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const createStripePaymentIntent = useCallback(
     async (
-      orderData: OrderData
+      orderData: OrderData,
     ): Promise<StripePaymentIntentResponse | null> => {
       setLoading(true);
       setError(null);
 
       try {
-        const response = await PaymentApiService.createStripePaymentIntent(
-          orderData
-        );
+        const response =
+          await PaymentApiService.createStripePaymentIntent(orderData);
 
         if (response.success) {
           return response;
@@ -201,7 +202,7 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const getPlans = useCallback(async (): Promise<GetPlansResponse | null> => {
@@ -243,12 +244,12 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   const createPayPalOrder = useCallback(
     async (
-      amount: number
+      amount: number,
     ): Promise<{ orderId: string; approvalUrl: string } | null> => {
       setLoading(true);
       setError(null);
@@ -267,7 +268,7 @@ export const PaymentProvider: React.FC<{ children: React.ReactNode }> = ({
         setLoading(false);
       }
     },
-    []
+    [],
   );
 
   return (

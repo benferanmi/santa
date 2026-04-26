@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -11,12 +10,14 @@ import {
   Crown,
   Sparkles,
   Video,
+  X,
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useVideoOrder } from "../hooks/useVideoOrder";
 import AppLayout from "@/components/layout/AppLayout";
 import { usePayment } from "@/context/PaymentContext";
 import SantaCheckout from "./SantaCheckout";
+import { uploadToCloudinary } from "@/utils/cloudinary";
 
 interface Plan {
   created_at: string;
@@ -35,13 +36,21 @@ const Personalise = () => {
   const [selectedPlanId, setSelectedPlanId] = useState<string>("");
   const [plansLoading, setPlansLoading] = useState(true);
   const [plansError, setPlansError] = useState<string>("");
+  const [selectedPaymentMethodId, setSelectedPaymentMethodId] =
+    useState<string>("");
+
+  console.log(selectedPlanId);
 
   const [formData, setFormData] = useState({
     childName: "",
     childAge: "",
-    frontDoorPhoto: null as File | null,
+    childName2: "",
+    childAge2: "",
+    special: "",
+    frontDoorPhoto: null as string | null,
   });
   const [fileName, setFileName] = useState("");
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     const fetchPlans = async () => {
@@ -71,7 +80,7 @@ const Personalise = () => {
   }, [getPlans]);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -80,15 +89,29 @@ const Personalise = () => {
     }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setFormData((prev) => ({
-        ...prev,
-        frontDoorPhoto: file,
-      }));
-      setFileName(file.name);
-    }
+
+    const frontDoorUrl = await uploadToCloudinary(file);
+    setFormData((prev) => ({
+      ...prev,
+      frontDoorPhoto: frontDoorUrl,
+    }));
+    setFileName(file.name);
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImagePreview(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const clearImage = (e) => {
+    e.stopPropagation();
+    setFileName("");
+    setImagePreview(null);
+    // Clear the input
+    (document.getElementById("frontDoorPhoto") as HTMLInputElement).value = "";
   };
 
   const handlePlanSelect = (planId: string) => {
@@ -119,7 +142,13 @@ const Personalise = () => {
         childName: formData.childName,
         childAge: formData.childAge,
         pricingId: selectedPlanId,
-        frontDoorImage: formData.frontDoorPhoto,
+        ...(formData.childName2 && { childName2: formData.childName2 }),
+        ...(formData.childAge2 && { childAge2: formData.childAge2 }),
+        door_url: formData.frontDoorPhoto,
+        someone_special: formData.special,
+        ...(selectedPaymentMethodId && {
+          paymentMethodId: selectedPaymentMethodId,
+        }),
       };
 
       const res = await createStripePaymentIntent(orderData);
@@ -139,7 +168,7 @@ const Personalise = () => {
   const videoFeatures = [
     {
       icon: <User className="text-success" size={20} />,
-      text: "Personalised greeting with your child's name",
+      text: "Personalized greeting with your child's name",
     },
     {
       icon: <Calendar className="text-info" size={20} />,
@@ -218,7 +247,7 @@ const Personalise = () => {
               </span>
               <br />
               <span className="bg-gradient-to-r from-success to-error bg-clip-text text-transparent drop-shadow-lg">
-                magical personalised video
+                magical Personalized video
               </span>
               <br />
               <span className="text-base-content/90">
@@ -324,7 +353,7 @@ const Personalise = () => {
                               <div className="text-sm text-base-content/60">
                                 {plan.videos_included > 1
                                   ? `£${formatPrice(
-                                      plan.price / plan.videos_included
+                                      plan.price / plan.videos_included,
                                     )} per video`
                                   : "One-time payment"}
                               </div>
@@ -407,7 +436,7 @@ const Personalise = () => {
                   </span>
                 </motion.h2>
                 <p className="text-base-content/70 mb-6">
-                  This information will be used by Santa in the personalised
+                  This information will be used by Santa in the Personalized
                   video.
                 </p>
 
@@ -478,6 +507,120 @@ const Personalise = () => {
                     </div>
                   </motion.div>
 
+                  {selectedPlanId === "69d7894e7119c957e6e8010c" && (
+                    <>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.7 }}
+                      >
+                        <label className="block text-base-content font-semibold mb-3 text-lg">
+                          Child's Name 2
+                        </label>
+                        <div className="relative">
+                          <User
+                            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-base-content/40"
+                            size={20}
+                          />
+                          <input
+                            type="text"
+                            name="childName2"
+                            value={formData.childName2}
+                            onChange={handleInputChange}
+                            className="w-full bg-secondary border border-secondary/70 rounded-2xl py-4 pl-12 pr-4 text-secondary-content placeholder-base-content/50 focus:outline-none focus:border-accent focus:bg-secondary/80 transition-all duration-300"
+                            placeholder="Enter second child's name"
+                          />
+                        </div>
+                      </motion.div>
+
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.75 }}
+                      >
+                        <label className="block text-base-content font-semibold mb-3 text-lg">
+                          Child's Age 2
+                        </label>
+                        <div className="relative">
+                          <Calendar
+                            className="absolute left-4 top-1/2 transform -translate-y-1/2 text-base-content/40"
+                            size={20}
+                          />
+                          <select
+                            name="childAge2"
+                            value={formData.childAge2}
+                            onChange={handleInputChange}
+                            className="w-full bg-secondary border border-secondary/70 rounded-2xl py-4 pl-12 pr-4 text-secondary-content focus:outline-none focus:border-accent focus:bg-secondary/80 transition-all duration-300 appearance-none cursor-pointer"
+                          >
+                            <option
+                              value=""
+                              className="bg-base-100 text-base-content"
+                            >
+                              Select age
+                            </option>
+                            {[...Array(13)].map((_, i) => (
+                              <option
+                                key={i + 3}
+                                value={i + 3}
+                                className="bg-base-100 text-base-content"
+                              >
+                                {i + 3} years old
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      </motion.div>
+                    </>
+                  )}
+
+                  {/* Payment Method */}
+                  {/* <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                  >
+                    <label className="block text-base-content font-semibold mb-3 text-lg">
+                      Payment Method ID
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        name="paymentMethodId"
+                        value={selectedPaymentMethodId}
+                        onChange={(e) =>
+                          setSelectedPaymentMethodId(e.target.value)
+                        }
+                        className="w-full bg-secondary border border-secondary/70 rounded-2xl py-4 px-4 text-secondary-content placeholder-base-content/50 focus:outline-none focus:border-accent focus:bg-secondary/80 transition-all duration-300"
+                        placeholder="Enter payment method ID (optional)"
+                      />
+                    </div>
+                  </motion.div> */}
+
+                  {/* Special someone */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <label className="block text-base-content font-semibold mb-3 text-lg">
+                      Special Someone
+                    </label>
+                    <div className="relative">
+                      <Sparkles
+                        className="absolute left-4 top-1/2 transform -translate-y-1/2 text-base-content/40"
+                        size={20}
+                      />
+                      <input
+                        type="text"
+                        name="special"
+                        value={formData.special}
+                        onChange={handleInputChange}
+                        className="w-full bg-secondary border border-secondary/70 rounded-2xl py-4 pl-12 pr-4 text-secondary-content placeholder-base-content/50 focus:outline-none focus:border-accent focus:bg-secondary/80 transition-all duration-300"
+                        placeholder="Enter someone special name"
+                      />
+                    </div>
+                  </motion.div>
+
                   {/* Front Door Photo */}
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -501,23 +644,76 @@ const Personalise = () => {
                         id="frontDoorPhoto"
                         accept="image/*"
                         onChange={handleFileChange}
-                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                       />
                       <motion.div
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
-                        className="bg-base-content/10 border-2 border-dashed border-base-content/30 rounded-2xl p-8 text-center hover:border-accent hover:bg-base-content/15 transition-all duration-300 cursor-pointer"
+                        className={`
+          relative overflow-hidden rounded-2xl p-8 text-center transition-all duration-300 cursor-pointer min-h-[200px] flex items-center justify-center
+          ${
+            imagePreview
+              ? "border-2 border-accent"
+              : "bg-base-content/10 border-2 border-dashed border-base-content/30 hover:border-accent hover:bg-base-content/15"
+          }
+        `}
+                        style={
+                          imagePreview
+                            ? {
+                                backgroundImage: `url(${imagePreview})`,
+                                backgroundSize: "contain",
+                                backgroundPosition: "center",
+                                backgroundRepeat: "no-repeat",
+                              }
+                            : {}
+                        }
                       >
-                        <Upload
-                          className="mx-auto mb-4 text-base-content/60"
-                          size={32}
-                        />
-                        <p className="text-base-content font-medium mb-2">
-                          Choose File
-                        </p>
-                        <p className="text-base-content/60 text-sm">
-                          {fileName || "No file chosen"}
-                        </p>
+                        {imagePreview && (
+                          <>
+                            {/* Dark overlay for better text readability */}
+                            <div className="absolute inset-0 bg-black/10 "></div>
+
+                            {/* Clear button */}
+                            <button
+                              onClick={clearImage}
+                              className="absolute top-4 right-4 z-20 bg-error text-error-content rounded-full p-2 hover:bg-error/80 transition-colors"
+                            >
+                              <X size={16} />
+                            </button>
+                          </>
+                        )}
+
+                        {/* Content overlay */}
+                        <div
+                          className={`relative z-10 ${
+                            imagePreview ? "text-white" : ""
+                          }`}
+                        >
+                          <Upload
+                            className={`mx-auto mb-4 ${
+                              imagePreview
+                                ? "text-white/90"
+                                : "text-base-content/60"
+                            }`}
+                            size={32}
+                          />
+                          <p
+                            className={`font-medium mb-2 ${
+                              imagePreview ? "text-white" : "text-base-content"
+                            }`}
+                          >
+                            {imagePreview ? "Change File" : "Choose File"}
+                          </p>
+                          <p
+                            className={`text-sm ${
+                              imagePreview
+                                ? "text-white/80"
+                                : "text-base-content/60"
+                            }`}
+                          >
+                            {fileName || "No file chosen"}
+                          </p>
+                        </div>
                       </motion.div>
                     </div>
                   </motion.div>
@@ -656,7 +852,7 @@ const Personalise = () => {
                       Delivery Info:
                     </h4>
                     <p className="text-warning/90 text-sm leading-relaxed">
-                      Your personalized Santa video will be delivered to your
+                      Your Personalized Santa video will be delivered to your
                       email within 24 hours after payment confirmation.
                     </p>
                   </div>
